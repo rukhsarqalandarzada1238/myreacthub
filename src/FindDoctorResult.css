@@ -1,0 +1,801 @@
+/* =========================================================
+   FIND DOCTOR RESULT PAGE
+   Sidebar + Header are controlled by style.css
+========================================================= */
+
+
+/* =========================================================
+   RESULTS PAGE
+========================================================= */
+
+.doctor-results-page {
+    padding: 30px;
+    background: #f8f9fc;
+    min-height: calc(100vh - 85px);
+}
+
+
+/* =========================================================
+   RESULTS HEADER
+========================================================= */
+
+.doctor-results-header {
+    margin-bottom: 22px;
+}
+
+.doctor-results-header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    color: #263238;
+}
+
+.doctor-results-header p {
+    margin: 0;
+    color: #7b809a;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.doctor-results-search {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 130px;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.results-search-box {
+    height: 52px;
+    background: #ffffff;
+    border: 1px solid #e2e5ec;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    gap: 10px;
+}
+
+.results-search-box:focus-within {
+    border-color: rgb(239, 56, 172);
+    box-shadow: 0 0 0 3px rgba(239, 56, 172, 0.08);
+}
+
+.results-search-box span {
+    color: #7b809a;
+    font-size: 19px;
+    flex: 0 0 auto;
+}
+
+.results-search-box input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #344767;
+    background: transparent;
+}
+
+.results-search-box input::placeholder {
+    color: #9aa2b1;
+}
+
+.results-search-btn {
+    height: 52px;
+    border: none;
+    background: rgb(239, 56, 172);
+    color: white;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.results-search-btn:hover {
+    background: rgb(220, 42, 154);
+}
+
+
+/* =========================================================
+   MAP LAYOUT
+========================================================= */
+
+.doctor-map-layout {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 20px;
+    min-height: 620px;
+}
+
+
+/* =========================================================
+   FILTER PANEL
+========================================================= */
+
+.doctor-filter-panel {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    height: fit-content;
+}
+
+.filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.filter-header h2 {
+    margin: 0;
+    font-size: 21px;
+    color: #263238;
+}
+
+.filter-header button {
+    border: none;
+    background: none;
+    color: rgb(239, 56, 172);
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.filter-section {
+    border-top: 1px solid #edf0f5;
+    padding: 18px 0;
+}
+
+.filter-section:first-of-type {
+    border-top: none;
+    padding-top: 0;
+}
+
+.filter-section h3 {
+    margin: 0 0 14px;
+    font-size: 14px;
+    color: #344767;
+}
+
+.filter-section select {
+    width: 100%;
+    height: 44px;
+    padding: 0 12px;
+    border: 1px solid #dfe3eb;
+    border-radius: 7px;
+    outline: none;
+    background: white;
+    color: #475569;
+    cursor: pointer;
+}
+
+.filter-section select:focus {
+    border-color: rgb(239, 56, 172);
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #67748e;
+}
+
+.checkbox-row:last-child {
+    margin-bottom: 0;
+}
+
+.checkbox-row input {
+    width: 16px;
+    height: 16px;
+    accent-color: rgb(239, 56, 172);
+}
+
+.apply-filter-btn {
+    width: 100%;
+    height: 45px;
+    border: none;
+    border-radius: 7px;
+    background: rgb(239, 56, 172);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.apply-filter-btn:hover {
+    background: rgb(220, 42, 154);
+}
+
+
+/* =========================================================
+   MAP CONTAINER
+========================================================= */
+
+.doctor-map-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    min-width: 0;
+}
+
+.map-topbar {
+    height: 70px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.map-topbar strong {
+    display: block;
+    color: #263238;
+    margin-bottom: 4px;
+}
+
+.map-topbar span {
+    font-size: 12px;
+    color: #7b809a;
+}
+
+.map-location-btn {
+    border: 1px solid #dfe3eb;
+    background: white;
+    border-radius: 7px;
+    padding: 9px 14px;
+    cursor: pointer;
+    color: #344767;
+    white-space: nowrap;
+}
+
+.map-location-btn:hover {
+    border-color: rgb(239, 56, 172);
+    color: rgb(239, 56, 172);
+}
+
+
+/* =========================================================
+   FAKE MAP
+========================================================= */
+
+.fake-map {
+    position: relative;
+    height: 550px;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            30deg,
+            transparent 48%,
+            #e3e6eb 49%,
+            #e3e6eb 51%,
+            transparent 52%
+        ),
+        linear-gradient(
+            120deg,
+            transparent 48%,
+            #e3e6eb 49%,
+            #e3e6eb 51%,
+            transparent 52%
+        ),
+        #eef1ed;
+
+    background-repeat: repeat;
+    transition: background-size 0.2s ease;
+}
+
+
+/* =========================================================
+   ROADS
+========================================================= */
+
+.fake-road {
+    position: absolute;
+    background: #ffffff;
+    box-shadow: 0 0 0 1px #dfe3df;
+}
+
+.road-a {
+    width: 100%;
+    height: 25px;
+    top: 40%;
+    left: 0;
+    transform: rotate(-8deg);
+}
+
+.road-b {
+    width: 100%;
+    height: 20px;
+    top: 68%;
+    left: 0;
+    transform: rotate(12deg);
+}
+
+.road-c {
+    width: 25px;
+    height: 100%;
+    left: 45%;
+    top: 0;
+    transform: rotate(8deg);
+}
+
+.road-d {
+    width: 18px;
+    height: 100%;
+    left: 75%;
+    top: 0;
+    transform: rotate(-15deg);
+}
+
+
+/* =========================================================
+   MAP AREA LABELS
+========================================================= */
+
+.map-area-label {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 6px 10px;
+    border-radius: 5px;
+    color: #667085;
+    font-size: 11px;
+    z-index: 2;
+}
+
+.label-a {
+    left: 12%;
+    top: 15%;
+}
+
+.label-b {
+    left: 40%;
+    top: 78%;
+}
+
+.label-c {
+    right: 10%;
+    top: 38%;
+}
+
+
+/* =========================================================
+   DOCTOR MARKERS
+========================================================= */
+
+.doctor-marker {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-size: 21px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.doctor-marker:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.selected-marker {
+    background: rgb(239, 56, 172);
+    transform: scale(1.12);
+    z-index: 10;
+}
+
+
+/* MARKER POSITIONS */
+
+.marker-a {
+    left: 20%;
+    top: 25%;
+}
+
+.marker-b {
+    left: 58%;
+    top: 20%;
+}
+
+.marker-c {
+    left: 44%;
+    top: 55%;
+}
+
+.marker-d {
+    left: 73%;
+    top: 65%;
+}
+
+.marker-e {
+    left: 30%;
+    top: 70%;
+}
+
+
+/* =========================================================
+   CURRENT LOCATION
+========================================================= */
+
+.fake-current-location {
+    position: absolute;
+    left: 52%;
+    top: 43%;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgb(239, 56, 172);
+    border: 5px solid rgba(255, 255, 255, 0.85);
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 0 10px rgba(239, 56, 172, 0.12);
+    opacity: 0.85;
+    transition: 0.3s ease;
+    z-index: 4;
+}
+
+.fake-current-location.location-active {
+    opacity: 1;
+    transform: scale(1.15);
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 0 14px rgba(239, 56, 172, 0.14);
+}
+
+
+/* =========================================================
+   MAP CONTROLS
+========================================================= */
+
+.fake-map-controls {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    z-index: 20;
+}
+
+.fake-map-controls button {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    background: white;
+    color: #344767;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.fake-map-controls button:first-child {
+    border-radius: 7px 7px 0 0;
+}
+
+.fake-map-controls button:last-child {
+    border-top: none;
+    border-radius: 0 0 7px 7px;
+}
+
+.fake-map-controls button:hover {
+    background: #f8f9fc;
+}
+
+
+/* =========================================================
+   DOCTOR LIST
+========================================================= */
+
+.doctor-list-section {
+    margin-top: 30px;
+}
+
+.doctor-list-section h2 {
+    color: #263238;
+    margin: 0 0 18px;
+}
+
+.doctor-list {
+    display: grid;
+    gap: 14px;
+}
+
+.doctor-result-card {
+    background: white;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    border: 1px solid transparent;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.doctor-result-card:hover {
+    border-color: #f3a6d3;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+    transform: translateY(-1px);
+}
+
+.doctor-result-avatar {
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    border-radius: 50%;
+    background: #fce7f3;
+    color: rgb(239, 56, 172);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.doctor-result-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.doctor-result-info h3 {
+    margin: 0 0 5px;
+    color: #263238;
+    font-size: 16px;
+}
+
+.doctor-result-info p {
+    margin: 0 0 5px;
+    color: rgb(239, 56, 172);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.doctor-result-info span {
+    color: #7b809a;
+    font-size: 12px;
+}
+
+.doctor-result-card button {
+    border: 1px solid rgb(239, 56, 172);
+    background: white;
+    color: rgb(239, 56, 172);
+    padding: 10px 15px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: 0.2s ease;
+}
+
+.doctor-result-card button:hover {
+    background: rgb(239, 56, 172);
+    color: white;
+}
+
+
+/* =========================================================
+   NO RESULTS
+========================================================= */
+
+.no-doctors {
+    padding: 45px 20px;
+    background: white;
+    border: 1px dashed #d5dbe5;
+    border-radius: 10px;
+    color: #7b809a;
+    text-align: center;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   RESPONSIVE - 1100px
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .doctor-results-page {
+        padding: 24px;
+    }
+
+    .doctor-map-layout {
+        grid-template-columns: 260px minmax(0, 1fr);
+    }
+
+    .doctor-results-search {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 110px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - 900px
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .doctor-map-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .doctor-filter-panel {
+        order: 1;
+    }
+
+    .doctor-map-container {
+        order: 2;
+    }
+
+    .fake-map {
+        height: 500px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - 768px
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .doctor-results-page {
+        padding: 20px;
+    }
+
+    .doctor-results-search {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .results-search-btn {
+        grid-column: 1 / -1;
+    }
+
+    .doctor-filter-panel {
+        padding: 18px;
+    }
+
+    .map-topbar {
+        height: auto;
+        min-height: 70px;
+        padding: 12px 16px;
+    }
+
+    .fake-map {
+        height: 450px;
+    }
+
+    .doctor-result-card {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .doctor-result-info {
+        min-width: calc(100% - 76px);
+    }
+
+    .doctor-result-card button {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - 600px
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .doctor-results-page {
+        padding: 18px;
+    }
+
+    .doctor-results-header h1 {
+        font-size: 25px;
+    }
+
+    .doctor-results-search {
+        grid-template-columns: 1fr;
+    }
+
+    .results-search-btn {
+        grid-column: auto;
+        width: 100%;
+    }
+
+    .map-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .map-location-btn {
+        width: 100%;
+    }
+
+    .fake-map {
+        height: 420px;
+    }
+
+    .doctor-result-card {
+        padding: 15px;
+    }
+
+    .doctor-result-avatar {
+        width: 52px;
+        height: 52px;
+        flex-basis: 52px;
+    }
+
+    .doctor-result-info {
+        min-width: calc(100% - 66px);
+    }
+
+    .doctor-result-info h3 {
+        font-size: 15px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - 400px
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .doctor-results-page {
+        padding: 12px;
+    }
+
+    .doctor-results-header h1 {
+        font-size: 22px;
+    }
+
+    .doctor-results-header p {
+        font-size: 12px;
+    }
+
+    .doctor-filter-panel {
+        padding: 15px;
+    }
+
+    .fake-map {
+        height: 350px;
+    }
+
+    .doctor-marker {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .map-area-label {
+        font-size: 9px;
+        padding: 5px 7px;
+    }
+
+    .doctor-result-card {
+        gap: 12px;
+    }
+
+    .doctor-result-info {
+        min-width: 0;
+        width: calc(100% - 64px);
+    }
+}

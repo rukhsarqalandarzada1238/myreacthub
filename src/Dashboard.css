@@ -1,0 +1,883 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fa;
+    color: #303846;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+.dashboard-body {
+    display: flex;
+    min-height: 100vh;
+    background: #f5f7fa;
+}
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    background: #ffffff;
+    border-right: 1px solid #eeeeee;
+
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+
+    transition: transform 0.3s ease, width 0.3s ease;
+}
+.logo-area {
+    height: 95px;
+    min-height: 95px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 30px;
+    gap: 10px;
+
+    border-bottom: 1px solid #eeeeee;
+
+    font-size: 13px;
+    font-weight: 700;
+    color: #303846;
+}
+
+.logo-icon {
+    width: 35px;
+    height: 35px;
+
+    flex-shrink: 0;
+
+    border: 2px solid #1c4d9c;
+    color: #1c4d9c;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    border-radius: 6px;
+}
+.sidebar-menu {
+    width: 100%;
+    padding: 20px 18px;
+}
+
+.menu-item {
+    width: 100%;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 0 15px;
+
+    border-radius: 8px;
+    margin-bottom: 6px;
+
+    color: #6e7785;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.menu-item:hover {
+    background: #f4f5f8;
+    color: #303846;
+}
+
+.menu-item:active {
+    transform: scale(0.98);
+}
+
+.menu-item.active {
+    background: linear-gradient(
+        90deg,
+        #e500a7,
+        #a700ca
+    );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 5px 15px rgba(180, 0, 180, 0.20);
+}
+
+.menu-item.active:hover {
+    background: linear-gradient(
+        90deg,
+        #e500a7,
+        #a700ca
+    );
+
+    color: #ffffff;
+}
+.menu-icon {
+    width: 20px;
+    min-width: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    font-size: 16px;
+}
+
+.menu-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.help-box {
+    margin-top: auto;
+
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 20px;
+
+    min-height: 60px;
+
+    border-radius: 8px;
+
+    background: linear-gradient(
+        135deg,
+        #c900a9,
+        #a800c7
+    );
+
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 18px;
+
+    box-shadow:
+        0 5px 15px rgba(168, 0, 199, 0.15);
+}
+
+.help-box span {
+    width: 30px;
+    height: 30px;
+
+    min-width: 30px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+    color: #bb00b2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+.main-content {
+    margin-left: 250px;
+
+    width: calc(100% - 250px);
+
+    min-height: 100vh;
+
+    transition:
+        margin-left 0.3s ease,
+        width 0.3s ease;
+}
+.top-header {
+    height: 110px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #eeeeee;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 35px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.hamburger {
+    border: none;
+    background: transparent;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    color: #697483;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px;
+}
+
+.breadcrumb {
+    font-size: 11px;
+    color: #7e8793;
+
+    margin-bottom: 8px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-left h2 {
+    font-size: 15px;
+    font-weight: 600;
+}
+.header-right {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    color: #4f5a69;
+
+    font-size: 12px;
+}
+
+.header-link {
+    color: #4f5a69;
+    text-decoration: none;
+}
+
+.header-link:hover {
+    color: #a700ca;
+}
+.search-box {
+    width: 190px;
+    height: 35px;
+
+    border: 1px solid #eeeeee;
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 10px;
+
+    gap: 8px;
+
+    background: #ffffff;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+
+    width: 100%;
+
+    font-size: 11px;
+
+    background: transparent;
+}
+
+.search-box input::placeholder {
+    color: #a0a7b0;
+}
+
+.header-icon {
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: color 0.2s ease;
+}
+
+.header-icon:hover {
+    color: #a700ca;
+}
+
+.dashboard-content {
+    padding: 20px 30px;
+}
+
+.dashboard-content > h1 {
+    font-size: 21px;
+    font-weight: 600;
+
+    margin-bottom: 25px;
+}
+
+.cards-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+}
+.dashboard-card {
+    background: #ffffff;
+
+    border-radius: 10px;
+
+    padding: 20px;
+
+    min-height: 350px;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.02);
+}
+
+.card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.card-title h3 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.card-title span {
+    color: #a4abb4;
+
+    cursor: pointer;
+}
+.chart-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    gap: 15px;
+}
+.donut {
+    width: 175px;
+    height: 175px;
+
+    border-radius: 50%;
+
+    position: relative;
+
+    flex-shrink: 0;
+}
+
+.donut::after {
+    content: "";
+
+    width: 95px;
+    height: 95px;
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: #ffffff;
+
+    border-radius: 50%;
+}
+.chart-clinic {
+    background: conic-gradient(
+        #e90091 0deg 120deg,
+        #2866e9 120deg 150deg,
+        #f5c832 150deg 215deg,
+        #15ad4d 215deg 340deg,
+        #303b69 340deg 360deg
+    );
+}
+
+.chart-pharmacy {
+    background: conic-gradient(
+        #2866e9 0deg 100deg,
+        #b9c7df 100deg 180deg,
+        #ed0096 180deg 215deg,
+        #16aa4b 215deg 270deg,
+        #30375f 270deg 360deg
+    );
+}
+
+.chart-market {
+    background: conic-gradient(
+        #30375f 0deg 90deg,
+        #e90091 90deg 180deg,
+        #2c70ed 180deg 245deg,
+        #16aa4b 245deg 360deg
+    );
+}
+.legend {
+    width: 48%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+
+    font-size: 11px;
+
+    color: #606a78;
+}
+
+.legend div {
+    display: grid;
+
+    grid-template-columns:
+        12px
+        minmax(0, 1fr)
+        35px;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+.legend i {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    display: inline-block;
+}
+
+.legend b {
+    text-align: right;
+
+    font-weight: normal;
+}
+.pink {
+    background: #e90091;
+}
+
+.blue {
+    background: #2866e9;
+}
+
+.yellow {
+    background: #f5c832;
+}
+
+.green {
+    background: #16ad4d;
+}
+
+.darkblue {
+    background: #303b69;
+}
+
+.lightblue {
+    background: #b9c7df;
+}
+.details-btn {
+    margin-top: 15px;
+    margin-left: 35px;
+
+    width: 145px;
+    height: 32px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: linear-gradient(
+        90deg,
+        #aab9d3,
+        #7286a8
+    );
+
+    color: #ffffff;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.details-btn:hover {
+    opacity: 0.9;
+}
+
+.details-btn:active {
+    transform: translateY(1px);
+}
+.line-chart {
+    height: 230px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+}
+
+.line-chart svg {
+    width: 100%;
+    height: 180px;
+
+    color: #596372;
+}
+.appointment-card {
+    background: #ffffff;
+
+    margin-top: 20px;
+
+    border-radius: 10px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.02);
+}
+
+.appointment-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 15px;
+}
+
+.appointment-header h3 {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.appointment-header button {
+    border: none;
+
+    background: #edf1f7;
+
+    color: #63728a;
+
+    padding: 8px 15px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    cursor: pointer;
+}
+.appointment-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 0;
+
+    border-top: 1px solid #eeeeee;
+}
+.doctor {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.doctor-avatar {
+    width: 42px;
+    height: 42px;
+
+    min-width: 42px;
+
+    border-radius: 50%;
+
+    background: #edf1f7;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #4e6280;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.doctor div:last-child {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.doctor strong {
+    font-size: 12px;
+}
+
+.doctor span {
+    font-size: 11px;
+
+    color: #929aa7;
+}
+.appointment-info {
+    display: flex;
+
+    gap: 80px;
+
+    font-size: 12px;
+}
+
+.appointment-info span {
+    color: #8994a4;
+}
+.dashboard-footer {
+    min-height: 85px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 30px;
+
+    color: #7f8998;
+
+    font-size: 12px;
+}
+
+.dashboard-footer div {
+    display: flex;
+
+    gap: 35px;
+}
+
+.dashboard-footer a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.dashboard-footer a:hover {
+    color: #a700ca;
+}
+@media (max-width: 1000px) {
+
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-content {
+        margin-left: 220px;
+        width: calc(100% - 220px);
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header-right .search-box {
+        width: 140px;
+    }
+
+    .appointment-info {
+        gap: 40px;
+    }
+}
+@media (max-width: 768px) {
+
+    .sidebar {
+        width: 250px;
+
+        transform: translateX(-100%);
+
+        box-shadow:
+            5px 0 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .top-header {
+        height: 85px;
+
+        padding: 0 18px;
+    }
+
+    .header-left {
+        gap: 12px;
+    }
+
+    .header-right {
+        gap: 8px;
+    }
+
+    .header-right .search-box {
+        display: none;
+    }
+
+    .header-link {
+        display: none;
+    }
+
+    .dashboard-content {
+        padding: 18px;
+    }
+
+    .dashboard-content > h1 {
+        font-size: 19px;
+    }
+
+    .chart-content {
+        flex-direction: column;
+    }
+
+    .legend {
+        width: 100%;
+    }
+
+    .appointment-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .appointment-info {
+        width: 100%;
+
+        justify-content: space-between;
+
+        gap: 20px;
+    }
+
+    .dashboard-footer {
+        flex-direction: column;
+
+        gap: 15px;
+
+        text-align: center;
+    }
+}
+@media (max-width: 500px) {
+
+    .top-header {
+        padding: 0 14px;
+    }
+
+    .breadcrumb {
+        display: none;
+    }
+
+    .dashboard-content {
+        padding: 15px;
+    }
+
+    .dashboard-content > h1 {
+        font-size: 18px;
+
+        margin-bottom: 18px;
+    }
+
+    .dashboard-card {
+        padding: 15px;
+
+        min-height: auto;
+    }
+
+    .donut {
+        width: 150px;
+        height: 150px;
+    }
+
+    .donut::after {
+        width: 80px;
+        height: 80px;
+    }
+
+    .appointment-card {
+        padding: 15px;
+    }
+
+    .appointment-info {
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+    .dashboard-footer {
+        padding: 20px 15px;
+    }
+
+    .dashboard-footer div {
+        gap: 15px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+}
+@media (max-width: 360px) {
+
+    .sidebar {
+        width: 230px;
+    }
+
+    .logo-area {
+        padding: 0 20px;
+    }
+
+    .sidebar-menu {
+        padding: 15px;
+    }
+
+    .help-box {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    .donut {
+        width: 130px;
+        height: 130px;
+    }
+
+    .donut::after {
+        width: 70px;
+        height: 70px;
+    }
+}

@@ -1,0 +1,939 @@
+
+.clinic-page .clinic-hero {
+    position: relative;
+
+    width: 100%;
+    min-height: 390px;
+
+    padding: 18px 25px 30px;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    color: white;
+
+    background:
+        radial-gradient(
+            ellipse at 8% 90%,
+            rgba(255, 0, 190, .90) 0%,
+            rgba(255, 0, 190, .55) 28%,
+            transparent 60%
+        ),
+
+        radial-gradient(
+            ellipse at 95% 15%,
+            rgba(70, 0, 255, .90) 0%,
+            rgba(90, 0, 220, .60) 35%,
+            transparent 70%
+        ),
+
+        linear-gradient(
+            120deg,
+            #b900a2 0%,
+            #e300a7 35%,
+            #9218cf 65%,
+            #423ca8 100%
+        );
+
+    box-shadow:
+        0 8px 25px rgba(130, 0, 150, .12);
+}
+
+
+.clinic-page .clinic-hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 850px;
+    height: 250px;
+
+    left: -180px;
+    bottom: -150px;
+
+    border-radius: 50%;
+
+    border-top:
+        2px solid rgba(255,255,255,.18);
+
+    transform:
+        rotate(-10deg);
+
+    pointer-events: none;
+}
+
+
+.clinic-page .clinic-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 700px;
+    height: 260px;
+
+    right: -160px;
+    top: -180px;
+
+    border-radius: 50%;
+
+    border-bottom:
+        2px solid rgba(255,255,255,.18);
+
+    transform:
+        rotate(-12deg);
+
+    pointer-events: none;
+}
+
+.clinic-page .hero-topbar {
+    position: relative;
+
+    z-index: 10;
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+}
+
+
+.clinic-page .hero-left {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 22px;
+}
+
+
+.clinic-page .hero-hamburger {
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 25px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    padding: 4px;
+
+    display: none;
+}
+
+
+.clinic-page .hero-breadcrumb {
+    font-size: 9px;
+
+    color: white;
+
+    line-height: 1.6;
+}
+
+
+.clinic-page .hero-breadcrumb div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    opacity: .95;
+}
+
+
+.clinic-page .hero-breadcrumb span {
+    opacity: .7;
+}
+
+
+.clinic-page .hero-breadcrumb strong {
+    display: block;
+
+    font-size: 12px;
+
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   HERO RIGHT
+========================================================= */
+
+.clinic-page .hero-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    color: white;
+}
+
+
+.clinic-page .hero-search {
+    width: 210px;
+
+    height: 38px;
+
+    background: white;
+
+    border-radius: 7px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 11px;
+
+    color: #777;
+}
+
+
+.clinic-page .hero-search span {
+    font-size: 18px;
+
+    line-height: 1;
+}
+
+
+.clinic-page .hero-search input {
+    border: none;
+
+    outline: none;
+
+    width: 100%;
+
+    font-size: 10px;
+
+    color: #555;
+
+    background: transparent;
+}
+
+
+.clinic-page .hero-search input::placeholder {
+    color: #999;
+}
+
+
+.clinic-page .hero-logout {
+    color: white;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+
+    text-decoration: none;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+}
+
+
+.clinic-page .hero-icon {
+    color: white;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   HERO TITLE
+========================================================= */
+
+.clinic-page .hero-title {
+    position: relative;
+
+    z-index: 5;
+
+    text-align: center;
+
+    margin-top: 48px;
+}
+
+
+.clinic-page .hero-title h1 {
+    color: white;
+
+    font-size: 32px;
+
+    font-weight: bold;
+
+    margin: 0 0 6px;
+}
+
+
+.clinic-page .hero-title p {
+    color: white;
+
+    font-size: 12px;
+
+    margin: 0 0 28px;
+}
+
+
+/* =========================================================
+   SEARCH ROW
+========================================================= */
+
+.clinic-page .search-row {
+    position: relative;
+
+    z-index: 5;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.clinic-page .search-input {
+    height: 48px;
+
+    width: 280px;
+
+    padding: 0 15px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    background: white;
+
+    color: #555;
+
+    font-size: 11px;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,.08);
+}
+
+
+.clinic-page .search-input::placeholder {
+    color: #aaa;
+}
+
+
+.clinic-page .search-input:focus {
+    box-shadow:
+        0 0 0 2px rgba(255,255,255,.7);
+}
+
+
+.clinic-page .search-button {
+    height: 48px;
+
+    min-width: 105px;
+
+    padding: 0 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #10b9df;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,.10);
+}
+
+
+.clinic-page .search-button:hover {
+    background: #079fc5;
+
+    transform: translateY(-1px);
+}
+
+
+.clinic-page .search-button:active {
+    transform: scale(.97);
+}
+
+
+.clinic-page .current-button {
+    background: #12b9df;
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.clinic-page .section {
+    background: white;
+
+    border-radius: 9px;
+
+    padding: 20px;
+
+    margin-top: 20px;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,.04);
+}
+
+
+.clinic-page .section-title {
+    text-align: center;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #555;
+
+    margin: 0 0 4px;
+}
+
+
+.clinic-page .section-subtitle {
+    text-align: center;
+
+    font-size: 8px;
+
+    color: #888;
+
+    margin: 0 0 14px;
+}
+
+
+/* =========================================================
+   SERVICES
+========================================================= */
+
+.clinic-page .service-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+}
+
+
+.clinic-page .service-card {
+    min-height: 65px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 2px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 9px;
+
+    position: relative;
+
+    cursor: pointer;
+
+    background: white;
+
+    transition: .2s;
+}
+
+
+.clinic-page .service-card:hover {
+    box-shadow:
+        0 2px 7px rgba(0,0,0,.08);
+
+    transform: translateY(-1px);
+}
+
+
+.clinic-page .service-icon {
+    width: 34px;
+
+    height: 34px;
+
+    border-radius: 6px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 18px;
+
+    margin-right: 8px;
+
+    flex-shrink: 0;
+}
+
+
+.clinic-page .service-text {
+    flex: 1;
+}
+
+
+.clinic-page .service-text h3 {
+    font-size: 9px;
+
+    color: #444;
+
+    margin: 0 0 4px;
+}
+
+
+.clinic-page .service-text p {
+    font-size: 7px;
+
+    color: #888;
+
+    line-height: 1.4;
+
+    margin: 0;
+}
+
+
+.clinic-page .arrow {
+    position: absolute;
+
+    right: 8px;
+
+    top: 8px;
+
+    color: #999;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   CLINIC TYPES
+========================================================= */
+
+.clinic-page .specialty-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 5px 10px;
+}
+
+
+.clinic-page .specialty {
+    height: 42px;
+
+    border-bottom: 1px solid #ddd;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 8px;
+
+    font-size: 9px;
+
+    color: #555;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.clinic-page .specialty:hover {
+    background: #fafafa;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .clinic-page .clinic-hero {
+        min-height: 310px;
+
+        padding: 12px 12px 20px;
+
+        border-radius: 8px;
+    }
+
+
+    .clinic-page .hero-hamburger {
+        display: block;
+
+        font-size: 20px;
+    }
+
+
+    .clinic-page .hero-left {
+        gap: 8px;
+    }
+
+
+    .clinic-page .hero-breadcrumb {
+        font-size: 7px;
+    }
+
+
+    .clinic-page .hero-breadcrumb strong {
+        font-size: 9px;
+    }
+
+
+    .clinic-page .hero-right {
+        gap: 7px;
+    }
+
+
+    .clinic-page .hero-search {
+        width: 110px;
+
+        height: 30px;
+
+        padding: 0 7px;
+    }
+
+
+    .clinic-page .hero-search span {
+        font-size: 14px;
+    }
+
+
+    .clinic-page .hero-search input {
+        font-size: 7px;
+    }
+
+
+    .clinic-page .hero-logout {
+        font-size: 7px;
+    }
+
+
+    .clinic-page .hero-icon {
+        font-size: 9px;
+    }
+
+
+    .clinic-page .hero-title {
+        margin-top: 45px;
+    }
+
+
+    .clinic-page .hero-title h1 {
+        font-size: 24px;
+    }
+
+
+    .clinic-page .hero-title p {
+        font-size: 8px;
+
+        margin-bottom: 17px;
+    }
+
+
+    .clinic-page .search-row {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 6px;
+    }
+
+
+    .clinic-page .search-input {
+        width: 100%;
+
+        height: 34px;
+
+        font-size: 8px;
+    }
+
+
+    .clinic-page .search-button {
+        height: 34px;
+
+        min-width: 0;
+
+        width: 100%;
+
+        font-size: 8px;
+    }
+
+
+    .clinic-page .service-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+
+    .clinic-page .specialty-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 500px) {
+
+    .clinic-page .clinic-hero {
+        min-height: 205px;
+
+        padding: 9px 10px 13px;
+    }
+
+
+    .clinic-page .hero-topbar {
+        align-items: center;
+    }
+
+
+    .clinic-page .hero-hamburger {
+        font-size: 17px;
+
+        padding: 2px;
+    }
+
+
+    .clinic-page .hero-left {
+        gap: 5px;
+    }
+
+
+    .clinic-page .hero-breadcrumb {
+        font-size: 5.5px;
+    }
+
+
+    .clinic-page .hero-breadcrumb strong {
+        font-size: 7px;
+    }
+
+
+    .clinic-page .hero-right {
+        gap: 5px;
+    }
+
+
+    .clinic-page .hero-search {
+        width: 100px;
+
+        height: 25px;
+
+        border-radius: 5px;
+
+        padding: 0 6px;
+    }
+
+
+    .clinic-page .hero-search span {
+        font-size: 11px;
+    }
+
+
+    .clinic-page .hero-search input {
+        font-size: 6px;
+    }
+
+
+    .clinic-page .hero-logout {
+        font-size: 6px;
+    }
+
+
+    .clinic-page .hero-icon {
+        font-size: 7px;
+    }
+
+
+    .clinic-page .hero-title {
+        margin-top: 27px;
+    }
+
+
+    .clinic-page .hero-title h1 {
+        font-size: 21px;
+
+        margin-bottom: 3px;
+    }
+
+
+    .clinic-page .hero-title p {
+        font-size: 7px;
+
+        margin-bottom: 11px;
+    }
+
+
+    .clinic-page .search-row {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 4px;
+    }
+
+
+    .clinic-page .search-input {
+        height: 27px;
+
+        padding: 0 7px;
+
+        font-size: 6.5px;
+
+        border-radius: 4px;
+    }
+
+
+    .clinic-page .search-button {
+        height: 27px;
+
+        font-size: 6.5px;
+
+        border-radius: 4px;
+    }
+
+
+    .clinic-page .section {
+        padding: 15px;
+
+        margin-top: 18px;
+    }
+
+
+    .clinic-page .section-title {
+        font-size: 12px;
+    }
+
+
+    .clinic-page .section-subtitle {
+        font-size: 7px;
+
+        margin-bottom: 10px;
+    }
+
+
+    .clinic-page .service-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 6px;
+    }
+
+
+    .clinic-page .service-card {
+        min-height: 62px;
+
+        padding: 7px;
+    }
+
+
+    .clinic-page .service-icon {
+        width: 27px;
+
+        height: 27px;
+
+        font-size: 15px;
+
+        margin-right: 5px;
+    }
+
+
+    .clinic-page .service-text h3 {
+        font-size: 7.5px;
+    }
+
+
+    .clinic-page .service-text p {
+        font-size: 6px;
+    }
+
+
+    .clinic-page .arrow {
+        right: 5px;
+
+        top: 5px;
+    }
+
+
+    .clinic-page .specialty-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 5px;
+    }
+
+
+    .clinic-page .specialty {
+        height: 35px;
+
+        padding: 0 7px;
+
+        font-size: 7.5px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .clinic-page .clinic-hero {
+        min-height: 195px;
+
+        padding: 8px;
+    }
+
+
+    .clinic-page .hero-search {
+        width: 85px;
+    }
+
+
+    .clinic-page .hero-title h1 {
+        font-size: 18px;
+    }
+
+
+    .clinic-page .hero-title p {
+        font-size: 6px;
+    }
+
+
+    .clinic-page .search-input {
+        font-size: 6px;
+    }
+
+
+    .clinic-page .search-button {
+        font-size: 6px;
+    }
+}

@@ -1,0 +1,520 @@
+.clinic-results-page {
+    padding: 30px;
+    background: #f8f9fc;
+    min-height: calc(100vh - 85px);
+}
+
+.clinic-results-header {
+    margin-bottom: 22px;
+}
+
+.clinic-results-header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    color: #382636;
+}
+
+.clinic-results-header p {
+    margin: 0;
+    color: #7b809a;
+}
+
+
+/* ================================
+   SEARCH
+================================ */
+
+.clinic-results-search {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.results-search-box {
+    flex: 1;
+    height: 52px;
+    background: white;
+    border: 1px solid #e2e5ec;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    gap: 10px;
+}
+
+.results-search-box span {
+    color: #7b809a;
+    font-size: 19px;
+}
+
+.results-search-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.results-search-btn {
+    border: none;
+    background: #344767;
+    color: white;
+    padding: 0 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+/* ================================
+   MAP LAYOUT
+================================ */
+
+.clinic-map-layout {
+    display: grid;
+    grid-template-columns: 310px 1fr;
+    gap: 20px;
+    min-height: 620px;
+}
+
+
+/* ================================
+   FILTER PANEL
+================================ */
+
+.clinic-filter-panel {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .05);
+    height: fit-content;
+}
+
+.filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.filter-header h2 {
+    margin: 0;
+    font-size: 21px;
+    color: #263238;
+}
+
+.filter-header button {
+    border: none;
+    background: none;
+    color: #e91e63;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.filter-section {
+    border-top: 1px solid #edf0f5;
+    padding: 18px 0;
+}
+
+.filter-section:first-of-type {
+    border-top: none;
+    padding-top: 0;
+}
+
+.filter-section h3 {
+    margin: 0 0 14px;
+    font-size: 14px;
+    color: #344767;
+}
+
+.filter-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #344767;
+}
+
+.filter-section select,
+.filter-section > input {
+    width: 100%;
+    height: 44px;
+    padding: 0 12px;
+    border: 1px solid #dfe3eb;
+    border-radius: 7px;
+    outline: none;
+    background: white;
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #67748e;
+}
+
+.checkbox-row input {
+    width: 16px;
+    height: 16px;
+    accent-color: #344767;
+}
+
+.apply-filter-btn {
+    width: 100%;
+    height: 45px;
+    border: none;
+    border-radius: 7px;
+    background: #344767;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+/* ================================
+   MAP CONTAINER
+================================ */
+
+.clinic-map-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .05);
+}
+
+.map-topbar {
+    height: 70px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.map-topbar strong {
+    display: block;
+    color: #263238;
+    margin-bottom: 4px;
+}
+
+.map-topbar span {
+    font-size: 12px;
+    color: #7b809a;
+}
+
+.map-location-btn {
+    border: 1px solid #dfe3eb;
+    background: white;
+    border-radius: 7px;
+    padding: 9px 14px;
+    cursor: pointer;
+}
+
+
+/* ================================
+   MAP
+================================ */
+
+.map-area {
+    position: relative;
+    height: 550px;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            30deg,
+            transparent 48%,
+            #e3e6eb 49%,
+            #e3e6eb 51%,
+            transparent 52%
+        ),
+        linear-gradient(
+            120deg,
+            transparent 48%,
+            #e3e6eb 49%,
+            #e3e6eb 51%,
+            transparent 52%
+        ),
+        #eef1ed;
+
+    background-size: 180px 180px;
+}
+
+
+/* ================================
+   MAP ROADS
+================================ */
+
+.map-road {
+    position: absolute;
+    background: #ffffff;
+    box-shadow: 0 0 0 1px #dfe3df;
+}
+
+.road-one {
+    width: 100%;
+    height: 25px;
+    top: 40%;
+    left: 0;
+    transform: rotate(-8deg);
+}
+
+.road-two {
+    width: 100%;
+    height: 20px;
+    top: 68%;
+    left: 0;
+    transform: rotate(12deg);
+}
+
+.road-three {
+    width: 25px;
+    height: 100%;
+    left: 45%;
+    top: 0;
+    transform: rotate(8deg);
+}
+
+.road-four {
+    width: 18px;
+    height: 100%;
+    left: 75%;
+    top: 0;
+    transform: rotate(-15deg);
+}
+
+
+/* ================================
+   MAP MARKERS
+================================ */
+
+.map-marker {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+    cursor: pointer;
+    font-size: 21px;
+    z-index: 3;
+}
+
+.marker-one {
+    left: 25%;
+    top: 28%;
+}
+
+.marker-two {
+    left: 62%;
+    top: 22%;
+}
+
+.marker-three {
+    left: 47%;
+    top: 58%;
+}
+
+.marker-four {
+    left: 76%;
+    top: 67%;
+}
+
+
+/* ================================
+   CURRENT LOCATION
+================================ */
+
+.current-location {
+    position: absolute;
+    left: 52%;
+    top: 43%;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #4285f4;
+    border: 5px solid rgba(255,255,255,.8);
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+
+.current-location span {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    left: -19px;
+    top: -19px;
+    border-radius: 50%;
+    background: rgba(66,133,244,.15);
+}
+
+
+/* ================================
+   MAP CONTROLS
+================================ */
+
+.map-controls {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.map-controls button {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    background: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+
+/* ================================
+   MAP LABELS
+================================ */
+
+.map-label {
+    position: absolute;
+    background: rgba(255,255,255,.85);
+    padding: 6px 10px;
+    border-radius: 5px;
+    color: #667085;
+    font-size: 11px;
+}
+
+.label-one {
+    left: 12%;
+    top: 15%;
+}
+
+.label-two {
+    left: 40%;
+    top: 78%;
+}
+
+.label-three {
+    right: 10%;
+    top: 38%;
+}
+
+
+/* ================================
+   CLINIC LIST
+================================ */
+
+.clinic-list-section {
+    margin-top: 30px;
+}
+
+.clinic-list-section h2 {
+    color: #263238;
+    margin-bottom: 18px;
+}
+
+.clinic-list {
+    display: grid;
+    gap: 14px;
+}
+
+.clinic-card {
+    background: white;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.04);
+}
+
+.clinic-card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: #eef3f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.clinic-card-info {
+    flex: 1;
+}
+
+.clinic-card-info h3 {
+    margin: 0 0 5px;
+    color: #263238;
+}
+
+.clinic-card-info p {
+    margin: 0 0 5px;
+    color: #667085;
+    font-size: 13px;
+}
+
+.clinic-card-info span {
+    color: #7b809a;
+    font-size: 12px;
+}
+
+.clinic-card button {
+    border: 1px solid #344767;
+    background: white;
+    color: #344767;
+    padding: 10px 15px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+
+    .clinic-map-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .clinic-filter-panel {
+        order: 1;
+    }
+
+    .clinic-map-container {
+        order: 2;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .clinic-results-page {
+        padding: 18px;
+    }
+
+    .clinic-results-search {
+        flex-direction: column;
+    }
+
+    .results-search-btn {
+        height: 48px;
+    }
+
+    .clinic-card {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .clinic-card button {
+        width: 100%;
+    }
+
+    .map-area {
+        height: 450px;
+    }
+}
