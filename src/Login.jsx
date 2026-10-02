@@ -6,6 +6,17 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
+
+    // Get the email value
+    const email = e.target.email.value.trim();
+
+    // Extra validation to make sure @ exists
+    if (!email.includes("@")) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    // Login successful
     navigate("/dashboard");
   };
 
@@ -15,6 +26,7 @@ function Login() {
 
       <div className="login-container">
         <div className="login-content">
+
           <div className="welcome-text">
             <h1>Welcome to MyPatientHUB</h1>
             <p>
@@ -42,15 +54,20 @@ function Login() {
             </div>
 
             <form onSubmit={handleLogin} autoComplete="off">
+
+              {/* EMAIL */}
               <input
-                type="text"
+                type="email"
+                name="email"
                 placeholder="Enter your email"
-                autoComplete="off"
+                autoComplete="email"
                 required
               />
 
+              {/* PASSWORD */}
               <input
                 type="password"
+                name="password"
                 placeholder="Enter your password"
                 autoComplete="new-password"
                 required
@@ -62,10 +79,16 @@ function Login() {
               >
                 SIGN IN
               </button>
+
             </form>
 
             <div className="login-options">
-              <a href="#">Forgot password?</a>
+              <a
+                href="#"
+                onClick={(e) => e.preventDefault()}
+              >
+                Forgot password?
+              </a>
 
               <label>
                 <input type="checkbox" />
@@ -85,15 +108,45 @@ function Login() {
               SIGN UP
             </button>
           </div>
+
         </div>
       </div>
 
       <footer className="login-footer">
-        <a href="#">Google Play Store APP</a>
-        <a href="#">App Store APP</a>
-        <a href="#">About MyPatientHUB</a>
-        <a href="#">About Us</a>
-        <a href="#">Our Blog</a>
+        <a
+          href="#"
+          onClick={(e) => e.preventDefault()}
+        >
+          Google Play Store APP
+        </a>
+
+        <a
+          href="#"
+          onClick={(e) => e.preventDefault()}
+        >
+          App Store APP
+        </a>
+
+        <a
+          href="#"
+          onClick={(e) => e.preventDefault()}
+        >
+          About MyPatientHUB
+        </a>
+
+        <a
+          href="#"
+          onClick={(e) => e.preventDefault()}
+        >
+          About Us
+        </a>
+
+        <a
+          href="#"
+          onClick={(e) => e.preventDefault()}
+        >
+          Our Blog
+        </a>
       </footer>
     </div>
   );

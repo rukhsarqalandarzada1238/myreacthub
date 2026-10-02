@@ -13,6 +13,10 @@ function Dashboard() {
 
   return (
     <div className="dashboard-body">
+
+      {/* =========================
+          SIDEBAR
+      ========================== */}
       <aside className={`sidebar ${sidebarOpen ? "show" : ""}`}>
 
         <div className="logo-area">
@@ -22,6 +26,7 @@ function Dashboard() {
 
         <nav className="sidebar-menu">
 
+          {/* Dashboard */}
           <button
             type="button"
             className="menu-item active"
@@ -31,6 +36,7 @@ function Dashboard() {
             <span>Dashboard</span>
           </button>
 
+          {/* Appointments */}
           <button
             type="button"
             className="menu-item"
@@ -38,6 +44,8 @@ function Dashboard() {
             <span className="menu-icon">▤</span>
             <span>Appointments</span>
           </button>
+
+          {/* Find Doctor */}
           <button
             type="button"
             className="menu-item"
@@ -46,6 +54,8 @@ function Dashboard() {
             <span className="menu-icon">♟</span>
             <span>Find Doctor</span>
           </button>
+
+          {/* Find Clinic */}
           <button
             type="button"
             className="menu-item"
@@ -55,6 +65,7 @@ function Dashboard() {
             <span>Find Clinic</span>
           </button>
 
+          {/* Chat */}
           <button
             type="button"
             className="menu-item"
@@ -63,14 +74,21 @@ function Dashboard() {
             <span>Chat</span>
           </button>
 
-          <button
-            type="button"
-            className="menu-item"
-          >
-            <span className="menu-icon">▤</span>
-            <span>Find Market-Place</span>
-          </button>
+<button
+  type="button"
+  className="menu-item"
+  onClick={() => {
+    console.log("Marketplace clicked");
+    navigate("/marketplace");
+  }}
+>
+  <span className="menu-icon">▤</span>
+  <span>Find Market-Place</span>
+</button>
 
+
+
+          {/* Find Pharmacy */}
           <button
             type="button"
             className="menu-item"
@@ -79,6 +97,7 @@ function Dashboard() {
             <span>Find Pharmacy</span>
           </button>
 
+          {/* My Dependents */}
           <button
             type="button"
             className="menu-item"
@@ -87,6 +106,7 @@ function Dashboard() {
             <span>My Dependents</span>
           </button>
 
+          {/* My Account */}
           <button
             type="button"
             className="menu-item"
@@ -95,6 +115,7 @@ function Dashboard() {
             <span>My Account</span>
           </button>
 
+          {/* Settings */}
           <button
             type="button"
             className="menu-item"
@@ -110,7 +131,15 @@ function Dashboard() {
         </div>
 
       </aside>
+
+      {/* =========================
+          MAIN CONTENT
+      ========================== */}
       <main className="main-content">
+
+        {/* =========================
+            HEADER
+        ========================== */}
         <header className="top-header">
 
           <div className="header-left">
@@ -124,6 +153,7 @@ function Dashboard() {
             </button>
 
             <div>
+
               <div className="breadcrumb">
                 <span>⌂</span>
                 <span>/</span>
@@ -131,6 +161,7 @@ function Dashboard() {
               </div>
 
               <h2>Dashboard</h2>
+
             </div>
 
           </div>
@@ -160,11 +191,17 @@ function Dashboard() {
           </div>
 
         </header>
+
+        {/* =========================
+            DASHBOARD CONTENT
+        ========================== */}
         <section className="dashboard-content">
 
           <h1>Welcome To MyPatientHUB!</h1>
 
           <div className="cards-grid">
+
+            {/* Promotion by Clinics */}
             <div className="dashboard-card">
 
               <div className="card-title">
@@ -220,6 +257,8 @@ function Dashboard() {
               </button>
 
             </div>
+
+            {/* Promotion by Pharmacies */}
             <div className="dashboard-card">
 
               <div className="card-title">
@@ -275,6 +314,8 @@ function Dashboard() {
               </button>
 
             </div>
+
+            {/* Smart Market */}
             <div className="dashboard-card">
 
               <div className="card-title">
@@ -311,6 +352,8 @@ function Dashboard() {
               </div>
 
             </div>
+
+            {/* Health Index */}
             <div className="dashboard-card">
 
               <div className="card-title">
@@ -351,14 +394,20 @@ function Dashboard() {
             </div>
 
           </div>
+
+          {/* =========================
+              UPCOMING APPOINTMENTS
+          ========================== */}
           <div className="appointment-card">
 
             <div className="appointment-header">
+
               <h3>Upcoming Appointments</h3>
 
               <button type="button">
                 VIEW ALL
               </button>
+
             </div>
 
             <div className="appointment-row">
@@ -377,8 +426,11 @@ function Dashboard() {
               </div>
 
               <div className="appointment-info">
+
                 <strong>RM 400</strong>
+
                 <span>40%</span>
+
               </div>
 
             </div>
@@ -386,6 +438,10 @@ function Dashboard() {
           </div>
 
         </section>
+
+        {/* =========================
+            FOOTER
+        ========================== */}
         <footer className="dashboard-footer">
 
           <p>
@@ -402,6 +458,7 @@ function Dashboard() {
         </footer>
 
       </main>
+
     </div>
   );
 }
