@@ -88,8 +88,11 @@ function FindClinic() {
               <span className="menu-icon">▣</span>
               <span>Chat</span>
             </button>
-
-            <button type="button" className="menu-item">
+            <button
+              type="button"
+              className="menu-item"
+              onClick={() => navigate("/marketplace")}
+            >
               <span className="menu-icon">▤</span>
               <span>Find Market-Place</span>
             </button>

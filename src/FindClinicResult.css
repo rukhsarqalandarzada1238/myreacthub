@@ -1,520 +1,1585 @@
+/* =========================================================
+   FIND CLINIC RESULTS
+   Hero/header is controlled here.
+   Sidebar behavior is compatible with Dashboard.css.
+========================================================= */
+
+.clinic-result-page,
+.clinic-result-page * {
+  box-sizing: border-box;
+}
+
+.clinic-result-page {
+  width: 100%;
+  min-height: 100vh;
+}
+
+
+/* =========================================================
+   CLINIC HERO
+========================================================= */
+
+.clinic-hero {
+  position: relative;
+  width: 100%;
+  min-height: 360px;
+  padding: 8px 30px 40px;
+  border-radius: 10px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(255, 255, 255, 0.16),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 10%,
+      rgba(255, 255, 255, 0.12),
+      transparent 25%
+    ),
+    linear-gradient(
+      135deg,
+      #5d2f73 0%,
+      #80427f 48%,
+      #d34f83 100%
+    );
+
+  color: white;
+}
+
+
+/* =========================================================
+   DECORATIVE HERO SHAPES
+========================================================= */
+
+.hero-decoration {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0.12;
+}
+
+.hero-decoration-one {
+  width: 300px;
+  height: 300px;
+  right: -120px;
+  top: -160px;
+  border: 55px solid white;
+}
+
+.hero-decoration-two {
+  width: 360px;
+  height: 180px;
+  left: -180px;
+  bottom: -100px;
+  border: 45px solid white;
+}
+
+
+/* =========================================================
+   HERO TOP BAR
+========================================================= */
+
+.hero-topbar {
+  position: relative;
+  z-index: 5;
+
+  width: 100%;
+  min-height: 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.hero-left,
+.hero-right {
+  display: flex;
+  align-items: center;
+}
+
+.hero-left {
+  gap: 14px;
+  min-width: 0;
+}
+
+.hero-right {
+  gap: 18px;
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   HAMBURGER
+========================================================= */
+
+.hero-hamburger {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  border-radius: 8px;
+
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.hero-hamburger:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+
+/* =========================================================
+   BREADCRUMB
+========================================================= */
+
+.hero-breadcrumb {
+  min-width: 0;
+}
+
+.hero-breadcrumb > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+
+  white-space: nowrap;
+}
+
+.hero-breadcrumb > div span {
+  opacity: 0.7;
+}
+
+.hero-breadcrumb strong {
+  display: block;
+  margin-top: 4px;
+
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   HERO RIGHT
+========================================================= */
+
+.hero-search {
+  width: 190px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+  padding: 0 12px;
+
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.hero-search span {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 17px;
+}
+
+.hero-search input {
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+  color: white;
+
+  font-size: 12px;
+}
+
+.hero-search input::placeholder {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.hero-logout,
+.hero-icon {
+  color: white;
+}
+
+.hero-logout {
+  border: none;
+  background: transparent;
+
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.hero-logout:hover {
+  opacity: 0.8;
+}
+
+.hero-icon {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.hero-icon:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+
+/* =========================================================
+   HERO TITLE
+========================================================= */
+
+.hero-title {
+  position: relative;
+  z-index: 3;
+
+  max-width: 1100px;
+  margin: 45px auto 0;
+
+  text-align: center;
+}
+
+.hero-title h1 {
+  margin: 0 0 8px;
+
+  font-size: clamp(30px, 4vw, 42px);
+  line-height: 1.15;
+  font-weight: 700;
+
+  color: white;
+}
+
+.hero-title p {
+  margin: 0 0 28px;
+
+  color: rgba(255, 255, 255, 0.82);
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   MAIN SEARCH
+========================================================= */
+
+.search-row {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns:
+    minmax(220px, 1fr)
+    minmax(220px, 1fr)
+    130px
+    130px;
+
+  gap: 10px;
+
+  padding: 10px;
+
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+
+  backdrop-filter: blur(8px);
+}
+
+.search-input {
+  width: 100%;
+  height: 48px;
+
+  border: none;
+  outline: none;
+
+  border-radius: 8px;
+  padding: 0 15px;
+
+  background: white;
+  color: #344767;
+
+  font-size: 13px;
+}
+
+.search-input::placeholder {
+  color: #8b91a5;
+}
+
+.search-button {
+  height: 48px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #344767;
+  color: white;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.search-button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.current-button {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+
+/* =========================================================
+   RESULTS PAGE
+========================================================= */
+
 .clinic-results-page {
-    padding: 30px;
-    background: #f8f9fc;
-    min-height: calc(100vh - 85px);
-}
+  width: 100%;
 
-.clinic-results-header {
-    margin-bottom: 22px;
-}
+  padding: 28px 30px 35px;
 
-.clinic-results-header h1 {
-    margin: 0 0 8px;
-    font-size: 30px;
-    color: #382636;
-}
+  background: #f8f9fc;
 
-.clinic-results-header p {
-    margin: 0;
-    color: #7b809a;
+  min-height: calc(100vh - 360px);
 }
 
 
-/* ================================
-   SEARCH
-================================ */
+/* =========================================================
+   RESULTS TOOLBAR
+========================================================= */
 
-.clinic-results-search {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 25px;
+.results-toolbar {
+  min-height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 20px;
 }
 
-.results-search-box {
-    flex: 1;
-    height: 52px;
-    background: white;
-    border: 1px solid #e2e5ec;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-    gap: 10px;
+.results-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.results-search-box span {
-    color: #7b809a;
-    font-size: 19px;
+.results-summary strong {
+  color: #263238;
+  font-size: 20px;
 }
 
-.results-search-box input {
-    width: 100%;
-    border: none;
-    outline: none;
-    font-size: 14px;
+.results-summary span {
+  color: #7b809a;
+  font-size: 12px;
 }
 
-.results-search-btn {
-    border: none;
-    background: #344767;
-    color: white;
-    padding: 0 28px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
+.results-current-btn {
+  height: 40px;
+
+  padding: 0 15px;
+
+  border: 1px solid #dfe3eb;
+  border-radius: 8px;
+
+  background: white;
+  color: #344767;
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 600;
 }
 
 
-/* ================================
+/* =========================================================
    MAP LAYOUT
-================================ */
+========================================================= */
 
 .clinic-map-layout {
-    display: grid;
-    grid-template-columns: 310px 1fr;
-    gap: 20px;
-    min-height: 620px;
+  display: grid;
+
+  grid-template-columns: 300px minmax(0, 1fr);
+
+  gap: 20px;
+
+  min-height: 620px;
 }
 
 
-/* ================================
+/* =========================================================
    FILTER PANEL
-================================ */
+========================================================= */
 
 .clinic-filter-panel {
-    background: white;
-    border-radius: 12px;
-    padding: 22px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, .05);
-    height: fit-content;
+  height: fit-content;
+
+  background: white;
+
+  border-radius: 12px;
+
+  padding: 22px;
+
+  box-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
 .filter-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
 }
 
 .filter-header h2 {
-    margin: 0;
-    font-size: 21px;
-    color: #263238;
+  margin: 0;
+
+  color: #263238;
+  font-size: 21px;
 }
 
 .filter-header button {
-    border: none;
-    background: none;
-    color: #e91e63;
-    cursor: pointer;
-    font-size: 13px;
+  border: none;
+  background: none;
+
+  color: #e91e63;
+
+  cursor: pointer;
+
+  font-size: 13px;
 }
 
 .filter-section {
-    border-top: 1px solid #edf0f5;
-    padding: 18px 0;
+  border-top: 1px solid #edf0f5;
+
+  padding: 18px 0;
 }
 
 .filter-section:first-of-type {
-    border-top: none;
-    padding-top: 0;
+  border-top: none;
+  padding-top: 0;
 }
 
 .filter-section h3 {
-    margin: 0 0 14px;
-    font-size: 14px;
-    color: #344767;
+  margin: 0 0 14px;
+
+  color: #344767;
+
+  font-size: 14px;
 }
 
 .filter-label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #344767;
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #344767;
+
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .filter-section select,
 .filter-section > input {
-    width: 100%;
-    height: 44px;
-    padding: 0 12px;
-    border: 1px solid #dfe3eb;
-    border-radius: 7px;
-    outline: none;
-    background: white;
+  width: 100%;
+  height: 44px;
+
+  padding: 0 12px;
+
+  border: 1px solid #dfe3eb;
+  border-radius: 7px;
+
+  outline: none;
+
+  background: white;
+
+  color: #344767;
+
+  font-size: 13px;
+}
+
+.filter-section select:focus,
+.filter-section > input:focus {
+  border-color: #344767;
 }
 
 .checkbox-row {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 13px;
-    color: #67748e;
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  margin-bottom: 12px;
+
+  cursor: pointer;
+
+  color: #67748e;
+
+  font-size: 13px;
+}
+
+.checkbox-row:last-child {
+  margin-bottom: 0;
 }
 
 .checkbox-row input {
-    width: 16px;
-    height: 16px;
-    accent-color: #344767;
+  width: 16px;
+  height: 16px;
+
+  accent-color: #344767;
+
+  cursor: pointer;
 }
 
 .apply-filter-btn {
-    width: 100%;
-    height: 45px;
-    border: none;
-    border-radius: 7px;
-    background: #344767;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
+  width: 100%;
+  height: 45px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: #344767;
+  color: white;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.apply-filter-btn:hover {
+  filter: brightness(1.06);
 }
 
 
-/* ================================
+/* =========================================================
    MAP CONTAINER
-================================ */
+========================================================= */
 
 .clinic-map-container {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, .05);
+  min-width: 0;
+
+  background: white;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
 .map-topbar {
-    height: 70px;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #edf0f5;
+  min-height: 70px;
+
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  border-bottom: 1px solid #edf0f5;
 }
 
 .map-topbar strong {
-    display: block;
-    color: #263238;
-    margin-bottom: 4px;
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #263238;
+
+  font-size: 14px;
 }
 
 .map-topbar span {
-    font-size: 12px;
-    color: #7b809a;
+  display: block;
+
+  color: #7b809a;
+
+  font-size: 12px;
 }
 
 .map-location-btn {
-    border: 1px solid #dfe3eb;
-    background: white;
-    border-radius: 7px;
-    padding: 9px 14px;
-    cursor: pointer;
+  flex-shrink: 0;
+
+  border: 1px solid #dfe3eb;
+
+  background: white;
+
+  border-radius: 7px;
+
+  padding: 9px 14px;
+
+  color: #344767;
+
+  cursor: pointer;
+
+  font-size: 12px;
 }
 
 
-/* ================================
+/* =========================================================
+   MAP WRAPPER
+========================================================= */
+
+.map-wrapper {
+  width: 100%;
+  height: 550px;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
    MAP
-================================ */
+========================================================= */
 
 .map-area {
-    position: relative;
-    height: 550px;
-    overflow: hidden;
+  position: relative;
 
-    background:
-        linear-gradient(
-            30deg,
-            transparent 48%,
-            #e3e6eb 49%,
-            #e3e6eb 51%,
-            transparent 52%
-        ),
-        linear-gradient(
-            120deg,
-            transparent 48%,
-            #e3e6eb 49%,
-            #e3e6eb 51%,
-            transparent 52%
-        ),
-        #eef1ed;
+  width: 100%;
+  height: 550px;
 
-    background-size: 180px 180px;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      30deg,
+      transparent 48%,
+      #e3e6eb 49%,
+      #e3e6eb 51%,
+      transparent 52%
+    ),
+    linear-gradient(
+      120deg,
+      transparent 48%,
+      #e3e6eb 49%,
+      #e3e6eb 51%,
+      transparent 52%
+    ),
+    #eef1ed;
+
+  background-size: 180px 180px;
+
+  transition: transform 0.2s ease;
 }
 
 
-/* ================================
+/* =========================================================
    MAP ROADS
-================================ */
+========================================================= */
 
 .map-road {
-    position: absolute;
-    background: #ffffff;
-    box-shadow: 0 0 0 1px #dfe3df;
+  position: absolute;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 1px #dfe3df;
 }
 
 .road-one {
-    width: 100%;
-    height: 25px;
-    top: 40%;
-    left: 0;
-    transform: rotate(-8deg);
+  width: 100%;
+  height: 25px;
+
+  top: 40%;
+  left: 0;
+
+  transform: rotate(-8deg);
 }
 
 .road-two {
-    width: 100%;
-    height: 20px;
-    top: 68%;
-    left: 0;
-    transform: rotate(12deg);
+  width: 100%;
+  height: 20px;
+
+  top: 68%;
+  left: 0;
+
+  transform: rotate(12deg);
 }
 
 .road-three {
-    width: 25px;
-    height: 100%;
-    left: 45%;
-    top: 0;
-    transform: rotate(8deg);
+  width: 25px;
+  height: 100%;
+
+  left: 45%;
+  top: 0;
+
+  transform: rotate(8deg);
 }
 
 .road-four {
-    width: 18px;
-    height: 100%;
-    left: 75%;
-    top: 0;
-    transform: rotate(-15deg);
+  width: 18px;
+  height: 100%;
+
+  left: 75%;
+  top: 0;
+
+  transform: rotate(-15deg);
 }
 
 
-/* ================================
+/* =========================================================
    MAP MARKERS
-================================ */
+========================================================= */
 
 .map-marker {
-    position: absolute;
-    width: 46px;
-    height: 46px;
-    border: none;
-    border-radius: 50%;
-    background: white;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
-    cursor: pointer;
-    font-size: 21px;
-    z-index: 3;
+  position: absolute;
+
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: white;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.2);
+
+  cursor: pointer;
+
+  font-size: 21px;
+
+  z-index: 3;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.map-marker:hover {
+  transform: scale(1.08);
+
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 .marker-one {
-    left: 25%;
-    top: 28%;
+  left: 25%;
+  top: 28%;
 }
 
 .marker-two {
-    left: 62%;
-    top: 22%;
+  left: 62%;
+  top: 22%;
 }
 
 .marker-three {
-    left: 47%;
-    top: 58%;
+  left: 47%;
+  top: 58%;
 }
 
 .marker-four {
-    left: 76%;
-    top: 67%;
+  left: 76%;
+  top: 67%;
 }
 
 
-/* ================================
+/* =========================================================
    CURRENT LOCATION
-================================ */
+========================================================= */
 
 .current-location {
-    position: absolute;
-    left: 52%;
-    top: 43%;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: #4285f4;
-    border: 5px solid rgba(255,255,255,.8);
-    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  position: absolute;
+
+  left: 52%;
+  top: 43%;
+
+  width: 22px;
+  height: 22px;
+
+  border-radius: 50%;
+
+  background: #4285f4;
+
+  border: 5px solid rgba(255, 255, 255, 0.8);
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.3);
+
+  z-index: 4;
 }
 
 .current-location span {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    left: -19px;
-    top: -19px;
-    border-radius: 50%;
-    background: rgba(66,133,244,.15);
+  position: absolute;
+
+  width: 50px;
+  height: 50px;
+
+  left: -19px;
+  top: -19px;
+
+  border-radius: 50%;
+
+  background: rgba(66, 133, 244, 0.15);
+}
+
+.current-location.location-active {
+  animation: locationPulse 1.6s infinite;
+}
+
+@keyframes locationPulse {
+  0% {
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.3),
+      0 0 0 0 rgba(66, 133, 244, 0.3);
+  }
+
+  70% {
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.3),
+      0 0 0 16px rgba(66, 133, 244, 0);
+  }
+
+  100% {
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.3),
+      0 0 0 0 rgba(66, 133, 244, 0);
+  }
 }
 
 
-/* ================================
+/* =========================================================
    MAP CONTROLS
-================================ */
+========================================================= */
 
 .map-controls {
-    position: absolute;
-    right: 18px;
-    bottom: 18px;
-    display: flex;
-    flex-direction: column;
+  position: absolute;
+
+  right: 18px;
+  bottom: 18px;
+
+  display: flex;
+  flex-direction: column;
+
+  z-index: 10;
 }
 
 .map-controls button {
-    width: 40px;
-    height: 40px;
-    border: 1px solid #ddd;
-    background: white;
-    font-size: 22px;
-    cursor: pointer;
+  width: 40px;
+  height: 40px;
+
+  border: 1px solid #ddd;
+
+  background: white;
+
+  color: #344767;
+
+  font-size: 22px;
+
+  cursor: pointer;
+}
+
+.map-controls button:first-child {
+  border-radius: 7px 7px 0 0;
+}
+
+.map-controls button:last-child {
+  border-top: none;
+  border-radius: 0 0 7px 7px;
+}
+
+.map-controls button:hover {
+  background: #f5f6f8;
 }
 
 
-/* ================================
+/* =========================================================
    MAP LABELS
-================================ */
+========================================================= */
 
 .map-label {
-    position: absolute;
-    background: rgba(255,255,255,.85);
-    padding: 6px 10px;
-    border-radius: 5px;
-    color: #667085;
-    font-size: 11px;
+  position: absolute;
+
+  background: rgba(255, 255, 255, 0.88);
+
+  padding: 6px 10px;
+
+  border-radius: 5px;
+
+  color: #667085;
+
+  font-size: 11px;
+
+  pointer-events: none;
 }
 
 .label-one {
-    left: 12%;
-    top: 15%;
+  left: 12%;
+  top: 15%;
 }
 
 .label-two {
-    left: 40%;
-    top: 78%;
+  left: 40%;
+  top: 78%;
 }
 
 .label-three {
-    right: 10%;
-    top: 38%;
+  right: 10%;
+  top: 38%;
 }
 
 
-/* ================================
+/* =========================================================
    CLINIC LIST
-================================ */
+========================================================= */
 
 .clinic-list-section {
-    margin-top: 30px;
+  margin-top: 30px;
+}
+
+.clinic-list-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
 }
 
 .clinic-list-section h2 {
-    color: #263238;
-    margin-bottom: 18px;
+  margin: 0 0 5px;
+
+  color: #263238;
+
+  font-size: 22px;
+}
+
+.clinic-list-section p {
+  margin: 0;
+
+  color: #7b809a;
+
+  font-size: 12px;
 }
 
 .clinic-list {
-    display: grid;
-    gap: 14px;
+  display: grid;
+
+  gap: 14px;
 }
 
+
+/* =========================================================
+   CLINIC CARD
+========================================================= */
+
 .clinic-card {
-    background: white;
-    border-radius: 10px;
-    padding: 18px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.04);
+  min-width: 0;
+
+  background: white;
+
+  border-radius: 10px;
+
+  padding: 18px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.04);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.clinic-card:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 18px rgba(0, 0, 0, 0.07);
 }
 
 .clinic-card-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 10px;
-    background: #eef3f8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
+  width: 52px;
+  height: 52px;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: #eef3f8;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
 }
 
 .clinic-card-info {
-    flex: 1;
+  flex: 1;
+  min-width: 0;
+}
+
+.clinic-card-title {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 5px;
 }
 
 .clinic-card-info h3 {
-    margin: 0 0 5px;
-    color: #263238;
+  margin: 0;
+
+  color: #263238;
+
+  font-size: 16px;
+}
+
+.clinic-type {
+  display: inline-flex;
+
+  padding: 4px 8px;
+
+  border-radius: 20px;
+
+  background: #f1eef7;
+
+  color: #69416f;
+
+  font-size: 10px;
+  font-weight: 600;
 }
 
 .clinic-card-info p {
-    margin: 0 0 5px;
-    color: #667085;
-    font-size: 13px;
+  margin: 0 0 5px;
+
+  color: #667085;
+
+  font-size: 13px;
 }
 
-.clinic-card-info span {
-    color: #7b809a;
-    font-size: 12px;
+.clinic-card-info > span {
+  color: #7b809a;
+
+  font-size: 12px;
 }
 
-.clinic-card button {
-    border: 1px solid #344767;
-    background: white;
-    color: #344767;
-    padding: 10px 15px;
-    border-radius: 7px;
-    cursor: pointer;
+.clinic-card > button {
+  flex-shrink: 0;
+
+  border: 1px solid #344767;
+
+  background: white;
+
+  color: #344767;
+
+  padding: 10px 15px;
+
+  border-radius: 7px;
+
+  cursor: pointer;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.clinic-card > button:hover {
+  background: #344767;
+  color: white;
 }
 
 
-/* ================================
-   RESPONSIVE
-================================ */
+/* =========================================================
+   NO RESULTS
+========================================================= */
+
+.no-results {
+  padding: 50px 20px;
+
+  background: white;
+
+  border-radius: 12px;
+
+  text-align: center;
+}
+
+.no-results-icon {
+  font-size: 38px;
+
+  margin-bottom: 10px;
+}
+
+.no-results h3 {
+  margin: 0 0 6px;
+
+  color: #263238;
+}
+
+.no-results p {
+  margin: 0 0 18px;
+
+  color: #7b809a;
+}
+
+.no-results button {
+  height: 40px;
+
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: #344767;
+  color: white;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   MOBILE SIDEBAR OVERLAY
+========================================================= */
+
+.sidebar-overlay {
+  display: none;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+  .hero-search {
+    width: 150px;
+  }
+
+  .hero-right {
+    gap: 10px;
+  }
+
+  .clinic-map-layout {
+    grid-template-columns: 270px minmax(0, 1fr);
+  }
+
+  .search-row {
+    grid-template-columns:
+      minmax(180px, 1fr)
+      minmax(180px, 1fr)
+      115px
+      115px;
+  }
+}
+
+
+/* =========================================================
+   900px
+========================================================= */
 
 @media (max-width: 900px) {
+  .clinic-map-layout {
+    grid-template-columns: 1fr;
+  }
 
-    .clinic-map-layout {
-        grid-template-columns: 1fr;
-    }
+  .clinic-filter-panel {
+    order: 1;
+  }
 
-    .clinic-filter-panel {
-        order: 1;
-    }
+  .clinic-map-container {
+    order: 2;
+  }
 
-    .clinic-map-container {
-        order: 2;
-    }
+  .clinic-filter-panel {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 25px;
+  }
+
+  .filter-header {
+    grid-column: 1 / -1;
+  }
+
+  .apply-filter-btn {
+    grid-column: 1 / -1;
+  }
+
+  .filter-section {
+    border-top: none;
+  }
 }
 
 
-@media (max-width: 600px) {
+/* =========================================================
+   768px
+========================================================= */
 
-    .clinic-results-page {
-        padding: 18px;
-    }
+@media (max-width: 768px) {
+  .clinic-hero {
+    min-height: auto;
 
-    .clinic-results-search {
-        flex-direction: column;
-    }
+    padding:
+      8px
+      20px
+      30px;
+  }
 
-    .results-search-btn {
-        height: 48px;
-    }
+  .hero-topbar {
+    min-height: 58px;
+  }
 
-    .clinic-card {
-        align-items: flex-start;
-        flex-wrap: wrap;
-    }
+  .hero-search {
+    display: none;
+  }
 
-    .clinic-card button {
-        width: 100%;
-    }
+  .hero-title {
+    margin-top: 32px;
+  }
 
-    .map-area {
-        height: 450px;
-    }
+  .search-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .clinic-results-page {
+    padding: 22px 20px 30px;
+  }
+
+  .results-toolbar {
+    align-items: flex-start;
+  }
+
+  .clinic-result-page .sidebar {
+    position: fixed;
+
+    top: 0;
+    left: -280px;
+
+    width: 260px;
+    height: 100vh;
+
+    z-index: 1100;
+
+    transition: left 0.25s ease;
+  }
+
+  .clinic-result-page .sidebar.show {
+    left: 0;
+  }
+
+  .sidebar-overlay {
+    display: block;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1050;
+
+    border: none;
+
+    background: rgba(20, 15, 30, 0.42);
+
+    cursor: pointer;
+  }
+
+  .clinic-result-page .main-content {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+
+/* =========================================================
+   650px
+========================================================= */
+
+@media (max-width: 650px) {
+  .hero-topbar {
+    align-items: flex-start;
+  }
+
+  .hero-right {
+    gap: 7px;
+  }
+
+  .hero-logout {
+    font-size: 11px;
+  }
+
+  .hero-icon {
+    width: 31px;
+    height: 31px;
+
+    font-size: 13px;
+  }
+
+  .hero-title h1 {
+    font-size: 30px;
+  }
+
+  .search-row {
+    grid-template-columns: 1fr;
+  }
+
+  .search-input,
+  .search-button {
+    height: 46px;
+  }
+
+  .clinic-filter-panel {
+    display: block;
+  }
+
+  .filter-section {
+    border-top: 1px solid #edf0f5;
+  }
+
+  .filter-section:first-of-type {
+    border-top: none;
+  }
+
+  .map-topbar {
+    min-height: 65px;
+    padding: 0 14px;
+  }
+
+  .map-location-btn {
+    padding: 8px 10px;
+  }
+
+  .clinic-card {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .clinic-card-info {
+    width: calc(100% - 70px);
+    flex: none;
+  }
+
+  .clinic-card > button {
+    width: 100%;
+  }
+
+  .clinic-card-title {
+    flex-wrap: wrap;
+  }
+}
+
+
+/* =========================================================
+   500px
+========================================================= */
+
+@media (max-width: 500px) {
+  .clinic-hero {
+    padding:
+      6px
+      14px
+      25px;
+
+    border-radius: 0 0 10px 10px;
+  }
+
+  .hero-breadcrumb > div {
+    font-size: 10px;
+    gap: 5px;
+  }
+
+  .hero-breadcrumb strong {
+    font-size: 12px;
+  }
+
+  .hero-hamburger {
+    width: 36px;
+    height: 36px;
+  }
+
+  .hero-left {
+    gap: 8px;
+  }
+
+  .hero-right {
+    gap: 5px;
+  }
+
+  .hero-logout {
+    font-size: 0;
+  }
+
+  .hero-logout::before {
+    content: "◉";
+
+    font-size: 15px;
+  }
+
+  .settings-icon {
+    display: none;
+  }
+
+  .hero-title {
+    margin-top: 28px;
+  }
+
+  .hero-title h1 {
+    font-size: 27px;
+  }
+
+  .hero-title p {
+    font-size: 12px;
+    line-height: 1.5;
+
+    margin-bottom: 20px;
+  }
+
+  .clinic-results-page {
+    padding:
+      18px
+      14px
+      25px;
+  }
+
+  .results-toolbar {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    margin-bottom: 15px;
+  }
+
+  .results-current-btn {
+    width: 100%;
+  }
+
+  .map-wrapper,
+  .map-area {
+    height: 420px;
+  }
+
+  .map-topbar {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding:
+      12px 14px;
+  }
+
+  .map-location-btn {
+    width: 100%;
+  }
+
+  .map-controls {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .map-label {
+    font-size: 9px;
+    padding: 5px 7px;
+  }
+
+  .clinic-list-section {
+    margin-top: 22px;
+  }
+
+  .clinic-list-section h2 {
+    font-size: 19px;
+  }
+
+  .clinic-card {
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .clinic-card-icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .clinic-card-info {
+    width: calc(100% - 60px);
+  }
+
+  .clinic-card-info h3 {
+    font-size: 14px;
+  }
+
+  .clinic-type {
+    font-size: 9px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+  .hero-breadcrumb {
+    max-width: 125px;
+  }
+
+  .hero-breadcrumb > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .profile-icon {
+    display: none;
+  }
+
+  .hero-title h1 {
+    font-size: 24px;
+  }
+
+  .clinic-results-page {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .clinic-filter-panel {
+    padding: 16px;
+  }
+
+  .map-wrapper,
+  .map-area {
+    height: 380px;
+  }
 }

@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./FindClinicResult.css";
+import "./Dashboard.css";
 
 const clinics = [
   {
@@ -41,11 +43,22 @@ const clinics = [
 ];
 
 function FindClinicResult() {
+  const navigate = useNavigate();
+
   /* =========================
      SIDEBAR
   ========================= */
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
+  const goTo = (path) => {
+    closeSidebar();
+    navigate(path);
+  };
 
   /* =========================
      SEARCH
@@ -95,7 +108,8 @@ function FindClinicResult() {
       const matchesSearch =
         !search ||
         clinic.name.toLowerCase().includes(search) ||
-        clinic.service.toLowerCase().includes(search);
+        clinic.service.toLowerCase().includes(search) ||
+        clinic.category.toLowerCase().includes(search);
 
       const matchesLocation =
         !location ||
@@ -124,12 +138,31 @@ function FindClinicResult() {
   ]);
 
   /* =========================
-     SEARCH FUNCTION
+     SEARCH
   ========================= */
 
   const searchClinics = () => {
-    console.log("Clinic Search:", clinicSearch);
-    console.log("Location:", locationSearch);
+    const params = new URLSearchParams();
+
+    if (clinicSearch.trim()) {
+      params.set("clinic", clinicSearch.trim());
+    }
+
+    if (locationSearch.trim()) {
+      params.set("location", locationSearch.trim());
+    }
+
+    navigate(
+      params.toString()
+        ? `/find-clinic-results?${params.toString()}`
+        : "/find-clinic-results"
+    );
+  };
+
+  const handleSearchKeyDown = (e) => {
+    if (e.key === "Enter") {
+      searchClinics();
+    }
   };
 
   /* =========================
@@ -190,14 +223,15 @@ function FindClinicResult() {
   };
 
   return (
-    <div className="dashboard-body">
-
+    <div className="clinic-result-page dashboard-body">
       {/* ==================================
           SIDEBAR
       ================================== */}
 
       <aside
-        className={`sidebar ${sidebarOpen ? "show" : ""}`}
+        className={`sidebar ${
+          sidebarOpen ? "show" : ""
+        }`}
         id="sidebar"
       >
         <div className="logo-area">
@@ -206,60 +240,95 @@ function FindClinicResult() {
         </div>
 
         <nav className="sidebar-menu">
-
-          <a href="/dashboard" className="menu-item">
+          <button
+            type="button"
+            className="menu-item"
+            onClick={() => goTo("/dashboard")}
+          >
             <span className="menu-icon">▣</span>
             <span>Dashboard</span>
-          </a>
+          </button>
 
-          <a href="/appointments" className="menu-item">
+          <button
+            type="button"
+            className="menu-item"
+            onClick={() => goTo("/appointments")}
+          >
             <span className="menu-icon">▤</span>
             <span>Appointments</span>
-          </a>
+          </button>
 
-          <a href="/find-doctor" className="menu-item">
+          <button
+            type="button"
+            className="menu-item"
+            onClick={() => goTo("/find-doctor")}
+          >
             <span className="menu-icon">♟</span>
             <span>Find Doctor</span>
-          </a>
+          </button>
 
-          <a
-            href="/find-clinic"
+          <button
+            type="button"
             className="menu-item active"
+            onClick={() => goTo("/find-clinic")}
           >
             <span className="menu-icon">▦</span>
             <span>Find Clinic</span>
-          </a>
+          </button>
 
-          <a href="/chat" className="menu-item">
+          <button
+            type="button"
+            className="menu-item"
+            onClick={() => goTo("/chat")}
+          >
             <span className="menu-icon">▣</span>
             <span>Chat</span>
-          </a>
+          </button>
 
-          <a href="/marketplace" className="menu-item">
+          <button
+            type="button"
+            className="menu-item"
+            onClick={() => goTo("/marketplace")}
+          >
             <span className="menu-icon">▤</span>
             <span>Find Market-Place</span>
-          </a>
+          </button>
 
-          <a href="/pharmacy" className="menu-item">
+          <button
+            type="button"
+            className="menu-item"
+            onClick={() => goTo("/pharmacy")}
+          >
             <span className="menu-icon">▦</span>
             <span>Find Pharmacy</span>
-          </a>
+          </button>
 
-          <a href="/dependents" className="menu-item">
+          <button
+            type="button"
+            className="menu-item"
+            onClick={() => goTo("/dependents")}
+          >
             <span className="menu-icon">▤</span>
             <span>My Dependents</span>
-          </a>
+          </button>
 
-          <a href="/account" className="menu-item">
+          <button
+            type="button"
+            className="menu-item"
+            onClick={() => goTo("/account")}
+          >
             <span className="menu-icon">⚒</span>
             <span>My Account</span>
-          </a>
+          </button>
 
-          <a href="/settings" className="menu-item">
+          <button
+            type="button"
+            className="menu-item"
+            onClick={() => goTo("/settings")}
+          >
             <span className="menu-icon">⚙</span>
             <span>Settings</span>
-          </a>
-
+          </button>
         </nav>
 
         <div className="help-box">
@@ -267,104 +336,112 @@ function FindClinicResult() {
         </div>
       </aside>
 
+      {/* MOBILE SIDEBAR OVERLAY */}
+
+      {sidebarOpen && (
+        <button
+          type="button"
+          className="sidebar-overlay"
+          aria-label="Close sidebar"
+          onClick={closeSidebar}
+        />
+      )}
 
       {/* ==================================
           MAIN CONTENT
       ================================== */}
 
       <main className="main-content">
-
         <section className="dashboard-content">
-
           {/* ==================================
               CLINIC HERO
           ================================== */}
 
           <section className="clinic-hero">
+            <div className="hero-decoration hero-decoration-one" />
+            <div className="hero-decoration hero-decoration-two" />
 
             {/* TOP BAR */}
 
             <div className="hero-topbar">
-
               <div className="hero-left">
-
                 <button
                   type="button"
                   className="hero-hamburger"
                   onClick={() =>
                     setSidebarOpen((prev) => !prev)
                   }
+                  aria-label="Toggle sidebar"
                 >
                   ☰
                 </button>
 
                 <div className="hero-breadcrumb">
-
                   <div>
-                    ⌂
+                    <span>⌂</span>
                     <span>/</span>
                     Find Clinic
                     <span>/</span>
                     Results
                   </div>
 
-                  <strong>
-                    Find Clinics
-                  </strong>
-
+                  <strong>Find Clinics</strong>
                 </div>
-
               </div>
 
-
               <div className="hero-right">
-
                 <div className="hero-search">
-
                   <span>⌕</span>
 
                   <input
                     type="text"
                     placeholder="Type here..."
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        searchClinics();
+                      }
+                    }}
                   />
-
                 </div>
 
-                <a
-                  href="/"
+                <button
+                  type="button"
                   className="hero-logout"
+                  onClick={() => navigate("/login")}
                 >
                   ◉ Log out
-                </a>
+                </button>
 
-                <span className="hero-icon">
+                <button
+                  type="button"
+                  className="hero-icon settings-icon"
+                  aria-label="Settings"
+                  onClick={() => goTo("/settings")}
+                >
                   ⚙
-                </span>
+                </button>
 
-                <span className="hero-icon">
+                <button
+                  type="button"
+                  className="hero-icon profile-icon"
+                  aria-label="Account"
+                  onClick={() => goTo("/account")}
+                >
                   ♟
-                </span>
-
+                </button>
               </div>
-
             </div>
 
-
-            {/* HERO TITLE */}
+            {/* HERO TITLE + SEARCH */}
 
             <div className="hero-title">
-
-              <h1>
-                Find a Clinic
-              </h1>
+              <h1>Find a Clinic</h1>
 
               <p>
                 Find clinics and healthcare services near you
               </p>
 
-
               <div className="search-row">
-
                 <input
                   type="text"
                   className="search-input"
@@ -373,8 +450,8 @@ function FindClinicResult() {
                   onChange={(e) =>
                     setClinicSearch(e.target.value)
                   }
+                  onKeyDown={handleSearchKeyDown}
                 />
-
 
                 <input
                   type="text"
@@ -384,19 +461,16 @@ function FindClinicResult() {
                   onChange={(e) =>
                     setLocationSearch(e.target.value)
                   }
+                  onKeyDown={handleSearchKeyDown}
                 />
-
 
                 <button
                   type="button"
                   className="search-button current-button"
-                  onClick={() => {
-                    showClinicLocation();
-                  }}
+                  onClick={showClinicLocation}
                 >
                   CURRENT
                 </button>
-
 
                 <button
                   type="button"
@@ -405,99 +479,51 @@ function FindClinicResult() {
                 >
                   SEARCH
                 </button>
-
               </div>
-
             </div>
-
           </section>
-
 
           {/* ==================================
               RESULTS
           ================================== */}
 
           <section className="clinic-results-page">
+            {/* NO DUPLICATE TITLE / SEARCH HERE */}
 
-            <div className="clinic-results-header">
+            <div className="results-toolbar">
+              <div className="results-summary">
+                <strong>
+                  {filteredClinics.length}{" "}
+                  {filteredClinics.length === 1
+                    ? "Clinic"
+                    : "Clinics"}{" "}
+                  Found
+                </strong>
 
-              <div>
-
-                <h1>
-                  Find Clinics
-                </h1>
-
-                <p>
-                  Find clinics and healthcare services near you
-                </p>
-
+                <span>
+                  Search results based on your criteria
+                </span>
               </div>
-
-            </div>
-
-
-            {/* BOTTOM SEARCH */}
-
-            <div className="clinic-results-search">
-
-              <div className="results-search-box">
-
-                <span>⌕</span>
-
-                <input
-                  type="text"
-                  placeholder="Primary Care"
-                  value={clinicSearch}
-                  onChange={(e) =>
-                    setClinicSearch(e.target.value)
-                  }
-                />
-
-              </div>
-
-
-              <div className="results-search-box">
-
-                <span>📍</span>
-
-                <input
-                  type="text"
-                  placeholder="ZIP Code"
-                  value={locationSearch}
-                  onChange={(e) =>
-                    setLocationSearch(e.target.value)
-                  }
-                />
-
-              </div>
-
 
               <button
                 type="button"
-                className="results-search-btn"
-                onClick={searchClinics}
+                className="results-current-btn"
+                onClick={showClinicLocation}
               >
-                SEARCH
+                📍 Use My Location
               </button>
-
             </div>
-
 
             {/* ==================================
                 MAP + FILTER
             ================================== */}
 
             <div className="clinic-map-layout">
-
               {/* FILTER */}
 
               <aside className="clinic-filter-panel">
-
                 <div className="filter-header">
-
-                  <h2>
-                    Filters
-                  </h2>
+                  <h2>Filters</h2>
 
                   <button
                     type="button"
@@ -505,14 +531,11 @@ function FindClinicResult() {
                   >
                     Clear
                   </button>
-
                 </div>
-
 
                 {/* PRIMARY CARE */}
 
                 <div className="filter-section">
-
                   <label className="filter-label">
                     Primary Care
                   </label>
@@ -523,7 +546,6 @@ function FindClinicResult() {
                       setPrimaryCare(e.target.value)
                     }
                   >
-
                     <option value="">
                       Select Primary Care
                     </option>
@@ -543,16 +565,12 @@ function FindClinicResult() {
                     <option value="Pediatrics">
                       Pediatrics
                     </option>
-
                   </select>
-
                 </div>
-
 
                 {/* ZIP */}
 
                 <div className="filter-section">
-
                   <label className="filter-label">
                     ZIP Code
                   </label>
@@ -565,17 +583,12 @@ function FindClinicResult() {
                       setFilterZip(e.target.value)
                     }
                   />
-
                 </div>
-
 
                 {/* FILTER BY */}
 
                 <div className="filter-section">
-
-                  <h3>
-                    Filter By
-                  </h3>
+                  <h3>Filter By</h3>
 
                   {[
                     ["specialty", "Specialty"],
@@ -583,12 +596,10 @@ function FindClinicResult() {
                     ["condition", "Condition"],
                     ["languages", "Languages"],
                   ].map(([key, label]) => (
-
                     <label
                       className="checkbox-row"
                       key={key}
                     >
-
                       <input
                         type="checkbox"
                         checked={filterBy[key]}
@@ -600,36 +611,25 @@ function FindClinicResult() {
                         }
                       />
 
-                      <span>
-                        {label}
-                      </span>
-
+                      <span>{label}</span>
                     </label>
-
                   ))}
-
                 </div>
-
 
                 {/* AGE */}
 
                 <div className="filter-section">
-
-                  <h3>
-                    All Ages
-                  </h3>
+                  <h3>Age</h3>
 
                   {[
                     ["all", "All Ages"],
                     ["children", "Children"],
                     ["adults", "Adults"],
                   ].map(([value, label]) => (
-
                     <label
                       className="checkbox-row"
                       key={value}
                     >
-
                       <input
                         type="checkbox"
                         checked={ageFilter === value}
@@ -642,27 +642,17 @@ function FindClinicResult() {
                         }
                       />
 
-                      <span>
-                        {label}
-                      </span>
-
+                      <span>{label}</span>
                     </label>
-
                   ))}
-
                 </div>
-
 
                 {/* VIEW ONLY */}
 
                 <div className="filter-section">
-
-                  <h3>
-                    View Only
-                  </h3>
+                  <h3>View Only</h3>
 
                   <label className="checkbox-row">
-
                     <input
                       type="checkbox"
                       checked={
@@ -677,15 +667,10 @@ function FindClinicResult() {
                       }
                     />
 
-                    <span>
-                      Online Scheduling
-                    </span>
-
+                    <span>Online Scheduling</span>
                   </label>
 
-
                   <label className="checkbox-row">
-
                     <input
                       type="checkbox"
                       checked={
@@ -700,14 +685,9 @@ function FindClinicResult() {
                       }
                     />
 
-                    <span>
-                      Primary Care
-                    </span>
-
+                    <span>Primary Care</span>
                   </label>
-
                 </div>
-
 
                 <button
                   type="button"
@@ -716,30 +696,22 @@ function FindClinicResult() {
                 >
                   APPLY FILTER
                 </button>
-
               </aside>
-
 
               {/* ==================================
                   MAP
               ================================== */}
 
               <section className="clinic-map-container">
-
                 <div className="map-topbar">
-
                   <div>
-
-                    <strong>
-                      Clinics Near You
-                    </strong>
+                    <strong>Clinics Near You</strong>
 
                     <span>
-                      {filteredClinics.length} clinics found
+                      {filteredClinics.length} clinics
+                      found
                     </span>
-
                   </div>
-
 
                   <button
                     type="button"
@@ -748,138 +720,143 @@ function FindClinicResult() {
                   >
                     📍 My Location
                   </button>
-
                 </div>
 
-
-                <div
-                  className="map-area"
-                  style={{
-                    transform: `scale(${mapZoom})`,
-                    transformOrigin: "center",
-                  }}
-                >
-
-                  <div className="map-road road-one" />
-                  <div className="map-road road-two" />
-                  <div className="map-road road-three" />
-                  <div className="map-road road-four" />
-
-
-                  {clinics.map((clinic) => (
-
-                    <button
-                      key={clinic.id}
-                      className={`map-marker ${clinic.marker}`}
-                      title={clinic.name}
-                      onClick={() =>
-                        console.log(clinic.name)
-                      }
-                    >
-                      🏥
-                    </button>
-
-                  ))}
-
-
+                <div className="map-wrapper">
                   <div
-                    className={`current-location ${
-                      locationActive
-                        ? "location-active"
-                        : ""
-                    }`}
+                    className="map-area"
+                    style={{
+                      transform: `scale(${mapZoom})`,
+                      transformOrigin: "center",
+                    }}
                   >
-                    <span />
-                  </div>
+                    <div className="map-road road-one" />
+                    <div className="map-road road-two" />
+                    <div className="map-road road-three" />
+                    <div className="map-road road-four" />
 
+                    {filteredClinics.map((clinic) => (
+                      <button
+                        type="button"
+                        key={clinic.id}
+                        className={`map-marker ${clinic.marker}`}
+                        title={clinic.name}
+                        onClick={() =>
+                          console.log(
+                            "Selected clinic:",
+                            clinic
+                          )
+                        }
+                      >
+                        🏥
+                      </button>
+                    ))}
 
-                  <div className="map-controls">
-
-                    <button
-                      type="button"
-                      onClick={zoomIn}
+                    <div
+                      className={`current-location ${
+                        locationActive
+                          ? "location-active"
+                          : ""
+                      }`}
                     >
-                      +
-                    </button>
+                      <span />
+                    </div>
 
-                    <button
-                      type="button"
-                      onClick={zoomOut}
-                    >
-                      −
-                    </button>
+                    <div className="map-controls">
+                      <button
+                        type="button"
+                        onClick={zoomIn}
+                        aria-label="Zoom in"
+                      >
+                        +
+                      </button>
 
+                      <button
+                        type="button"
+                        onClick={zoomOut}
+                        aria-label="Zoom out"
+                      >
+                        −
+                      </button>
+                    </div>
+
+                    <div className="map-label label-one">
+                      Central District
+                    </div>
+
+                    <div className="map-label label-two">
+                      Medical Center
+                    </div>
+
+                    <div className="map-label label-three">
+                      Riverside
+                    </div>
                   </div>
-
-
-                  <div className="map-label label-one">
-                    Central District
-                  </div>
-
-                  <div className="map-label label-two">
-                    Medical Center
-                  </div>
-
-                  <div className="map-label label-three">
-                    Riverside
-                  </div>
-
                 </div>
-
               </section>
-
             </div>
-
 
             {/* ==================================
                 CLINIC LIST
             ================================== */}
 
             <section className="clinic-list-section">
+              <div className="clinic-list-heading">
+                <div>
+                  <h2>Available Clinics</h2>
 
-              <h2>
-                Available Clinics
-              </h2>
-
+                  <p>
+                    Clinics matching your search
+                  </p>
+                </div>
+              </div>
 
               <div className="clinic-list">
-
                 {filteredClinics.length === 0 ? (
-
                   <div className="no-results">
-                    No clinics found.
+                    <div className="no-results-icon">
+                      🏥
+                    </div>
+
+                    <h3>No clinics found</h3>
+
+                    <p>
+                      Try changing your search or
+                      filters.
+                    </p>
+
+                    <button
+                      type="button"
+                      onClick={clearFilters}
+                    >
+                      CLEAR FILTERS
+                    </button>
                   </div>
-
                 ) : (
-
                   filteredClinics.map((clinic) => (
-
                     <div
                       className="clinic-card"
                       key={clinic.id}
                     >
-
                       <div className="clinic-card-icon">
                         🏥
                       </div>
 
-
                       <div className="clinic-card-info">
+                        <div className="clinic-card-title">
+                          <h3>{clinic.name}</h3>
 
-                        <h3>
-                          {clinic.name}
-                        </h3>
+                          <span className="clinic-type">
+                            {clinic.type}
+                          </span>
+                        </div>
 
-                        <p>
-                          {clinic.service}
-                        </p>
+                        <p>{clinic.service}</p>
 
                         <span>
                           📍 {clinic.location}
                         </span>
-
                       </div>
-
 
                       <button
                         type="button"
@@ -892,53 +869,31 @@ function FindClinicResult() {
                       >
                         VIEW DETAILS
                       </button>
-
                     </div>
-
                   ))
-
                 )}
-
               </div>
-
             </section>
-
           </section>
-
 
           {/* ==================================
               FOOTER
           ================================== */}
 
           <footer className="dashboard-footer">
-
             <p>
               ©️ 2026, made with ♥️ by MyPatientHUB
               for a better web.
             </p>
 
             <div>
-
-              <a href="#">
-                MyPatientHUB
-              </a>
-
-              <a href="#">
-                About Us
-              </a>
-
-              <a href="#">
-                Blog
-              </a>
-
+              <a href="/dashboard">MyPatientHUB</a>
+              <a href="/about">About Us</a>
+              <a href="/blog">Blog</a>
             </div>
-
           </footer>
-
         </section>
-
       </main>
-
     </div>
   );
 }
