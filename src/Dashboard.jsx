@@ -14,9 +14,7 @@ function Dashboard() {
   return (
     <div className="dashboard-body">
 
-      {/* =========================
-          SIDEBAR
-      ========================== */}
+     
       <aside className={`sidebar ${sidebarOpen ? "show" : ""}`}>
 
         <div className="logo-area">
