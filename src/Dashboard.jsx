@@ -1,464 +1,445 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  LineChart,
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+} from "recharts";
 import "./Dashboard.css";
 
+/* =========================
+   CHART DATA
+========================= */
+
+const clinicData = [
+  { name: "Klinik Lee Healthcare", value: 19, color: "#e90091" },
+  { name: "Klinik Bandar Baru Nilai", value: 4, color: "#2866e9" },
+  { name: "Klinik Mediviron Giant Nilai", value: 10, color: "#f5c832" },
+  { name: "KLINIK NILAI IMPIAN", value: 21, color: "#16ad4d" },
+  { name: "Klinik Mediviron", value: 2, color: "#303b69" },
+];
+
+const pharmacyData = [
+  { name: "ALPRO PHARMACY NILAI", value: 15, color: "#2866e9" },
+  { name: "ALPRO PHARMACY PEKAN NILAI", value: 12, color: "#b9c7df" },
+  { name: "OK PHARMACY", value: 5, color: "#e90091" },
+  { name: "PHARMART PHARMACY NILAI", value: 9, color: "#16ad4d" },
+  { name: "Health Lane Family Pharmacy", value: 14, color: "#303b69" },
+];
+
+const marketData = [
+  { name: "Food Panda", value: 25, color: "#e90091" },
+  { name: "Grab Food", value: 15, color: "#2866e9" },
+  { name: "Other", value: 10, color: "#16ad4d" },
+];
+
+const healthData = [
+  { month: "Jan", value: 45 },
+  { month: "Feb", value: 52 },
+  { month: "Mar", value: 48 },
+  { month: "Apr", value: 61 },
+  { month: "May", value: 58 },
+  { month: "Jun", value: 72 },
+  { month: "Jul", value: 65 },
+  { month: "Aug", value: 82 },
+  { month: "Sep", value: 75 },
+  { month: "Oct", value: 91 },
+  { month: "Nov", value: 85 },
+  { month: "Dec", value: 96 },
+];
+
+/* =========================
+   REAL DONUT CHART
+========================= */
+
+function PromotionChart({ data }) {
+  return (
+    <div className="donut real-donut">
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            innerRadius="58%"
+            outerRadius="90%"
+            paddingAngle={2}
+            stroke="none"
+          >
+            {data.map((item) => (
+              <Cell key={item.name} fill={item.color} />
+            ))}
+          </Pie>
+
+          <Tooltip
+            formatter={(value, name) => [`${value}%`, name]}
+            contentStyle={{
+              borderRadius: "8px",
+              border: "1px solid #edf0f4",
+              fontSize: "12px",
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+/* =========================
+   LEGEND — ORIGINAL CSS
+========================= */
+
+function ChartLegend({ data }) {
+  return (
+    <div className="legend">
+      {data.map((item) => (
+        <div key={item.name}>
+          <i style={{ backgroundColor: item.color }} />
+          <span>{item.name}</span>
+          <b>{item.value}%</b>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
 function Dashboard() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
+  const handleNavigation = (path) => {
+    navigate(path);
+    setSidebarOpen(false);
   };
+
+  const menuItems = [
+    { label: "Dashboard", icon: "▦", path: "/dashboard" },
+    { label: "Appointments", icon: "▣", path: "/appointments" },
+    { label: "Find Doctor", icon: "⚕", path: "/find-doctor" },
+    { label: "Find Clinic", icon: "⌂", path: "/find-clinic" },
+    { label: "Chat", icon: "▤", path: "/chat" },
+    { label: "Find Market-Place", icon: "▧", path: "/marketplace" },
+    { label: "Find Pharmacy", icon: "✚", path: "/find-pharmacy" },
+  { label: "My Dependents", icon: "♧", path: "/my-dependents" },
+    { label: "My Account", icon: "♙", path: "/account" },
+    { label: "Settings", icon: "⚙", path: "/settings" },
+  ];
 
   return (
     <div className="dashboard-body">
+      {/* MOBILE SIDEBAR OVERLAY */}
+      {sidebarOpen && (
+        <button
+          type="button"
+          className="dashboard-sidebar-overlay"
+          aria-label="Close sidebar"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-      {/* =========================
-          SIDEBAR
-      ========================== */}
-      <aside className={`sidebar ${sidebarOpen ? "show" : ""}`}>
+      {/* SIDEBAR */}
+      <aside
+        className={`pharmacy-sidebar ${sidebarOpen ? "show" : ""}`}
+      >
+        <div className="pharmacy-logo">
+          <div className="logo-mark">
+            M
+            <span>HUB</span>
+          </div>
 
-        <div className="logo-area">
-          <div className="logo-icon">M</div>
-          <span>MyPatientHUB</span>
+          <div className="logo-text">MyPatientHUB</div>
         </div>
 
-        <nav className="sidebar-menu">
-
-          {/* Dashboard */}
-          <button
-            type="button"
-            className="menu-item active"
-            onClick={() => navigate("/dashboard")}
-          >
-            <span className="menu-icon">▣</span>
-            <span>Dashboard</span>
-          </button>
-
-          {/* Appointments */}
-          <button
-            type="button"
-            className="menu-item"
-          >
-            <span className="menu-icon">▤</span>
-            <span>Appointments</span>
-          </button>
-
-          {/* Find Doctor */}
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => navigate("/find-doctor")}
-          >
-            <span className="menu-icon">♟</span>
-            <span>Find Doctor</span>
-          </button>
-
-          {/* Find Clinic */}
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => navigate("/find-clinic")}
-          >
-            <span className="menu-icon">▦</span>
-            <span>Find Clinic</span>
-          </button>
-
-          {/* Chat */}
-          <button
-            type="button"
-            className="menu-item"
-          >
-            <span className="menu-icon">▣</span>
-            <span>Chat</span>
-          </button>
-
-<button
-  type="button"
-  className="menu-item"
-  onClick={() => {
-    console.log("Marketplace clicked");
-    navigate("/marketplace");
-  }}
->
-  <span className="menu-icon">▤</span>
-  <span>Find Market-Place</span>
-</button>
-
-
-
-          {/* Find Pharmacy */}
-          <button
-            type="button"
-            className="menu-item"
-          >
-            <span className="menu-icon">▦</span>
-            <span>Find Pharmacy</span>
-          </button>
-
-          {/* My Dependents */}
-          <button
-            type="button"
-            className="menu-item"
-          >
-            <span className="menu-icon">▤</span>
-            <span>My Dependents</span>
-          </button>
-
-          {/* My Account */}
-          <button
-            type="button"
-            className="menu-item"
-          >
-            <span className="menu-icon">⚒</span>
-            <span>My Account</span>
-          </button>
-
-          {/* Settings */}
-          <button
-            type="button"
-            className="menu-item"
-          >
-            <span className="menu-icon">⚙</span>
-            <span>Settings</span>
-          </button>
-
+        <nav className="pharmacy-sidebar-menu">
+          {menuItems.map((item) => (
+            <button
+              type="button"
+              key={item.label}
+              className={`pharmacy-menu-item ${
+                item.path === "/dashboard" ? "active" : ""
+              }`}
+              onClick={() => handleNavigation(item.path)}
+            >
+              <span className="pharmacy-menu-icon">{item.icon}</span>
+              <span>{item.label}</span>
+            </button>
+          ))}
         </nav>
 
-        <div className="help-box">
-          <span>?</span>
+        <div className="pharmacy-help">
+          <div className="help-icon">?</div>
+          <div>
+            <h4>Need Help?</h4>
+            <p>Contact our support team.</p>
+          </div>
         </div>
-
       </aside>
 
-      {/* =========================
-          MAIN CONTENT
-      ========================== */}
+      {/* MAIN CONTENT */}
       <main className="main-content">
-
-        {/* =========================
-            HEADER
-        ========================== */}
+        {/* HEADER */}
         <header className="top-header">
-
           <div className="header-left">
-
             <button
-              className="hamburger"
-              onClick={toggleSidebar}
               type="button"
+              className="hamburger"
+              aria-label="Open menu"
+              onClick={() => setSidebarOpen(true)}
             >
               ☰
             </button>
 
             <div>
-
               <div className="breadcrumb">
-                <span>⌂</span>
+                <span>Home</span>
                 <span>/</span>
                 <span>Dashboard</span>
               </div>
-
               <h2>Dashboard</h2>
-
             </div>
-
           </div>
 
           <div className="header-right">
-
             <div className="search-box">
               <span>⌕</span>
-
               <input
-                type="text"
-                placeholder="Type here..."
+                type="search"
+                placeholder="Search..."
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
               />
             </div>
 
             <button
               type="button"
-              className="header-link"
-              onClick={() => navigate("/login")}
+              className="header-icon"
+              aria-label="Notifications"
+              onClick={() => handleNavigation("/notifications")}
             >
-              ◉ Log out
+              ♧
             </button>
 
-            <span className="header-icon">⚙</span>
-            <span className="header-icon">♟</span>
+            <button
+              type="button"
+              className="header-icon"
+              aria-label="My account"
+              onClick={() => handleNavigation("/account")}
+            >
+              ♙
+            </button>
 
+            <button
+              type="button"
+              className="header-link"
+              onClick={() => handleNavigation("/login")}
+            >
+              Log out
+            </button>
           </div>
-
         </header>
 
-        {/* =========================
-            DASHBOARD CONTENT
-        ========================== */}
+        {/* DASHBOARD CONTENT */}
         <section className="dashboard-content">
+          <h1>Dashboard Overview</h1>
 
-          <h1>Welcome To MyPatientHUB!</h1>
-
+          {/* CHART CARDS */}
           <div className="cards-grid">
-
-            {/* Promotion by Clinics */}
-            <div className="dashboard-card">
-
+            {/* CLINIC CHART */}
+            <article className="dashboard-card">
               <div className="card-title">
                 <h3>Promotion by Clinics</h3>
-                <span>ⓘ</span>
+                <span title="Clinic promotion distribution">ⓘ</span>
               </div>
 
               <div className="chart-content">
-
-                <div className="donut chart-clinic"></div>
-
-                <div className="legend">
-
-                  <div>
-                    <i className="pink"></i>
-                    <span>Klinik Lee Healthcare</span>
-                    <b>19%</b>
-                  </div>
-
-                  <div>
-                    <i className="blue"></i>
-                    <span>Klinik Bandar Baru Nilai</span>
-                    <b>4%</b>
-                  </div>
-
-                  <div>
-                    <i className="yellow"></i>
-                    <span>Klinik Mediviron Giant Nilai</span>
-                    <b>10%</b>
-                  </div>
-
-                  <div>
-                    <i className="green"></i>
-                    <span>KLINIK NILAI IMPIAN</span>
-                    <b>21%</b>
-                  </div>
-
-                  <div>
-                    <i className="darkblue"></i>
-                    <span>Klinik Mediviron</span>
-                    <b>2%</b>
-                  </div>
-
-                </div>
-
+                <PromotionChart data={clinicData} />
+                <ChartLegend data={clinicData} />
               </div>
 
               <button
-                className="details-btn"
                 type="button"
+                className="details-btn"
+                onClick={() => handleNavigation("/find-clinic")}
               >
-                MORE DETAILS
+                VIEW MORE DETAILS
               </button>
+            </article>
 
-            </div>
-
-            {/* Promotion by Pharmacies */}
-            <div className="dashboard-card">
-
+            {/* PHARMACY CHART */}
+            <article className="dashboard-card">
               <div className="card-title">
                 <h3>Promotion by Pharmacies</h3>
-                <span>ⓘ</span>
+                <span title="Pharmacy promotion distribution">ⓘ</span>
               </div>
 
               <div className="chart-content">
-
-                <div className="donut chart-pharmacy"></div>
-
-                <div className="legend">
-
-                  <div>
-                    <i className="blue"></i>
-                    <span>ALPRO PHARMACY NILAI</span>
-                    <b>15%</b>
-                  </div>
-
-                  <div>
-                    <i className="lightblue"></i>
-                    <span>ALPRO PHARMACY PEKAN NILAI</span>
-                    <b>12%</b>
-                  </div>
-
-                  <div>
-                    <i className="pink"></i>
-                    <span>OK PHARMACY</span>
-                    <b>5%</b>
-                  </div>
-
-                  <div>
-                    <i className="green"></i>
-                    <span>PHARMART PHARMACY NILAI</span>
-                    <b>9%</b>
-                  </div>
-
-                  <div>
-                    <i className="darkblue"></i>
-                    <span>Health Lane Family Pharmacy</span>
-                    <b>14%</b>
-                  </div>
-
-                </div>
-
+                <PromotionChart data={pharmacyData} />
+                <ChartLegend data={pharmacyData} />
               </div>
 
               <button
-                className="details-btn"
                 type="button"
+                className="details-btn"
+                onClick={() => handleNavigation("/find-pharmacy")}
               >
-                MORE DETAILS
+                VIEW MORE DETAILS
               </button>
+            </article>
 
-            </div>
-
-            {/* Smart Market */}
-            <div className="dashboard-card">
-
+            {/* MARKET CHART */}
+            <article className="dashboard-card">
               <div className="card-title">
-                <h3>Smart Market Usage by app</h3>
-                <span>ⓘ</span>
+                <h3>Smart Market Usage by App</h3>
+                <span title="Market usage distribution">ⓘ</span>
               </div>
 
               <div className="chart-content">
-
-                <div className="donut chart-market"></div>
-
-                <div className="legend">
-
-                  <div>
-                    <i className="pink"></i>
-                    <span>Food Panda</span>
-                    <b>25%</b>
-                  </div>
-
-                  <div>
-                    <i className="blue"></i>
-                    <span>Grab Food</span>
-                    <b>15%</b>
-                  </div>
-
-                  <div>
-                    <i className="green"></i>
-                    <span>Other</span>
-                    <b>10%</b>
-                  </div>
-
-                </div>
-
+                <PromotionChart data={marketData} />
+                <ChartLegend data={marketData} />
               </div>
 
-            </div>
+              <button
+                type="button"
+                className="details-btn"
+                onClick={() => handleNavigation("/marketplace")}
+              >
+                VIEW MORE DETAILS
+              </button>
+            </article>
 
-            {/* Health Index */}
-            <div className="dashboard-card">
-
+            {/* HEALTH INDEX CHART */}
+            <article className="dashboard-card">
               <div className="card-title">
-                <h3>Health index</h3>
-                <span>ⓘ</span>
+                <h3>Health Index</h3>
+                <span title="Monthly health index trend">ⓘ</span>
               </div>
 
-              <div className="line-chart">
+              <div className="line-chart real-line-chart">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart
+                    data={healthData}
+                    margin={{
+                      top: 10,
+                      right: 12,
+                      left: -15,
+                      bottom: 0,
+                    }}
+                  >
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="#e8edf4"
+                      vertical={false}
+                    />
 
-                <svg
-                  viewBox="0 0 600 180"
-                  preserveAspectRatio="none"
-                >
-                  <polyline
-                    points="
-                      0,145
-                      50,135
-                      100,142
-                      150,125
-                      200,130
-                      250,105
-                      300,120
-                      350,75
-                      400,95
-                      450,60
-                      500,80
-                      550,50
-                      600,35
-                    "
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                  />
-                </svg>
+                    <XAxis
+                      dataKey="month"
+                      tick={{ fill: "#8190a9", fontSize: 10 }}
+                      axisLine={false}
+                      tickLine={false}
+                    />
 
+                    <YAxis
+                      domain={[0, 100]}
+                      ticks={[0, 20, 40, 60, 80, 100]}
+                      tick={{ fill: "#8190a9", fontSize: 10 }}
+                      axisLine={false}
+                      tickLine={false}
+                      width={35}
+                    />
+
+                    <Tooltip
+                      formatter={(value) => [value, "Health Index"]}
+                      contentStyle={{
+                        borderRadius: "8px",
+                        border: "1px solid #edf0f4",
+                        fontSize: "12px",
+                      }}
+                    />
+
+                    <Line
+                      type="monotone"
+                      dataKey="value"
+                      name="Health Index"
+                      stroke="#e500a8"
+                      strokeWidth={3}
+                      dot={{
+                        r: 3,
+                        fill: "#e500a8",
+                        strokeWidth: 0,
+                      }}
+                      activeDot={{ r: 6 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
 
-            </div>
-
+              <button
+                type="button"
+                className="details-btn"
+                onClick={() => handleNavigation("/dashboard")}
+              >
+                VIEW HEALTH INDEX
+              </button>
+            </article>
           </div>
 
-          {/* =========================
-              UPCOMING APPOINTMENTS
-          ========================== */}
-          <div className="appointment-card">
-
+          {/* UPCOMING APPOINTMENTS */}
+          <section className="appointment-card">
             <div className="appointment-header">
-
               <h3>Upcoming Appointments</h3>
 
-              <button type="button">
+              <button
+                type="button"
+                onClick={() => handleNavigation("/appointments")}
+              >
                 VIEW ALL
               </button>
-
             </div>
 
             <div className="appointment-row">
-
               <div className="doctor">
-
-                <div className="doctor-avatar">
-                  DR
+                <div className="doctor-avatar">DR</div>
+                <div className="doctor-details">
+                  <strong>Dr. Allan</strong>
+                  <span>Cardiology</span>
                 </div>
-
-                <div>
-                  <strong>Dr Allan</strong>
-                  <span>Cardiologist</span>
-                </div>
-
               </div>
 
               <div className="appointment-info">
-
-                <strong>RM 400</strong>
-
-                <span>40%</span>
-
+                <strong>Appointment</strong>
+                <span>Check your appointment list for details</span>
               </div>
-
             </div>
-
-          </div>
-
+          </section>
         </section>
 
-        {/* =========================
-            FOOTER
-        ========================== */}
+        {/* FOOTER */}
         <footer className="dashboard-footer">
-
           <p>
-            ©️ 2026, made with ♥️ by MyPiHUB
-            for a better web.
+            © {new Date().getFullYear()} MyPatientHUB. All rights reserved.
           </p>
 
           <div>
-            <a href="#">MyPatientHUB</a>
-            <a href="#">About Us</a>
-            <a href="#">Blog</a>
+            <a href="/privacy-policy">Privacy Policy</a>
+            <a href="/terms">Terms &amp; Conditions</a>
+            <a href="/help">Help</a>
           </div>
-
         </footer>
-
       </main>
-
     </div>
   );
 }

@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./FindDoctor.css";
 import "./Dashboard.css";
 
@@ -10,10 +11,9 @@ function FindDoctor() {
     const [headerSearch, setHeaderSearch] = useState("");
 
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const closeSidebar = () => {
-        setSidebarOpen(false);
-    };
+    const closeSidebar = () => setSidebarOpen(false);
 
     const goTo = (path) => {
         closeSidebar();
@@ -22,17 +22,11 @@ function FindDoctor() {
 
     const handleSearch = () => {
         const params = new URLSearchParams();
-
         const doctor = doctorSearch.trim();
-        const location = locationSearch.trim();
+        const place = locationSearch.trim();
 
-        if (doctor) {
-            params.set("doctor", doctor);
-        }
-
-        if (location) {
-            params.set("location", location);
-        }
+        if (doctor) params.set("doctor", doctor);
+        if (place) params.set("location", place);
 
         const query = params.toString();
 
@@ -48,9 +42,7 @@ function FindDoctor() {
     };
 
     const handleEnter = (event) => {
-        if (event.key === "Enter") {
-            handleSearch();
-        }
+        if (event.key === "Enter") handleSearch();
     };
 
     const handleHeaderSearch = (event) => {
@@ -59,21 +51,30 @@ function FindDoctor() {
 
             if (value) {
                 goTo(
-                    `/find-doctor-results?doctor=${encodeURIComponent(
-                        value
-                    )}`
+                    `/find-doctor-results?doctor=${encodeURIComponent(value)}`
                 );
             }
         }
     };
 
+    const menuItems = [
+        { label: "Dashboard", icon: "▣", path: "/dashboard" },
+        { label: "Appointments", icon: "▤", path: "/appointments" },
+        { label: "Find Doctor", icon: "♟", path: "/find-doctor" },
+        { label: "Find Clinic", icon: "▦", path: "/find-clinic" },
+        { label: "Chat", icon: "▣", path: "/chat" },
+        { label: "Find Market-Place", icon: "▤", path: "/marketplace" },
+        { label: "Find Pharmacy", icon: "▦", path: "/find-pharmacy" },
+        { label: "My Dependents", icon: "▤", path: "/my-dependents" },
+        { label: "My Account", icon: "⚒", path: "/account" },
+        { label: "Settings", icon: "⚙", path: "/settings" },
+    ];
+
     return (
         <div className="doctor-page">
             <div className="dashboard-body">
 
-                {/* =====================================================
-                    MOBILE SIDEBAR OVERLAY
-                ====================================================== */}
+                {/* MOBILE SIDEBAR OVERLAY */}
                 {sidebarOpen && (
                     <div
                         className="doctor-sidebar-overlay"
@@ -81,134 +82,69 @@ function FindDoctor() {
                     />
                 )}
 
-                {/* =====================================================
-                    SIDEBAR
-                ====================================================== */}
+                {/* SIDEBAR — SAME DESIGN AS FIND PHARMACY */}
                 <aside
-                    className={`sidebar ${
+                    className={`pharmacy-sidebar ${
                         sidebarOpen ? "show" : ""
                     }`}
                 >
-                    <div className="logo-area">
-                        <div className="logo-icon">M</div>
-                        <span>MyPatientHUB</span>
+                    <div className="pharmacy-logo">
+                        <div className="logo-mark">
+                            M<span>HUB</span>
+                        </div>
+                        <span className="logo-text">MyPatientHUB</span>
                     </div>
 
-                    <nav className="sidebar-menu">
+                    <nav className="pharmacy-sidebar-menu">
+                        {menuItems.map((item) => {
+                            const isActive =
+                                location.pathname === item.path;
 
-                        <button
-                            type="button"
-                            className="menu-item"
-                            onClick={() => goTo("/dashboard")}
-                        >
-                            <span className="menu-icon">▣</span>
-                            <span>Dashboard</span>
-                        </button>
+                            return (
+                                <button
+                                    key={item.path}
+                                    type="button"
+                                    className={`pharmacy-menu-item ${
+                                        isActive ? "active" : ""
+                                    }`}
+                                    onClick={() => goTo(item.path)}
+                                >
+                                    <span
+                                        className={`pharmacy-menu-icon ${
+                                            isActive ? "active-icon" : ""
+                                        }`}
+                                    >
+                                        {item.icon}
+                                    </span>
 
-                        <button
-                            type="button"
-                            className="menu-item"
-                        >
-                            <span className="menu-icon">▤</span>
-                            <span>Appointments</span>
-                        </button>
-
-                        <button
-                            type="button"
-                            className="menu-item active"
-                        >
-                            <span className="menu-icon">♟</span>
-                            <span>Find Doctor</span>
-                        </button>
-
-                        <button
-                            type="button"
-                            className="menu-item"
-                            onClick={() => goTo("/find-clinic")}
-                        >
-                            <span className="menu-icon">▦</span>
-                            <span>Find Clinic</span>
-                        </button>
-
-                        <button
-                            type="button"
-                            className="menu-item"
-                        >
-                            <span className="menu-icon">▣</span>
-                            <span>Chat</span>
-                        </button>
-
-                        <button
-                            type="button"
-                            className="menu-item"
-                            onClick={() => goTo("/marketplace")}
-                        >
-                            <span className="menu-icon">▤</span>
-                            <span>Find Market-Place</span>
-                        </button>
-
-                        <button
-                            type="button"
-                            className="menu-item"
-                        >
-                            <span className="menu-icon">▦</span>
-                            <span>Find Pharmacy</span>
-                        </button>
-
-                        <button
-                            type="button"
-                            className="menu-item"
-                        >
-                            <span className="menu-icon">▤</span>
-                            <span>My Dependents</span>
-                        </button>
-
-                        <button
-                            type="button"
-                            className="menu-item"
-                        >
-                            <span className="menu-icon">⚒</span>
-                            <span>My Account</span>
-                        </button>
-
-                        <button
-                            type="button"
-                            className="menu-item"
-                        >
-                            <span className="menu-icon">⚙</span>
-                            <span>Settings</span>
-                        </button>
-
+                                    <span>{item.label}</span>
+                                </button>
+                            );
+                        })}
                     </nav>
 
-                    <div className="help-box">
-                        <span>?</span>
+                    <div className="pharmacy-help">
+                        <div className="help-icon">?</div>
+                        <div>
+                            <h4>Need Help?</h4>
+                            <p>Contact our support team</p>
+                        </div>
                     </div>
                 </aside>
 
-                {/* =====================================================
-                    MAIN CONTENT
-                ====================================================== */}
+                {/* MAIN CONTENT — ORIGINAL CONTENT PRESERVED */}
                 <main className="main-content">
                     <section className="dashboard-content">
 
-                        {/* =================================================
-                            HERO
-                        ================================================== */}
+                        {/* HERO */}
                         <section className="doctor-hero">
-
-                            {/* TOP HEADER INSIDE PURPLE HERO */}
                             <header className="hero-topbar">
-
                                 <div className="hero-left">
-
                                     <button
                                         type="button"
                                         className="hero-hamburger"
                                         onClick={() =>
-                                            setSidebarOpen(
-                                                (previous) => !previous
-                                            )
+                                            setSidebarOpen((previous) => !previous)
                                         }
                                         aria-label="Toggle sidebar"
                                     >
@@ -220,36 +156,25 @@ function FindDoctor() {
                                             <span className="breadcrumb-home">
                                                 ⌂
                                             </span>
-
                                             <span className="breadcrumb-slash">
                                                 /
                                             </span>
-
-                                            <strong>
-                                                Find Doctor
-                                            </strong>
+                                            <strong>Find Doctor</strong>
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <div className="hero-right">
-
                                     <div className="hero-search">
                                         <span>⌕</span>
-
                                         <input
                                             type="text"
                                             placeholder="Type here..."
                                             value={headerSearch}
                                             onChange={(event) =>
-                                                setHeaderSearch(
-                                                    event.target.value
-                                                )
+                                                setHeaderSearch(event.target.value)
                                             }
-                                            onKeyDown={
-                                                handleHeaderSearch
-                                            }
+                                            onKeyDown={handleHeaderSearch}
                                         />
                                     </div>
 
@@ -264,9 +189,7 @@ function FindDoctor() {
                                     <button
                                         type="button"
                                         className="hero-icon"
-                                        onClick={() =>
-                                            goTo("/settings")
-                                        }
+                                        onClick={() => goTo("/settings")}
                                         aria-label="Settings"
                                     >
                                         ⚙
@@ -279,34 +202,23 @@ function FindDoctor() {
                                     >
                                         ♟
                                     </button>
-
                                 </div>
-
                             </header>
 
-                            {/* =================================================
-                                HERO TITLE + SEARCH
-                            ================================================== */}
                             <div className="hero-title">
-
                                 <h1>Find a Doctor</h1>
-
                                 <p>
-                                    Search Doctors and schedule an
-                                    appointment
+                                    Search Doctors and schedule an appointment
                                 </p>
 
                                 <div className="search-row">
-
                                     <input
                                         type="text"
                                         className="search-input"
                                         placeholder="Search a doctor by name, specialty"
                                         value={doctorSearch}
                                         onChange={(event) =>
-                                            setDoctorSearch(
-                                                event.target.value
-                                            )
+                                            setDoctorSearch(event.target.value)
                                         }
                                         onKeyDown={handleEnter}
                                     />
@@ -317,9 +229,7 @@ function FindDoctor() {
                                         placeholder="Zip Code or Neighborhood"
                                         value={locationSearch}
                                         onChange={(event) =>
-                                            setLocationSearch(
-                                                event.target.value
-                                            )
+                                            setLocationSearch(event.target.value)
                                         }
                                         onKeyDown={handleEnter}
                                     />
@@ -339,24 +249,17 @@ function FindDoctor() {
                                     >
                                         SEARCH
                                     </button>
-
                                 </div>
-
                             </div>
-
                         </section>
 
-                        {/* =================================================
-                            SPECIAL SERVICES
-                        ================================================== */}
+                        {/* SPECIAL SERVICES */}
                         <section className="section">
-
                             <h2 className="section-title">
                                 Special Services
                             </h2>
 
                             <div className="service-grid">
-
                                 <button
                                     type="button"
                                     className="service-card"
@@ -366,21 +269,14 @@ function FindDoctor() {
                                         )
                                     }
                                 >
-                                    <div className="service-icon">
-                                        🩺
-                                    </div>
-
+                                    <div className="service-icon">🩺</div>
                                     <div className="service-text">
-                                        <h3>
-                                            Primary Care and Internal MD
-                                        </h3>
-
+                                        <h3>Primary Care and Internal MD</h3>
                                         <p>
-                                            Our Doctors Partner with you
-                                            to help you reach your wellness
+                                            Our Doctors Partner with you to help
+                                            you reach your wellness
                                         </p>
                                     </div>
-
                                     <span className="arrow">›</span>
                                 </button>
 
@@ -393,21 +289,14 @@ function FindDoctor() {
                                         )
                                     }
                                 >
-                                    <div className="service-icon">
-                                        🫀
-                                    </div>
-
+                                    <div className="service-icon">🫀</div>
                                     <div className="service-text">
-                                        <h3>
-                                            Emergency Care
-                                        </h3>
-
+                                        <h3>Emergency Care</h3>
                                         <p>
-                                            We provide emergency care for
-                                            adults and children
+                                            We provide emergency care for adults
+                                            and children
                                         </p>
                                     </div>
-
                                     <span className="arrow">›</span>
                                 </button>
 
@@ -420,21 +309,14 @@ function FindDoctor() {
                                         )
                                     }
                                 >
-                                    <div className="service-icon">
-                                        ❤️
-                                    </div>
-
+                                    <div className="service-icon">❤️</div>
                                     <div className="service-text">
-                                        <h3>
-                                            Imaging Services
-                                        </h3>
-
+                                        <h3>Imaging Services</h3>
                                         <p>
                                             From Xray to MR scan we offer
                                             comprehensive imaging services
                                         </p>
                                     </div>
-
                                     <span className="arrow">›</span>
                                 </button>
 
@@ -447,44 +329,31 @@ function FindDoctor() {
                                         )
                                     }
                                 >
-                                    <div className="service-icon">
-                                        ⊕
-                                    </div>
-
+                                    <div className="service-icon">⊕</div>
                                     <div className="service-text">
-                                        <h3>
-                                            Urgent Care
-                                        </h3>
-
+                                        <h3>Urgent Care</h3>
                                         <p>
                                             We offer urgent care for
                                             non-emergency medical needs
                                         </p>
                                     </div>
-
                                     <span className="arrow">›</span>
                                 </button>
-
                             </div>
-
                         </section>
 
-                        {/* =================================================
-                            SPECIALTIES
-                        ================================================== */}
+                        {/* SPECIALTIES */}
                         <section className="section">
-
                             <h2 className="section-title">
                                 Find Doctors By Specialty
                             </h2>
 
                             <p className="section-subtitle">
-                                Select a Specialty to View all Doctors
-                                and schedule an Appointment
+                                Select a Specialty to View all Doctors and
+                                schedule an Appointment
                             </p>
 
                             <div className="specialty-grid">
-
                                 {[
                                     "Anesthesiology",
                                     "Dermatology",
@@ -511,40 +380,24 @@ function FindDoctor() {
                                         </span>
                                     </button>
                                 ))}
-
                             </div>
-
                         </section>
 
-                        {/* =================================================
-                            FOOTER
-                        ================================================== */}
+                        {/* FOOTER */}
                         <footer className="dashboard-footer">
-
                             <p>
-                                © 2026, made with ♥ by MyPatientHUB
-                                for a better web.
+                                © 2026, made with ♥ by MyPatientHUB for a
+                                better web.
                             </p>
 
                             <div>
-                                <a href="#mypatienthub">
-                                    MyPatientHUB
-                                </a>
-
-                                <a href="#about">
-                                    About Us
-                                </a>
-
-                                <a href="#blog">
-                                    Blog
-                                </a>
+                                <a href="#mypatienthub">MyPatientHUB</a>
+                                <a href="#about">About Us</a>
+                                <a href="#blog">Blog</a>
                             </div>
-
                         </footer>
-
                     </section>
                 </main>
-
             </div>
         </div>
     );

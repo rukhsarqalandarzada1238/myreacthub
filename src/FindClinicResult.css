@@ -1,7 +1,5 @@
 /* =========================================================
-   FIND CLINIC RESULTS
-   Hero/header is controlled here.
-   Sidebar behavior is compatible with Dashboard.css.
+   FIND CLINIC RESULT - BASE
 ========================================================= */
 
 .clinic-result-page,
@@ -12,21 +10,201 @@
 .clinic-result-page {
   width: 100%;
   min-height: 100vh;
+  background: #f8f9fc;
+  color: #344767;
+  overflow-x: clip;
 }
 
+.clinic-result-page button,
+.clinic-result-page input,
+.clinic-result-page select {
+  font: inherit;
+}
+
+.clinic-result-page button {
+  cursor: pointer;
+}
+
+.clinic-result-page .main-content {
+  width: calc(100% - 280px);
+  min-width: 0;
+  margin-left: 280px;
+  transition: width 0.25s ease, margin-left 0.25s ease;
+}
+
+.clinic-result-page .dashboard-content {
+  width: 100%;
+  min-width: 0;
+  padding: 16px;
+}
 
 /* =========================================================
-   CLINIC HERO
+   SIDEBAR - MATCH PHARMACY PAGE
 ========================================================= */
 
-.clinic-hero {
+.clinic-result-page .pharmacy-sidebar {
+  position: fixed;
+  z-index: 1200;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  height: 100vh;
+  padding: 24px 16px 18px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #fff;
+  border-right: 1px solid #edf0f5;
+  box-shadow: 3px 0 18px rgba(25, 35, 60, 0.035);
+  transition: transform 0.25s ease;
+}
+
+.clinic-result-page .pharmacy-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  margin-bottom: 30px;
+  padding: 0 8px;
+}
+
+.clinic-result-page .logo-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #e83e8c, #8c45a8);
+  box-shadow: 0 5px 14px rgba(204, 57, 139, 0.2);
+  color: #fff;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.clinic-result-page .logo-mark span {
+  margin-left: 1px;
+  font-size: 10px;
+}
+
+.clinic-result-page .logo-text {
+  color: #344767;
+  font-size: 17px;
+  font-weight: 750;
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+}
+
+.clinic-result-page .pharmacy-sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+}
+
+.clinic-result-page .pharmacy-menu-item {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  min-height: 47px;
+  padding: 11px 13px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: #67748e;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease, transform 0.2s ease;
+}
+
+.clinic-result-page .pharmacy-menu-item:hover {
+  color: #d63384;
+  background: #fff3f8;
+  transform: translateX(2px);
+}
+
+.clinic-result-page .pharmacy-menu-item.active {
+  color: #d63384;
+  background: #fff0f6;
+  border-color: #ffe0ed;
+  font-weight: 700;
+}
+
+.clinic-result-page .pharmacy-menu-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  color: inherit;
+  font-size: 17px;
+}
+
+.clinic-result-page .pharmacy-menu-item.active .pharmacy-menu-icon {
+  background: #fbd8e8;
+}
+
+.clinic-result-page .pharmacy-help {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: auto;
+  padding: 16px 10px 4px;
+}
+
+.clinic-result-page .pharmacy-help-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #fff0f6;
+  color: #d63384;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.clinic-result-page .pharmacy-help strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #344767;
+  font-size: 12px;
+}
+
+.clinic-result-page .pharmacy-help p {
+  margin: 0;
+  color: #8a94a8;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.clinic-result-page .clinic-sidebar-overlay {
+  display: none;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.clinic-result-page .clinic-hero {
+  position: relative;
+  isolation: isolate;
   width: 100%;
   min-height: 360px;
   padding: 8px 30px 40px;
-  border-radius: 10px;
   overflow: hidden;
-
+  border-radius: 12px;
   background:
     radial-gradient(
       circle at 15% 20%,
@@ -38,641 +216,513 @@
       rgba(255, 255, 255, 0.12),
       transparent 25%
     ),
-    linear-gradient(
-      135deg,
-      #5d2f73 0%,
-      #80427f 48%,
-      #d34f83 100%
-    );
-
-  color: white;
+    linear-gradient(135deg, #5d2f73 0%, #80427f 48%, #d34f83 100%);
+  color: #fff;
 }
 
-
-/* =========================================================
-   DECORATIVE HERO SHAPES
-========================================================= */
-
-.hero-decoration {
+.clinic-result-page .hero-decoration {
   position: absolute;
+  z-index: -1;
   pointer-events: none;
   border-radius: 50%;
   opacity: 0.12;
 }
 
-.hero-decoration-one {
+.clinic-result-page .hero-decoration-one {
+  top: -160px;
+  right: -120px;
   width: 300px;
   height: 300px;
-  right: -120px;
-  top: -160px;
-  border: 55px solid white;
+  border: 55px solid #fff;
 }
 
-.hero-decoration-two {
+.clinic-result-page .hero-decoration-two {
+  bottom: -100px;
+  left: -180px;
   width: 360px;
   height: 180px;
-  left: -180px;
-  bottom: -100px;
-  border: 45px solid white;
+  border: 45px solid #fff;
 }
-
 
 /* =========================================================
    HERO TOP BAR
 ========================================================= */
 
-.hero-topbar {
+.clinic-result-page .hero-topbar {
   position: relative;
   z-index: 5;
-
-  width: 100%;
-  min-height: 64px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 20px;
+  width: 100%;
+  min-height: 64px;
 }
 
-.hero-left,
-.hero-right {
+.clinic-result-page .hero-left,
+.clinic-result-page .hero-right {
   display: flex;
   align-items: center;
 }
 
-.hero-left {
+.clinic-result-page .hero-left {
   gap: 14px;
   min-width: 0;
 }
 
-.hero-right {
-  gap: 18px;
+.clinic-result-page .hero-right {
+  gap: 14px;
   flex-shrink: 0;
 }
 
-
-/* =========================================================
-   HAMBURGER
-========================================================= */
-
-.hero-hamburger {
-  width: 40px;
-  height: 40px;
-
+.clinic-result-page .hero-hamburger {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border: none;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9px;
   background: rgba(255, 255, 255, 0.12);
-  color: white;
-  border-radius: 8px;
-
+  color: #fff;
   font-size: 22px;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-.hero-hamburger:hover {
-  background: rgba(255, 255, 255, 0.2);
+.clinic-result-page .hero-hamburger:hover {
+  background: rgba(255, 255, 255, 0.23);
 }
-
 
 /* =========================================================
    BREADCRUMB
 ========================================================= */
 
-.hero-breadcrumb {
+.clinic-result-page .hero-breadcrumb {
   min-width: 0;
 }
 
-.hero-breadcrumb > div {
+.clinic-result-page .hero-breadcrumb > div {
   display: flex;
   align-items: center;
   gap: 8px;
-
-  font-size: 12px;
   color: rgba(255, 255, 255, 0.75);
-
+  font-size: 12px;
   white-space: nowrap;
 }
 
-.hero-breadcrumb > div span {
+.clinic-result-page .hero-breadcrumb > div span {
   opacity: 0.7;
 }
 
-.hero-breadcrumb strong {
+.clinic-result-page .hero-breadcrumb strong {
   display: block;
   margin-top: 4px;
-
-  color: white;
+  color: #fff;
   font-size: 14px;
   font-weight: 600;
 }
 
-
 /* =========================================================
-   HERO RIGHT
+   HERO SEARCH / ACTIONS
 ========================================================= */
 
-.hero-search {
-  width: 190px;
-  height: 38px;
-
+.clinic-result-page .hero-search {
   display: flex;
   align-items: center;
-
   gap: 8px;
+  width: 190px;
+  height: 38px;
   padding: 0 12px;
-
-  background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
 }
 
-.hero-search span {
+.clinic-result-page .hero-search span {
   color: rgba(255, 255, 255, 0.8);
   font-size: 17px;
 }
 
-.hero-search input {
+.clinic-result-page .hero-search input {
   width: 100%;
-
+  min-width: 0;
   border: none;
   outline: none;
-
   background: transparent;
-  color: white;
-
+  color: #fff;
   font-size: 12px;
 }
 
-.hero-search input::placeholder {
+.clinic-result-page .hero-search input::placeholder {
   color: rgba(255, 255, 255, 0.65);
 }
 
-.hero-logout,
-.hero-icon {
-  color: white;
+.clinic-result-page .hero-logout,
+.clinic-result-page .hero-icon {
+  color: #fff;
 }
 
-.hero-logout {
+.clinic-result-page .hero-logout {
   border: none;
   background: transparent;
-
   font-size: 12px;
-  cursor: pointer;
   white-space: nowrap;
 }
 
-.hero-logout:hover {
+.clinic-result-page .hero-logout:hover {
   opacity: 0.8;
 }
 
-.hero-icon {
-  width: 34px;
-  height: 34px;
-
+.clinic-result-page .hero-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
   border: none;
   border-radius: 50%;
-
   background: rgba(255, 255, 255, 0.12);
-
   font-size: 15px;
-  cursor: pointer;
 }
 
-.hero-icon:hover {
+.clinic-result-page .hero-icon:hover {
   background: rgba(255, 255, 255, 0.22);
 }
-
 
 /* =========================================================
    HERO TITLE
 ========================================================= */
 
-.hero-title {
+.clinic-result-page .hero-title {
   position: relative;
   z-index: 3;
-
   max-width: 1100px;
   margin: 45px auto 0;
-
   text-align: center;
 }
 
-.hero-title h1 {
+.clinic-result-page .hero-title h1 {
   margin: 0 0 8px;
-
+  color: #fff;
   font-size: clamp(30px, 4vw, 42px);
   line-height: 1.15;
   font-weight: 700;
-
-  color: white;
 }
 
-.hero-title p {
+.clinic-result-page .hero-title p {
   margin: 0 0 28px;
-
   color: rgba(255, 255, 255, 0.82);
-
   font-size: 14px;
 }
 
-
 /* =========================================================
-   MAIN SEARCH
+   MAIN SEARCH ROW
 ========================================================= */
 
-.search-row {
-  width: 100%;
-
+.clinic-result-page .search-row {
   display: grid;
-  grid-template-columns:
-    minmax(220px, 1fr)
-    minmax(220px, 1fr)
-    130px
-    130px;
-
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 130px 130px;
   gap: 10px;
-
+  width: 100%;
   padding: 10px;
-
-  background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 12px;
-
+  background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(8px);
 }
 
-.search-input {
+.clinic-result-page .search-input {
   width: 100%;
+  min-width: 0;
   height: 48px;
-
+  padding: 0 15px;
   border: none;
   outline: none;
-
   border-radius: 8px;
-  padding: 0 15px;
-
-  background: white;
+  background: #fff;
   color: #344767;
-
   font-size: 13px;
 }
 
-.search-input::placeholder {
+.clinic-result-page .search-input::placeholder {
   color: #8b91a5;
 }
 
-.search-button {
+.clinic-result-page .search-button {
   height: 48px;
-
   border: none;
   border-radius: 8px;
-
   background: #344767;
-  color: white;
-
+  color: #fff;
   font-size: 12px;
   font-weight: 700;
-
-  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-.search-button:hover {
+.clinic-result-page .search-button:hover {
   transform: translateY(-1px);
-  filter: brightness(1.05);
+  filter: brightness(1.08);
 }
 
-.current-button {
-  background: rgba(255, 255, 255, 0.18);
+.clinic-result-page .current-button {
   border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.18);
 }
 
-
 /* =========================================================
-   RESULTS PAGE
+   RESULTS AREA
 ========================================================= */
 
-.clinic-results-page {
+.clinic-result-page .clinic-results-page {
   width: 100%;
-
-  padding: 28px 30px 35px;
-
-  background: #f8f9fc;
-
   min-height: calc(100vh - 360px);
+  padding: 28px 20px 35px;
+  background: #f8f9fc;
 }
 
-
-/* =========================================================
-   RESULTS TOOLBAR
-========================================================= */
-
-.results-toolbar {
-  min-height: 60px;
-
+.clinic-result-page .results-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 15px;
-
+  min-height: 60px;
   margin-bottom: 20px;
 }
 
-.results-summary {
+.clinic-result-page .results-summary {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.results-summary strong {
+.clinic-result-page .results-summary strong {
   color: #263238;
   font-size: 20px;
 }
 
-.results-summary span {
+.clinic-result-page .results-summary span {
   color: #7b809a;
   font-size: 12px;
 }
 
-.results-current-btn {
-  height: 40px;
-
+.clinic-result-page .results-current-btn {
+  min-height: 40px;
   padding: 0 15px;
-
   border: 1px solid #dfe3eb;
   border-radius: 8px;
-
-  background: white;
+  background: #fff;
   color: #344767;
-
-  cursor: pointer;
-
   font-size: 12px;
   font-weight: 600;
 }
 
-
-/* =========================================================
-   MAP LAYOUT
-========================================================= */
-
-.clinic-map-layout {
-  display: grid;
-
-  grid-template-columns: 300px minmax(0, 1fr);
-
-  gap: 20px;
-
-  min-height: 620px;
+.clinic-result-page .results-current-btn:hover {
+  border-color: #d63384;
+  color: #d63384;
 }
 
+/* =========================================================
+   FILTER + MAP LAYOUT
+========================================================= */
+
+.clinic-result-page .clinic-map-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  align-items: start;
+  gap: 20px;
+  min-height: 620px;
+}
 
 /* =========================================================
    FILTER PANEL
 ========================================================= */
 
-.clinic-filter-panel {
+.clinic-result-page .clinic-filter-panel {
+  min-width: 0;
   height: fit-content;
-
-  background: white;
-
-  border-radius: 12px;
-
   padding: 22px;
-
-  box-shadow:
-    0 2px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #edf0f5;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.045);
 }
 
-.filter-header {
+.clinic-result-page .filter-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  gap: 10px;
   margin-bottom: 20px;
 }
 
-.filter-header h2 {
+.clinic-result-page .filter-header h2 {
   margin: 0;
-
   color: #263238;
   font-size: 21px;
 }
 
-.filter-header button {
+.clinic-result-page .filter-header button {
   border: none;
-  background: none;
-
-  color: #e91e63;
-
-  cursor: pointer;
-
+  background: transparent;
+  color: #d63384;
   font-size: 13px;
 }
 
-.filter-section {
-  border-top: 1px solid #edf0f5;
+.clinic-result-page .filter-header button:hover {
+  text-decoration: underline;
+}
 
+.clinic-result-page .filter-section {
   padding: 18px 0;
+  border-top: 1px solid #edf0f5;
 }
 
-.filter-section:first-of-type {
-  border-top: none;
+.clinic-result-page .filter-section:first-of-type {
   padding-top: 0;
+  border-top: none;
 }
 
-.filter-section h3 {
+.clinic-result-page .filter-section h3 {
   margin: 0 0 14px;
-
   color: #344767;
-
   font-size: 14px;
 }
 
-.filter-label {
+.clinic-result-page .filter-label {
   display: block;
-
   margin-bottom: 8px;
-
   color: #344767;
-
   font-size: 13px;
   font-weight: 600;
 }
 
-.filter-section select,
-.filter-section > input {
+.clinic-result-page .filter-section select,
+.clinic-result-page .filter-section > input {
   width: 100%;
   height: 44px;
-
   padding: 0 12px;
-
   border: 1px solid #dfe3eb;
   border-radius: 7px;
-
   outline: none;
-
-  background: white;
-
+  background: #fff;
   color: #344767;
-
   font-size: 13px;
 }
 
-.filter-section select:focus,
-.filter-section > input:focus {
-  border-color: #344767;
+.clinic-result-page .filter-section select:focus,
+.clinic-result-page .filter-section > input:focus {
+  border-color: #d63384;
+  box-shadow: 0 0 0 3px rgba(214, 51, 132, 0.08);
 }
 
-.checkbox-row {
+.clinic-result-page .checkbox-row {
   display: flex;
   align-items: center;
-
   gap: 9px;
-
   margin-bottom: 12px;
-
-  cursor: pointer;
-
   color: #67748e;
-
   font-size: 13px;
+  cursor: pointer;
 }
 
-.checkbox-row:last-child {
+.clinic-result-page .checkbox-row:last-child {
   margin-bottom: 0;
 }
 
-.checkbox-row input {
+.clinic-result-page .checkbox-row input {
   width: 16px;
   height: 16px;
-
-  accent-color: #344767;
-
+  accent-color: #d63384;
   cursor: pointer;
 }
 
-.apply-filter-btn {
+.clinic-result-page .apply-filter-btn {
   width: 100%;
-  height: 45px;
-
+  min-height: 45px;
+  margin-top: 4px;
   border: none;
   border-radius: 7px;
-
   background: #344767;
-  color: white;
-
+  color: #fff;
   font-size: 12px;
   font-weight: 700;
-
-  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-.apply-filter-btn:hover {
-  filter: brightness(1.06);
+.clinic-result-page .apply-filter-btn:hover {
+  background: #d63384;
 }
-
 
 /* =========================================================
    MAP CONTAINER
 ========================================================= */
 
-.clinic-map-container {
+.clinic-result-page .clinic-map-container {
   min-width: 0;
-
-  background: white;
-
-  border-radius: 12px;
-
   overflow: hidden;
-
-  box-shadow:
-    0 2px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #edf0f5;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.045);
 }
 
-.map-topbar {
-  min-height: 70px;
-
-  padding: 0 20px;
-
+.clinic-result-page .map-topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 15px;
-
+  min-height: 70px;
+  padding: 0 20px;
   border-bottom: 1px solid #edf0f5;
 }
 
-.map-topbar strong {
+.clinic-result-page .map-topbar strong {
   display: block;
-
   margin-bottom: 4px;
-
   color: #263238;
-
   font-size: 14px;
 }
 
-.map-topbar span {
+.clinic-result-page .map-topbar span {
   display: block;
-
   color: #7b809a;
-
   font-size: 12px;
 }
 
-.map-location-btn {
+.clinic-result-page .map-location-btn {
   flex-shrink: 0;
-
-  border: 1px solid #dfe3eb;
-
-  background: white;
-
-  border-radius: 7px;
-
   padding: 9px 14px;
-
+  border: 1px solid #dfe3eb;
+  border-radius: 7px;
+  background: #fff;
   color: #344767;
-
-  cursor: pointer;
-
   font-size: 12px;
 }
 
-
-/* =========================================================
-   MAP WRAPPER
-========================================================= */
-
-.map-wrapper {
-  width: 100%;
-  height: 550px;
-
-  overflow: hidden;
+.clinic-result-page .map-location-btn:hover {
+  border-color: #d63384;
+  color: #d63384;
 }
 
-
 /* =========================================================
-   MAP
+   MAP CANVAS
 ========================================================= */
 
-.map-area {
-  position: relative;
-
+.clinic-result-page .map-wrapper {
   width: 100%;
   height: 550px;
-
   overflow: hidden;
+  background: #eef1ed;
+}
 
+.clinic-result-page .map-area {
+  position: relative;
+  width: 100%;
+  height: 550px;
+  overflow: hidden;
   background:
     linear-gradient(
       30deg,
@@ -689,172 +739,126 @@
       transparent 52%
     ),
     #eef1ed;
-
   background-size: 180px 180px;
-
   transition: transform 0.2s ease;
 }
 
-
-/* =========================================================
-   MAP ROADS
-========================================================= */
-
-.map-road {
+.clinic-result-page .map-road {
   position: absolute;
-
-  background: #ffffff;
-
-  box-shadow:
-    0 0 0 1px #dfe3df;
+  background: #fff;
+  box-shadow: 0 0 0 1px #dfe3df;
+  pointer-events: none;
 }
 
-.road-one {
-  width: 100%;
-  height: 25px;
-
+.clinic-result-page .road-one {
   top: 40%;
   left: 0;
-
+  width: 100%;
+  height: 25px;
   transform: rotate(-8deg);
 }
 
-.road-two {
-  width: 100%;
-  height: 20px;
-
+.clinic-result-page .road-two {
   top: 68%;
   left: 0;
-
+  width: 100%;
+  height: 20px;
   transform: rotate(12deg);
 }
 
-.road-three {
+.clinic-result-page .road-three {
+  top: 0;
+  left: 45%;
   width: 25px;
   height: 100%;
-
-  left: 45%;
-  top: 0;
-
   transform: rotate(8deg);
 }
 
-.road-four {
+.clinic-result-page .road-four {
+  top: 0;
+  left: 75%;
   width: 18px;
   height: 100%;
-
-  left: 75%;
-  top: 0;
-
   transform: rotate(-15deg);
 }
-
 
 /* =========================================================
    MAP MARKERS
 ========================================================= */
 
-.map-marker {
+.clinic-result-page .map-marker {
   position: absolute;
-
-  width: 46px;
-  height: 46px;
-
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
-
+  width: 46px;
+  height: 46px;
   border: none;
   border-radius: 50%;
-
-  background: white;
-
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.2);
-
-  cursor: pointer;
-
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   font-size: 21px;
-
-  z-index: 3;
-
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.map-marker:hover {
+.clinic-result-page .map-marker:hover {
   transform: scale(1.08);
-
-  box-shadow:
-    0 6px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-.marker-one {
+.clinic-result-page .marker-one {
   left: 25%;
   top: 28%;
 }
 
-.marker-two {
+.clinic-result-page .marker-two {
   left: 62%;
   top: 22%;
 }
 
-.marker-three {
+.clinic-result-page .marker-three {
   left: 47%;
   top: 58%;
 }
 
-.marker-four {
+.clinic-result-page .marker-four {
   left: 76%;
   top: 67%;
 }
-
 
 /* =========================================================
    CURRENT LOCATION
 ========================================================= */
 
-.current-location {
+.clinic-result-page .current-location {
   position: absolute;
-
-  left: 52%;
+  z-index: 4;
   top: 43%;
-
+  left: 52%;
   width: 22px;
   height: 22px;
-
-  border-radius: 50%;
-
-  background: #4285f4;
-
   border: 5px solid rgba(255, 255, 255, 0.8);
-
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.3);
-
-  z-index: 4;
+  border-radius: 50%;
+  background: #4285f4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.current-location span {
+.clinic-result-page .current-location span {
   position: absolute;
-
+  top: -19px;
+  left: -19px;
   width: 50px;
   height: 50px;
-
-  left: -19px;
-  top: -19px;
-
   border-radius: 50%;
-
   background: rgba(66, 133, 244, 0.15);
 }
 
-.current-location.location-active {
-  animation: locationPulse 1.6s infinite;
+.clinic-result-page .current-location.location-active {
+  animation: clinicLocationPulse 1.6s infinite;
 }
 
-@keyframes locationPulse {
+@keyframes clinicLocationPulse {
   0% {
     box-shadow:
       0 2px 8px rgba(0, 0, 0, 0.3),
@@ -874,447 +878,330 @@
   }
 }
 
-
 /* =========================================================
-   MAP CONTROLS
+   MAP ZOOM CONTROLS
 ========================================================= */
 
-.map-controls {
+.clinic-result-page .map-controls {
   position: absolute;
-
+  z-index: 10;
   right: 18px;
   bottom: 18px;
-
   display: flex;
   flex-direction: column;
-
-  z-index: 10;
 }
 
-.map-controls button {
+.clinic-result-page .map-controls button {
   width: 40px;
   height: 40px;
-
   border: 1px solid #ddd;
-
-  background: white;
-
+  background: #fff;
   color: #344767;
-
   font-size: 22px;
-
-  cursor: pointer;
 }
 
-.map-controls button:first-child {
+.clinic-result-page .map-controls button:first-child {
   border-radius: 7px 7px 0 0;
 }
 
-.map-controls button:last-child {
+.clinic-result-page .map-controls button:last-child {
   border-top: none;
   border-radius: 0 0 7px 7px;
 }
 
-.map-controls button:hover {
+.clinic-result-page .map-controls button:hover {
   background: #f5f6f8;
 }
-
 
 /* =========================================================
    MAP LABELS
 ========================================================= */
 
-.map-label {
+.clinic-result-page .map-label {
   position: absolute;
-
-  background: rgba(255, 255, 255, 0.88);
-
   padding: 6px 10px;
-
   border-radius: 5px;
-
+  background: rgba(255, 255, 255, 0.88);
   color: #667085;
-
   font-size: 11px;
-
   pointer-events: none;
 }
 
-.label-one {
-  left: 12%;
+.clinic-result-page .label-one {
   top: 15%;
+  left: 12%;
 }
 
-.label-two {
-  left: 40%;
+.clinic-result-page .label-two {
   top: 78%;
+  left: 40%;
 }
 
-.label-three {
-  right: 10%;
+.clinic-result-page .label-three {
   top: 38%;
+  right: 10%;
 }
-
 
 /* =========================================================
    CLINIC LIST
 ========================================================= */
 
-.clinic-list-section {
+.clinic-result-page .clinic-list-section {
   margin-top: 30px;
 }
 
-.clinic-list-heading {
+.clinic-result-page .clinic-list-heading {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-
   margin-bottom: 18px;
 }
 
-.clinic-list-section h2 {
+.clinic-result-page .clinic-list-section h2 {
   margin: 0 0 5px;
-
   color: #263238;
-
   font-size: 22px;
 }
 
-.clinic-list-section p {
+.clinic-result-page .clinic-list-section p {
   margin: 0;
-
   color: #7b809a;
-
   font-size: 12px;
 }
 
-.clinic-list {
+.clinic-result-page .clinic-list {
   display: grid;
-
   gap: 14px;
 }
-
 
 /* =========================================================
    CLINIC CARD
 ========================================================= */
 
-.clinic-card {
-  min-width: 0;
-
-  background: white;
-
-  border-radius: 10px;
-
-  padding: 18px;
-
+.clinic-result-page .clinic-card {
   display: flex;
   align-items: center;
-
   gap: 18px;
-
-  box-shadow:
-    0 2px 10px rgba(0, 0, 0, 0.04);
-
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.clinic-card:hover {
-  transform: translateY(-1px);
-
-  box-shadow:
-    0 5px 18px rgba(0, 0, 0, 0.07);
-}
-
-.clinic-card-icon {
-  width: 52px;
-  height: 52px;
-
-  flex-shrink: 0;
-
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #edf0f5;
   border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.035);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
 
-  background: #eef3f8;
+.clinic-result-page .clinic-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+}
 
+.clinic-result-page .clinic-card-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #eef3f8;
   font-size: 24px;
 }
 
-.clinic-card-info {
+.clinic-result-page .clinic-card-info {
   flex: 1;
   min-width: 0;
 }
 
-.clinic-card-title {
+.clinic-result-page .clinic-card-title {
   display: flex;
   align-items: center;
-
+  flex-wrap: wrap;
   gap: 10px;
-
   margin-bottom: 5px;
 }
 
-.clinic-card-info h3 {
+.clinic-result-page .clinic-card-info h3 {
   margin: 0;
-
   color: #263238;
-
   font-size: 16px;
 }
 
-.clinic-type {
+.clinic-result-page .clinic-type {
   display: inline-flex;
-
   padding: 4px 8px;
-
   border-radius: 20px;
-
   background: #f1eef7;
-
   color: #69416f;
-
   font-size: 10px;
   font-weight: 600;
 }
 
-.clinic-card-info p {
+.clinic-result-page .clinic-card-info p {
   margin: 0 0 5px;
-
   color: #667085;
-
   font-size: 13px;
 }
 
-.clinic-card-info > span {
+.clinic-result-page .clinic-card-info > span {
   color: #7b809a;
-
   font-size: 12px;
 }
 
-.clinic-card > button {
+.clinic-result-page .clinic-card > button {
   flex-shrink: 0;
-
-  border: 1px solid #344767;
-
-  background: white;
-
-  color: #344767;
-
   padding: 10px 15px;
-
+  border: 1px solid #344767;
   border-radius: 7px;
-
-  cursor: pointer;
-
+  background: #fff;
+  color: #344767;
   font-size: 11px;
   font-weight: 700;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
-.clinic-card > button:hover {
+.clinic-result-page .clinic-card > button:hover {
   background: #344767;
-  color: white;
+  color: #fff;
 }
-
 
 /* =========================================================
    NO RESULTS
 ========================================================= */
 
-.no-results {
+.clinic-result-page .no-results {
   padding: 50px 20px;
-
-  background: white;
-
   border-radius: 12px;
-
+  background: #fff;
   text-align: center;
 }
 
-.no-results-icon {
-  font-size: 38px;
-
+.clinic-result-page .no-results-icon {
   margin-bottom: 10px;
+  font-size: 38px;
 }
 
-.no-results h3 {
+.clinic-result-page .no-results h3 {
   margin: 0 0 6px;
-
   color: #263238;
 }
 
-.no-results p {
+.clinic-result-page .no-results p {
   margin: 0 0 18px;
-
   color: #7b809a;
 }
 
-.no-results button {
-  height: 40px;
-
+.clinic-result-page .no-results button {
+  min-height: 40px;
   padding: 0 18px;
-
   border: none;
   border-radius: 7px;
-
   background: #344767;
-  color: white;
-
+  color: #fff;
   font-size: 11px;
   font-weight: 700;
-
-  cursor: pointer;
 }
 
-
-/* =========================================================
-   MOBILE SIDEBAR OVERLAY
-========================================================= */
-
-.sidebar-overlay {
-  display: none;
+.clinic-result-page .no-results button:hover {
+  background: #d63384;
 }
 
-
 /* =========================================================
-   TABLET
+   TABLET - 1200px
 ========================================================= */
 
-@media (max-width: 1100px) {
-  .hero-search {
+@media (max-width: 1200px) {
+  .clinic-result-page .pharmacy-sidebar {
+    width: 250px;
+  }
+
+  .clinic-result-page .main-content {
+    width: calc(100% - 250px);
+    margin-left: 250px;
+  }
+
+  .clinic-result-page .clinic-map-layout {
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 15px;
+  }
+
+  .clinic-result-page .clinic-filter-panel {
+    padding: 18px;
+  }
+
+  .clinic-result-page .hero-search {
     width: 150px;
   }
 
-  .hero-right {
-    gap: 10px;
+  .clinic-result-page .hero-right {
+    gap: 9px;
   }
 
-  .clinic-map-layout {
-    grid-template-columns: 270px minmax(0, 1fr);
-  }
-
-  .search-row {
-    grid-template-columns:
-      minmax(180px, 1fr)
-      minmax(180px, 1fr)
-      115px
-      115px;
+  .clinic-result-page .search-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 110px 110px;
   }
 }
 
-
 /* =========================================================
-   900px
+   TABLET - 1000px
 ========================================================= */
 
-@media (max-width: 900px) {
-  .clinic-map-layout {
+@media (max-width: 1000px) {
+  .clinic-result-page .hero-search {
+    display: none;
+  }
+
+  .clinic-result-page .clinic-map-layout {
     grid-template-columns: 1fr;
   }
 
-  .clinic-filter-panel {
+  .clinic-result-page .clinic-filter-panel {
     order: 1;
-  }
-
-  .clinic-map-container {
-    order: 2;
-  }
-
-  .clinic-filter-panel {
     display: grid;
-
     grid-template-columns: repeat(2, minmax(0, 1fr));
-
     column-gap: 25px;
   }
 
-  .filter-header {
+  .clinic-result-page .filter-header,
+  .clinic-result-page .apply-filter-btn {
     grid-column: 1 / -1;
   }
 
-  .apply-filter-btn {
-    grid-column: 1 / -1;
-  }
-
-  .filter-section {
+  .clinic-result-page .filter-section {
     border-top: none;
   }
 }
 
-
 /* =========================================================
-   768px
+   MOBILE SIDEBAR - 768px
 ========================================================= */
 
 @media (max-width: 768px) {
-  .clinic-hero {
-    min-height: auto;
-
-    padding:
-      8px
-      20px
-      30px;
-  }
-
-  .hero-topbar {
-    min-height: 58px;
-  }
-
-  .hero-search {
-    display: none;
-  }
-
-  .hero-title {
-    margin-top: 32px;
-  }
-
-  .search-row {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .clinic-results-page {
-    padding: 22px 20px 30px;
-  }
-
-  .results-toolbar {
-    align-items: flex-start;
-  }
-
-  .clinic-result-page .sidebar {
-    position: fixed;
-
+  .clinic-result-page .pharmacy-sidebar {
+    z-index: 1200;
     top: 0;
-    left: -280px;
-
-    width: 260px;
-    height: 100vh;
-
-    z-index: 1100;
-
-    transition: left 0.25s ease;
-  }
-
-  .clinic-result-page .sidebar.show {
     left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 85vw;
+    height: 100vh;
+    transform: translateX(-105%);
+    box-shadow: 8px 0 30px rgba(20, 15, 30, 0.12);
   }
 
-  .sidebar-overlay {
+  .clinic-result-page .pharmacy-sidebar.show {
+    transform: translateX(0);
+  }
+
+  .clinic-result-page .clinic-sidebar-overlay {
     display: block;
-
     position: fixed;
-
+    z-index: 1150;
     inset: 0;
-
-    z-index: 1050;
-
+    width: 100%;
+    height: 100%;
     border: none;
-
-    background: rgba(20, 15, 30, 0.42);
-
+    background: rgba(20, 15, 30, 0.45);
     cursor: pointer;
   }
 
@@ -1322,264 +1209,285 @@
     width: 100%;
     margin-left: 0;
   }
+
+  .clinic-result-page .dashboard-content {
+    padding: 12px;
+  }
+
+  .clinic-result-page .clinic-hero {
+    min-height: auto;
+    padding: 8px 20px 30px;
+  }
+
+  .clinic-result-page .hero-topbar {
+    min-height: 58px;
+  }
+
+  .clinic-result-page .hero-title {
+    margin-top: 32px;
+  }
+
+  .clinic-result-page .search-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .clinic-result-page .clinic-results-page {
+    padding: 22px 14px 30px;
+  }
+
+  .clinic-result-page .results-toolbar {
+    align-items: flex-start;
+  }
 }
 
-
 /* =========================================================
-   650px
+   SMALL MOBILE - 650px
 ========================================================= */
 
 @media (max-width: 650px) {
-  .hero-topbar {
+  .clinic-result-page .hero-topbar {
     align-items: flex-start;
   }
 
-  .hero-right {
+  .clinic-result-page .hero-right {
     gap: 7px;
   }
 
-  .hero-logout {
+  .clinic-result-page .hero-logout {
     font-size: 11px;
   }
 
-  .hero-icon {
+  .clinic-result-page .hero-icon {
     width: 31px;
     height: 31px;
-
     font-size: 13px;
   }
 
-  .hero-title h1 {
+  .clinic-result-page .hero-title h1 {
     font-size: 30px;
   }
 
-  .search-row {
+  .clinic-result-page .search-row {
     grid-template-columns: 1fr;
   }
 
-  .search-input,
-  .search-button {
+  .clinic-result-page .search-input,
+  .clinic-result-page .search-button {
     height: 46px;
   }
 
-  .clinic-filter-panel {
+  .clinic-result-page .clinic-filter-panel {
     display: block;
   }
 
-  .filter-section {
+  .clinic-result-page .filter-section {
     border-top: 1px solid #edf0f5;
   }
 
-  .filter-section:first-of-type {
+  .clinic-result-page .filter-section:first-of-type {
     border-top: none;
   }
 
-  .map-topbar {
+  .clinic-result-page .map-topbar {
     min-height: 65px;
     padding: 0 14px;
   }
 
-  .map-location-btn {
+  .clinic-result-page .map-location-btn {
     padding: 8px 10px;
   }
 
-  .clinic-card {
+  .clinic-result-page .clinic-card {
     align-items: flex-start;
     flex-wrap: wrap;
   }
 
-  .clinic-card-info {
+  .clinic-result-page .clinic-card-info {
     width: calc(100% - 70px);
     flex: none;
   }
 
-  .clinic-card > button {
+  .clinic-result-page .clinic-card > button {
     width: 100%;
   }
 
-  .clinic-card-title {
+  .clinic-result-page .clinic-card-title {
     flex-wrap: wrap;
   }
 }
 
-
 /* =========================================================
-   500px
+   PHONE - 500px
 ========================================================= */
 
 @media (max-width: 500px) {
-  .clinic-hero {
-    padding:
-      6px
-      14px
-      25px;
-
+  .clinic-result-page .clinic-hero {
+    padding: 6px 14px 25px;
     border-radius: 0 0 10px 10px;
   }
 
-  .hero-breadcrumb > div {
-    font-size: 10px;
+  .clinic-result-page .hero-breadcrumb > div {
     gap: 5px;
+    font-size: 10px;
   }
 
-  .hero-breadcrumb strong {
+  .clinic-result-page .hero-breadcrumb strong {
     font-size: 12px;
   }
 
-  .hero-hamburger {
+  .clinic-result-page .hero-hamburger {
     width: 36px;
     height: 36px;
   }
 
-  .hero-left {
+  .clinic-result-page .hero-left {
     gap: 8px;
   }
 
-  .hero-right {
+  .clinic-result-page .hero-right {
     gap: 5px;
   }
 
-  .hero-logout {
+  .clinic-result-page .hero-logout {
     font-size: 0;
   }
 
-  .hero-logout::before {
+  .clinic-result-page .hero-logout::before {
     content: "◉";
-
     font-size: 15px;
   }
 
-  .settings-icon {
+  .clinic-result-page .settings-icon {
     display: none;
   }
 
-  .hero-title {
+  .clinic-result-page .hero-title {
     margin-top: 28px;
   }
 
-  .hero-title h1 {
+  .clinic-result-page .hero-title h1 {
     font-size: 27px;
   }
 
-  .hero-title p {
+  .clinic-result-page .hero-title p {
+    margin-bottom: 20px;
     font-size: 12px;
     line-height: 1.5;
-
-    margin-bottom: 20px;
   }
 
-  .clinic-results-page {
-    padding:
-      18px
-      14px
-      25px;
+  .clinic-result-page .clinic-results-page {
+    padding: 18px 10px 25px;
   }
 
-  .results-toolbar {
+  .clinic-result-page .results-toolbar {
     flex-direction: column;
-
     align-items: stretch;
-
     margin-bottom: 15px;
   }
 
-  .results-current-btn {
+  .clinic-result-page .results-current-btn {
     width: 100%;
   }
 
-  .map-wrapper,
-  .map-area {
+  .clinic-result-page .map-wrapper,
+  .clinic-result-page .map-area {
     height: 420px;
   }
 
-  .map-topbar {
+  .clinic-result-page .map-topbar {
     flex-direction: column;
-
     align-items: flex-start;
-
-    padding:
-      12px 14px;
+    padding: 12px 14px;
   }
 
-  .map-location-btn {
+  .clinic-result-page .map-location-btn {
     width: 100%;
   }
 
-  .map-controls {
+  .clinic-result-page .map-controls {
     right: 12px;
     bottom: 12px;
   }
 
-  .map-label {
-    font-size: 9px;
+  .clinic-result-page .map-label {
     padding: 5px 7px;
+    font-size: 9px;
   }
 
-  .clinic-list-section {
+  .clinic-result-page .clinic-list-section {
     margin-top: 22px;
   }
 
-  .clinic-list-section h2 {
+  .clinic-result-page .clinic-list-section h2 {
     font-size: 19px;
   }
 
-  .clinic-card {
-    padding: 15px;
+  .clinic-result-page .clinic-card {
     gap: 12px;
+    padding: 15px;
   }
 
-  .clinic-card-icon {
+  .clinic-result-page .clinic-card-icon {
     width: 46px;
     height: 46px;
   }
 
-  .clinic-card-info {
+  .clinic-result-page .clinic-card-info {
     width: calc(100% - 60px);
   }
 
-  .clinic-card-info h3 {
+  .clinic-result-page .clinic-card-info h3 {
     font-size: 14px;
   }
 
-  .clinic-type {
+  .clinic-result-page .clinic-type {
     font-size: 9px;
   }
 }
 
-
 /* =========================================================
-   VERY SMALL MOBILE
+   VERY SMALL MOBILE - 380px
 ========================================================= */
 
 @media (max-width: 380px) {
-  .hero-breadcrumb {
+  .clinic-result-page .hero-breadcrumb {
     max-width: 125px;
   }
 
-  .hero-breadcrumb > div {
+  .clinic-result-page .hero-breadcrumb > div {
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .profile-icon {
+  .clinic-result-page .profile-icon {
     display: none;
   }
 
-  .hero-title h1 {
+  .clinic-result-page .hero-title h1 {
     font-size: 24px;
   }
 
-  .clinic-results-page {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  .clinic-filter-panel {
+  .clinic-result-page .clinic-filter-panel {
     padding: 16px;
   }
 
-  .map-wrapper,
-  .map-area {
+  .clinic-result-page .map-wrapper,
+  .clinic-result-page .map-area {
     height: 380px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .clinic-result-page *,
+  .clinic-result-page *::before,
+  .clinic-result-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

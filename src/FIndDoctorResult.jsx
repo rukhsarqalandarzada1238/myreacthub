@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./style.css";
 import "./FindDoctorResult.css";
 
@@ -11,6 +11,8 @@ const doctors = [
         gender: "Male",
         location: "Central District",
         ageGroup: "Adults",
+        condition: "Heart",
+        languages: ["English"],
         onlineScheduling: true,
         primaryCare: false,
     },
@@ -21,6 +23,8 @@ const doctors = [
         gender: "Female",
         location: "Medical Center",
         ageGroup: "Adults",
+        condition: "Skin",
+        languages: ["English"],
         onlineScheduling: true,
         primaryCare: false,
     },
@@ -31,6 +35,8 @@ const doctors = [
         gender: "Male",
         location: "Riverside",
         ageGroup: "Adults",
+        condition: "Neurology",
+        languages: ["English", "Urdu"],
         onlineScheduling: false,
         primaryCare: false,
     },
@@ -41,6 +47,8 @@ const doctors = [
         gender: "Female",
         location: "Central District",
         ageGroup: "Children",
+        condition: "Children's health",
+        languages: ["English"],
         onlineScheduling: true,
         primaryCare: false,
     },
@@ -51,6 +59,8 @@ const doctors = [
         gender: "Male",
         location: "North Avenue",
         ageGroup: "Adults",
+        condition: "General health",
+        languages: ["English"],
         onlineScheduling: true,
         primaryCare: true,
     },
@@ -69,134 +79,126 @@ const initialFilters = {
 
 function FindDoctorResult() {
     const navigate = useNavigate();
+    const location = useLocation();
 
-    /* =========================
-       SIDEBAR
-    ========================= */
+    const queryParams = new URLSearchParams(location.search);
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    /* =========================
-       SEARCH
-    ========================= */
+    const [search, setSearch] = useState(
+        queryParams.get("doctor") || ""
+    );
 
-    const [search, setSearch] = useState("");
-    const [zipCode, setZipCode] = useState("");
-
-    /* =========================
-       FILTERS
-    ========================= */
+    const [zipCode, setZipCode] = useState(
+        queryParams.get("location") || ""
+    );
 
     const [specialty, setSpecialty] = useState("");
     const [filters, setFilters] = useState(initialFilters);
 
-    /* =========================
-       VIEW / SORT
-    ========================= */
-
     const [viewMode, setViewMode] = useState("map");
     const [sortBy, setSortBy] = useState("relevance");
-
-    /* =========================
-       MAP
-    ========================= */
 
     const [selectedDoctor, setSelectedDoctor] = useState(null);
     const [currentLocation, setCurrentLocation] = useState(false);
     const [mapScale, setMapScale] = useState(1);
-
-    /* =========================
-       NAVIGATION
-    ========================= */
 
     const goTo = (path) => {
         setSidebarOpen(false);
         navigate(path);
     };
 
-    /* =========================
-       FILTER HANDLER
-    ========================= */
-
     const handleFilterChange = (filterName) => {
-        setFilters((previous) => ({
-            ...previous,
-            [filterName]: !previous[filterName],
-        }));
-    };
+        setFilters((previous) => {
+            const updated = {
+                ...previous,
+                [filterName]: !previous[filterName],
+            };
 
-    /* =========================
-       FILTER DOCTORS
-    ========================= */
+            if (filterName === "allAges" && updated.allAges) {
+                updated.children = false;
+                updated.adults = false;
+            }
+
+            if (
+                (filterName === "children" || filterName === "adults") &&
+                updated[filterName]
+            ) {
+                updated.allAges = false;
+            }
+
+            return updated;
+        });
+    };
 
     const filteredDoctors = useMemo(() => {
         let results = [...doctors];
 
-        const searchValue = search.toLowerCase().trim();
-        const locationValue = zipCode.toLowerCase().trim();
+        const searchValue = search.trim().toLowerCase();
+        const locationValue = zipCode.trim().toLowerCase();
 
-        /* SEARCH */
         if (searchValue) {
-            results = results.filter((doctor) => {
-                return (
-                    doctor.name.toLowerCase().includes(searchValue) ||
-                    doctor.specialty.toLowerCase().includes(searchValue)
-                );
-            });
+            results = results.filter((doctor) =>
+                `${doctor.name} ${doctor.specialty} ${doctor.condition}`
+                    .toLowerCase()
+                    .includes(searchValue)
+            );
         }
 
-        /* SPECIALTY */
         if (specialty) {
             results = results.filter(
                 (doctor) => doctor.specialty === specialty
             );
         }
 
-        /* LOCATION */
         if (locationValue) {
             results = results.filter((doctor) =>
                 doctor.location.toLowerCase().includes(locationValue)
             );
         }
 
-        /* GENDER */
         if (filters.gender) {
-            results = results.filter((doctor) => doctor.gender === "Female");
+            results = results.filter(
+                (doctor) => doctor.gender === "Female"
+            );
         }
 
-        /* CHILDREN */
+        if (filters.condition) {
+            results = results.filter((doctor) => Boolean(doctor.condition));
+        }
+
+        if (filters.languages) {
+            results = results.filter(
+                (doctor) => doctor.languages.length > 0
+            );
+        }
+
         if (filters.children) {
             results = results.filter(
                 (doctor) => doctor.ageGroup === "Children"
             );
         }
 
-        /* ADULTS */
         if (filters.adults) {
             results = results.filter(
                 (doctor) => doctor.ageGroup === "Adults"
             );
         }
 
-        /* ONLINE */
         if (filters.onlineScheduling) {
             results = results.filter(
                 (doctor) => doctor.onlineScheduling
             );
         }
 
-        /* PRIMARY CARE */
         if (filters.primaryCare) {
             results = results.filter(
                 (doctor) => doctor.primaryCare
             );
         }
 
-        /* SORT */
         if (sortBy === "name") {
-            results.sort((a, b) =>
-                a.name.localeCompare(b.name)
-            );
+            results.sort((a, b) => a.name.localeCompare(b.name));
         }
 
         if (sortBy === "specialty") {
@@ -206,17 +208,7 @@ function FindDoctorResult() {
         }
 
         return results;
-    }, [
-        search,
-        zipCode,
-        specialty,
-        filters,
-        sortBy,
-    ]);
-
-    /* =========================
-       SEARCH
-    ========================= */
+    }, [search, zipCode, specialty, filters, sortBy]);
 
     const handleSearch = () => {
         setSearch(search.trim());
@@ -229,95 +221,89 @@ function FindDoctorResult() {
         }
     };
 
-    /* =========================
-       CLEAR FILTERS
-    ========================= */
-
     const clearDoctorFilters = () => {
         setSpecialty("");
-        setFilters(initialFilters);
+        setFilters({ ...initialFilters });
     };
-
-    /* =========================
-       SELECT DOCTOR
-    ========================= */
 
     const selectDoctor = (id) => {
         setSelectedDoctor(id);
-
-        setTimeout(() => {
-            setSelectedDoctor(null);
-        }, 1500);
     };
-
-    /* =========================
-       CURRENT LOCATION
-    ========================= */
 
     const showCurrentLocation = () => {
         setCurrentLocation(true);
     };
 
-    /* =========================
-       MAP ZOOM
-    ========================= */
-
     const zoomIn = () => {
-        setMapScale((previous) =>
-            Math.min(previous + 0.1, 2)
-        );
+        setMapScale((previous) => Math.min(previous + 0.1, 2));
     };
 
     const zoomOut = () => {
-        setMapScale((previous) =>
-            Math.max(previous - 0.1, 0.7)
-        );
+        setMapScale((previous) => Math.max(previous - 0.1, 0.7));
     };
+
+    const renderDoctorCard = (doctor) => (
+        <article className="doctor-result-card" key={doctor.id}>
+            <div className="doctor-result-avatar">
+                {doctor.gender === "Female" ? "DR" : "DR"}
+            </div>
+
+            <div className="doctor-result-info">
+                <h3>{doctor.name}</h3>
+                <p>{doctor.specialty}</p>
+                <span>📍 {doctor.location}</span>
+            </div>
+
+            <button
+                type="button"
+                onClick={() => {
+                    setViewMode("map");
+                    setSelectedDoctor(doctor.id);
+                }}
+            >
+                VIEW ON MAP
+            </button>
+        </article>
+    );
 
     return (
         <div className="dashboard-body doctor-results-page-wrapper">
-
-            {/* ==================================================
-                SIDEBAR
-            ================================================== */}
-
+            {/* SIDEBAR */}
             <aside
-                className={`sidebar ${
-                    sidebarOpen ? "show" : ""
-                }`}
                 id="sidebar"
+                className={`sidebar ${sidebarOpen ? "show" : ""}`}
             >
                 <div className="logo-area">
-                    <div className="logo-icon">
-                        M
-                    </div>
+                    <div className="logo-icon">M</div>
+                    <span>MyPatientHUB</span>
 
-                    <span>
-                        MyPatientHUB
-                    </span>
+                    <button
+                        type="button"
+                        className="doctor-sidebar-close"
+                        aria-label="Close sidebar"
+                        onClick={() => setSidebarOpen(false)}
+                    >
+                        ×
+                    </button>
                 </div>
 
                 <nav className="sidebar-menu">
-
                     <button
                         type="button"
                         className="menu-item"
                         onClick={() => goTo("/dashboard")}
                     >
                         <span className="menu-icon">▣</span>
-                        <span className="menu-text">
-                            Dashboard
-                        </span>
+                        <span className="menu-text">Dashboard</span>
                     </button>
 
                     <button
                         type="button"
                         className="menu-item"
+                        onClick={() => goTo("/appointments")}
                     >
                         <span className="menu-icon">▤</span>
-                        <span className="menu-text">
-                            Appointments
-                        </span>
+                        <span className="menu-text">Appointments</span>
                     </button>
 
                     <button
@@ -326,9 +312,7 @@ function FindDoctorResult() {
                         onClick={() => goTo("/find-doctor")}
                     >
                         <span className="menu-icon">♟</span>
-                        <span className="menu-text">
-                            Find Doctor
-                        </span>
+                        <span className="menu-text">Find Doctor</span>
                     </button>
 
                     <button
@@ -337,73 +321,62 @@ function FindDoctorResult() {
                         onClick={() => goTo("/find-clinic")}
                     >
                         <span className="menu-icon">▦</span>
-                        <span className="menu-text">
-                            Find Clinic
-                        </span>
+                        <span className="menu-text">Find Clinic</span>
                     </button>
 
                     <button
                         type="button"
                         className="menu-item"
+                        onClick={() => goTo("/chat")}
                     >
                         <span className="menu-icon">▣</span>
-                        <span className="menu-text">
-                            Chat
-                        </span>
+                        <span className="menu-text">Chat</span>
                     </button>
 
-                    {/* MARKETPLACE FIX */}
                     <button
                         type="button"
                         className="menu-item"
                         onClick={() => goTo("/marketplace")}
                     >
                         <span className="menu-icon">▤</span>
-                        <span className="menu-text">
-                            Find Market-Place
-                        </span>
+                        <span className="menu-text">Find Market-Place</span>
                     </button>
 
                     <button
                         type="button"
                         className="menu-item"
+                        onClick={() => goTo("/find-pharmacy")}
                     >
                         <span className="menu-icon">▦</span>
-                        <span className="menu-text">
-                            Find Pharmacy
-                        </span>
+                        <span className="menu-text">Find Pharmacy</span>
                     </button>
 
                     <button
                         type="button"
                         className="menu-item"
+                        onClick={() => goTo("/dependents")}
                     >
                         <span className="menu-icon">▤</span>
-                        <span className="menu-text">
-                            My Dependents
-                        </span>
+                        <span className="menu-text">My Dependents</span>
                     </button>
 
                     <button
                         type="button"
                         className="menu-item"
+                        onClick={() => goTo("/my-account")}
                     >
                         <span className="menu-icon">⚒</span>
-                        <span className="menu-text">
-                            My Account
-                        </span>
+                        <span className="menu-text">My Account</span>
                     </button>
 
                     <button
                         type="button"
                         className="menu-item"
+                        onClick={() => goTo("/settings")}
                     >
                         <span className="menu-icon">⚙</span>
-                        <span className="menu-text">
-                            Settings
-                        </span>
+                        <span className="menu-text">Settings</span>
                     </button>
-
                 </nav>
 
                 <div className="help-box">
@@ -411,53 +384,35 @@ function FindDoctorResult() {
                 </div>
             </aside>
 
-            {/* MOBILE OVERLAY */}
-
             {sidebarOpen && (
                 <div
                     className="doctor-sidebar-overlay"
                     onClick={() => setSidebarOpen(false)}
+                    aria-hidden="true"
                 />
             )}
 
-            {/* ==================================================
-                MAIN CONTENT
-            ================================================== */}
-
+            {/* MAIN CONTENT */}
             <main className="main-content">
-
                 <section className="dashboard-content">
-
-                    {/* ==================================================
-                        PURPLE HERO
-                    ================================================== */}
-
+                    {/* HERO */}
                     <section className="doctor-results-hero">
-
                         <div className="hero-decoration hero-decoration-one" />
                         <div className="hero-decoration hero-decoration-two" />
 
-                        {/* TOP BAR */}
-
                         <div className="doctor-result-topbar">
-
                             <div className="doctor-result-top-left">
-
                                 <button
                                     type="button"
                                     className="result-hamburger"
-                                    onClick={() =>
-                                        setSidebarOpen(
-                                            !sidebarOpen
-                                        )
-                                    }
-                                    aria-label="Open menu"
+                                    onClick={() => setSidebarOpen((open) => !open)}
+                                    aria-label="Toggle menu"
+                                    aria-expanded={sidebarOpen}
                                 >
                                     ☰
                                 </button>
 
                                 <div className="result-breadcrumb">
-
                                     <div className="breadcrumb-line">
                                         <span>⌂</span>
                                         <span>/</span>
@@ -466,111 +421,66 @@ function FindDoctorResult() {
                                         <span>Results</span>
                                     </div>
 
-                                    <strong>
-                                        Find Doctors
-                                    </strong>
-
+                                    <strong>Find Doctors</strong>
                                 </div>
-
                             </div>
 
                             <div className="doctor-result-top-right">
-
                                 <div className="top-search">
-
                                     <span>⌕</span>
-
                                     <input
                                         type="text"
                                         placeholder="Type here..."
                                         value={search}
                                         onChange={(event) =>
-                                            setSearch(
-                                                event.target.value
-                                            )
+                                            setSearch(event.target.value)
                                         }
-                                        onKeyDown={
-                                            handleSearchKeyDown
-                                        }
+                                        onKeyDown={handleSearchKeyDown}
                                     />
-
                                 </div>
 
                                 <button
                                     type="button"
                                     className="logout-button"
-                                    onClick={() =>
-                                        goTo("/login")
-                                    }
+                                    onClick={() => goTo("/login")}
                                 >
                                     ◉ Log out
                                 </button>
 
-                                <span className="top-icon">
-                                    ⚙
-                                </span>
-
-                                <span className="top-icon">
-                                    ♟
-                                </span>
-
+                                <span className="top-icon">⚙</span>
+                                <span className="top-icon">♟</span>
                             </div>
-
                         </div>
 
-                        {/* HERO CONTENT */}
-
                         <div className="doctor-result-hero-content">
-
-                            <h1>
-                                Find Doctors
-                            </h1>
-
-                            <p>
-                                Search doctors and schedule an
-                                appointment
-                            </p>
+                            <h1>Find Doctors</h1>
+                            <p>Search doctors and schedule an appointment</p>
 
                             <div className="hero-search-row">
-
                                 <div className="hero-search-input">
-
                                     <span>⌕</span>
-
                                     <input
                                         type="text"
                                         placeholder="Doctor name or specialty"
                                         value={search}
                                         onChange={(event) =>
-                                            setSearch(
-                                                event.target.value
-                                            )
+                                            setSearch(event.target.value)
                                         }
-                                        onKeyDown={
-                                            handleSearchKeyDown
-                                        }
+                                        onKeyDown={handleSearchKeyDown}
                                     />
-
                                 </div>
 
                                 <div className="hero-search-input">
-
                                     <span>📍</span>
-
                                     <input
                                         type="text"
                                         placeholder="ZIP Code or Neighborhood"
                                         value={zipCode}
                                         onChange={(event) =>
-                                            setZipCode(
-                                                event.target.value
-                                            )
+                                            setZipCode(event.target.value)
                                         }
-                                        onKeyDown={
-                                            handleSearchKeyDown
-                                        }
+                                        onKeyDown={handleSearchKeyDown}
                                     />
-
                                 </div>
 
                                 <button
@@ -580,384 +490,212 @@ function FindDoctorResult() {
                                 >
                                     SEARCH
                                 </button>
-
                             </div>
-
                         </div>
-
                     </section>
 
-                    {/* ==================================================
-                        RESULTS
-                    ================================================== */}
-
+                    {/* RESULTS */}
                     <section className="doctor-results-content">
-
-                        {/* RESULTS TOOLBAR */}
-
                         <div className="results-toolbar">
-
                             <div className="results-heading">
-
-                                <h2>
-                                    Doctors Near You
-                                </h2>
-
-                                <p>
-                                    {filteredDoctors.length}{" "}
-                                    doctors found
-                                </p>
-
+                                <h2>Doctors Near You</h2>
+                                <p>{filteredDoctors.length} doctors found</p>
                             </div>
 
                             <div className="results-toolbar-actions">
-
-                                {/* MAP / LIST */}
-
                                 <div className="view-switcher">
-
                                     <button
                                         type="button"
-                                        className={
-                                            viewMode === "map"
-                                                ? "active"
-                                                : ""
-                                        }
-                                        onClick={() =>
-                                            setViewMode("map")
-                                        }
+                                        className={viewMode === "map" ? "active" : ""}
+                                        onClick={() => setViewMode("map")}
                                     >
                                         Map
                                     </button>
 
                                     <button
                                         type="button"
-                                        className={
-                                            viewMode === "list"
-                                                ? "active"
-                                                : ""
-                                        }
-                                        onClick={() =>
-                                            setViewMode("list")
-                                        }
+                                        className={viewMode === "list" ? "active" : ""}
+                                        onClick={() => setViewMode("list")}
                                     >
                                         List
                                     </button>
-
                                 </div>
 
-                                {/* SORT */}
-
                                 <div className="sort-wrapper">
-
-                                    <label htmlFor="doctor-sort">
-                                        Sort By
-                                    </label>
-
+                                    <label htmlFor="doctor-sort">Sort By</label>
                                     <select
                                         id="doctor-sort"
                                         value={sortBy}
                                         onChange={(event) =>
-                                            setSortBy(
-                                                event.target.value
-                                            )
+                                            setSortBy(event.target.value)
                                         }
                                     >
-                                        <option value="relevance">
-                                            Relevance
-                                        </option>
-
-                                        <option value="name">
-                                            Name
-                                        </option>
-
-                                        <option value="specialty">
-                                            Specialty
-                                        </option>
+                                        <option value="relevance">Relevance</option>
+                                        <option value="name">Name</option>
+                                        <option value="specialty">Specialty</option>
                                     </select>
-
                                 </div>
-
                             </div>
-
                         </div>
 
-                        {/* ==================================================
-                            MAP VIEW
-                        ================================================== */}
-
+                        {/* MAP VIEW */}
                         {viewMode === "map" && (
                             <div className="doctor-map-layout">
-
-                                {/* FILTER PANEL */}
-
                                 <aside className="doctor-filter-panel">
-
                                     <div className="filter-header">
-
-                                        <h2>
-                                            Filters
-                                        </h2>
-
+                                        <h2>Filters</h2>
                                         <button
                                             type="button"
-                                            onClick={
-                                                clearDoctorFilters
-                                            }
+                                            onClick={clearDoctorFilters}
                                         >
                                             Clear
                                         </button>
-
                                     </div>
 
-                                    {/* SPECIALTY */}
-
                                     <div className="filter-section">
-
-                                        <h3>
-                                            Specialty
-                                        </h3>
-
+                                        <h3>Specialty</h3>
                                         <select
                                             value={specialty}
                                             onChange={(event) =>
-                                                setSpecialty(
-                                                    event.target.value
-                                                )
+                                                setSpecialty(event.target.value)
                                             }
                                         >
-                                            <option value="">
-                                                All Specialties
-                                            </option>
-
-                                            <option value="Cardiology">
-                                                Cardiology
-                                            </option>
-
-                                            <option value="Dermatology">
-                                                Dermatology
-                                            </option>
-
-                                            <option value="Neurology">
-                                                Neurology
-                                            </option>
-
-                                            <option value="Pediatrics">
-                                                Pediatrics
-                                            </option>
-
+                                            <option value="">All Specialties</option>
+                                            <option value="Cardiology">Cardiology</option>
+                                            <option value="Dermatology">Dermatology</option>
+                                            <option value="Neurology">Neurology</option>
+                                            <option value="Pediatrics">Pediatrics</option>
                                             <option value="General Medicine">
                                                 General Medicine
                                             </option>
                                         </select>
-
                                     </div>
 
-                                    {/* FILTER BY */}
-
                                     <div className="filter-section">
-
-                                        <h3>
-                                            Filter By
-                                        </h3>
+                                        <h3>Filter By</h3>
 
                                         <label className="checkbox-row">
                                             <input
                                                 type="checkbox"
-                                                checked={
-                                                    filters.gender
-                                                }
-                                                onChange={() =>
-                                                    handleFilterChange(
-                                                        "gender"
-                                                    )
-                                                }
+                                                checked={filters.gender}
+                                                onChange={() => handleFilterChange("gender")}
                                             />
-                                            <span>
-                                                Female Doctors
-                                            </span>
+                                            <span>Female Doctors</span>
                                         </label>
 
                                         <label className="checkbox-row">
                                             <input
                                                 type="checkbox"
-                                                checked={
-                                                    filters.condition
-                                                }
+                                                checked={filters.condition}
                                                 onChange={() =>
-                                                    handleFilterChange(
-                                                        "condition"
-                                                    )
+                                                    handleFilterChange("condition")
                                                 }
                                             />
-                                            <span>
-                                                Condition
-                                            </span>
+                                            <span>Condition Available</span>
                                         </label>
 
                                         <label className="checkbox-row">
                                             <input
                                                 type="checkbox"
-                                                checked={
-                                                    filters.languages
-                                                }
+                                                checked={filters.languages}
                                                 onChange={() =>
-                                                    handleFilterChange(
-                                                        "languages"
-                                                    )
+                                                    handleFilterChange("languages")
                                                 }
                                             />
-                                            <span>
-                                                Languages
-                                            </span>
+                                            <span>Languages Available</span>
                                         </label>
-
                                     </div>
 
-                                    {/* AGE */}
-
                                     <div className="filter-section">
-
-                                        <h3>
-                                            Patient Age
-                                        </h3>
+                                        <h3>Patient Age</h3>
 
                                         <label className="checkbox-row">
                                             <input
                                                 type="checkbox"
-                                                checked={
-                                                    filters.allAges
-                                                }
+                                                checked={filters.allAges}
                                                 onChange={() =>
-                                                    handleFilterChange(
-                                                        "allAges"
-                                                    )
+                                                    handleFilterChange("allAges")
                                                 }
                                             />
-                                            <span>
-                                                All Ages
-                                            </span>
+                                            <span>All Ages</span>
                                         </label>
 
                                         <label className="checkbox-row">
                                             <input
                                                 type="checkbox"
-                                                checked={
-                                                    filters.children
-                                                }
+                                                checked={filters.children}
                                                 onChange={() =>
-                                                    handleFilterChange(
-                                                        "children"
-                                                    )
+                                                    handleFilterChange("children")
                                                 }
                                             />
-                                            <span>
-                                                Children
-                                            </span>
+                                            <span>Children</span>
                                         </label>
 
                                         <label className="checkbox-row">
                                             <input
                                                 type="checkbox"
-                                                checked={
-                                                    filters.adults
-                                                }
+                                                checked={filters.adults}
                                                 onChange={() =>
-                                                    handleFilterChange(
-                                                        "adults"
-                                                    )
+                                                    handleFilterChange("adults")
                                                 }
                                             />
-                                            <span>
-                                                Adults
-                                            </span>
+                                            <span>Adults</span>
                                         </label>
-
                                     </div>
 
-                                    {/* VIEW ONLY */}
-
                                     <div className="filter-section">
-
-                                        <h3>
-                                            View Only
-                                        </h3>
+                                        <h3>View Only</h3>
 
                                         <label className="checkbox-row">
                                             <input
                                                 type="checkbox"
-                                                checked={
-                                                    filters.onlineScheduling
-                                                }
+                                                checked={filters.onlineScheduling}
                                                 onChange={() =>
                                                     handleFilterChange(
                                                         "onlineScheduling"
                                                     )
                                                 }
                                             />
-                                            <span>
-                                                Online Scheduling
-                                            </span>
+                                            <span>Online Scheduling</span>
                                         </label>
 
                                         <label className="checkbox-row">
                                             <input
                                                 type="checkbox"
-                                                checked={
-                                                    filters.primaryCare
-                                                }
+                                                checked={filters.primaryCare}
                                                 onChange={() =>
-                                                    handleFilterChange(
-                                                        "primaryCare"
-                                                    )
+                                                    handleFilterChange("primaryCare")
                                                 }
                                             />
-                                            <span>
-                                                Primary Care
-                                            </span>
+                                            <span>Primary Care</span>
                                         </label>
-
                                     </div>
 
                                     <button
                                         type="button"
                                         className="apply-filter-btn"
-                                        onClick={() =>
-                                            setViewMode("map")
-                                        }
+                                        onClick={() => setViewMode("map")}
                                     >
                                         APPLY FILTER
                                     </button>
-
                                 </aside>
 
-                                {/* MAP */}
-
                                 <section className="doctor-map-container">
-
                                     <div className="map-topbar">
-
                                         <div>
-                                            <strong>
-                                                Doctors Near You
-                                            </strong>
-
+                                            <strong>Doctors Near You</strong>
                                             <span>
-                                                {filteredDoctors.length}{" "}
-                                                doctors found
+                                                {filteredDoctors.length} doctors found
                                             </span>
                                         </div>
 
                                         <button
                                             type="button"
                                             className="map-location-btn"
-                                            onClick={
-                                                showCurrentLocation
-                                            }
+                                            onClick={showCurrentLocation}
                                         >
                                             📍 My Location
                                         </button>
-
                                     </div>
 
                                     <div
@@ -966,59 +704,43 @@ function FindDoctorResult() {
                                             backgroundSize: `${180 * mapScale}px ${180 * mapScale}px`,
                                         }}
                                     >
-
-                                        {/* ROADS */}
-
                                         <div className="fake-road road-a" />
                                         <div className="fake-road road-b" />
                                         <div className="fake-road road-c" />
                                         <div className="fake-road road-d" />
 
-                                        {/* LABELS */}
-
                                         <div className="map-area-label label-a">
                                             Central District
                                         </div>
-
                                         <div className="map-area-label label-b">
                                             Medical Center
                                         </div>
-
                                         <div className="map-area-label label-c">
                                             Riverside
                                         </div>
 
-                                        {/* MARKERS */}
-
-                                        {doctors.map((doctor, index) => (
+                                        {filteredDoctors.map((doctor) => (
                                             <button
                                                 type="button"
                                                 key={doctor.id}
                                                 className={`doctor-marker marker-${String.fromCharCode(
-                                                    97 + index
+                                                    96 + doctor.id
                                                 )} ${
-                                                    selectedDoctor ===
-                                                    doctor.id
+                                                    selectedDoctor === doctor.id
                                                         ? "selected-marker"
                                                         : ""
                                                 }`}
                                                 onClick={() =>
-                                                    selectDoctor(
-                                                        doctor.id
-                                                    )
+                                                    selectDoctor(doctor.id)
                                                 }
-                                                title={
-                                                    doctor.name
-                                                }
+                                                title={`${doctor.name} — ${doctor.specialty}`}
+                                                aria-label={`Select ${doctor.name}`}
                                             >
-                                                {doctor.gender ===
-                                                "Female"
+                                                {doctor.gender === "Female"
                                                     ? "👩‍⚕️"
                                                     : "👨‍⚕️"}
                                             </button>
                                         ))}
-
-                                        {/* CURRENT LOCATION */}
 
                                         <div
                                             className={`fake-current-location ${
@@ -1028,245 +750,105 @@ function FindDoctorResult() {
                                             }`}
                                         />
 
-                                        {/* MAP CONTROLS */}
-
                                         <div className="fake-map-controls">
-
                                             <button
                                                 type="button"
                                                 onClick={zoomIn}
+                                                aria-label="Zoom in"
                                             >
                                                 +
                                             </button>
-
                                             <button
                                                 type="button"
                                                 onClick={zoomOut}
+                                                aria-label="Zoom out"
                                             >
                                                 −
                                             </button>
-
                                         </div>
-
                                     </div>
-
                                 </section>
-
                             </div>
                         )}
 
-                        {/* ==================================================
-                            LIST VIEW
-                        ================================================== */}
-
+                        {/* LIST VIEW */}
                         {viewMode === "list" && (
                             <section className="doctor-list-section list-only-section">
-
                                 <div className="doctor-list">
-
                                     {filteredDoctors.length === 0 ? (
                                         <div className="no-doctors">
-                                            No doctors found.
+                                            No doctors found. Try changing your
+                                            search or filters.
                                         </div>
                                     ) : (
-                                        filteredDoctors.map(
-                                            (doctor) => (
-                                                <div
-                                                    className="doctor-result-card"
-                                                    key={doctor.id}
-                                                >
-
-                                                    <div className="doctor-result-avatar">
-                                                        {doctor.gender ===
-                                                        "Female"
-                                                            ? "SL"
-                                                            : "DR"}
-                                                    </div>
-
-                                                    <div className="doctor-result-info">
-
-                                                        <h3>
-                                                            {
-                                                                doctor.name
-                                                            }
-                                                        </h3>
-
-                                                        <p>
-                                                            {
-                                                                doctor.specialty
-                                                            }
-                                                        </p>
-
-                                                        <span>
-                                                            📍{" "}
-                                                            {
-                                                                doctor.location
-                                                            }
-                                                        </span>
-
-                                                    </div>
-
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => {
-                                                            setViewMode(
-                                                                "map"
-                                                            );
-                                                            selectDoctor(
-                                                                doctor.id
-                                                            );
-                                                        }}
-                                                    >
-                                                        VIEW ON MAP
-                                                    </button>
-
-                                                </div>
-                                            )
-                                        )
+                                        filteredDoctors.map(renderDoctorCard)
                                     )}
-
                                 </div>
-
                             </section>
                         )}
 
-                        {/* ==================================================
-                            AVAILABLE DOCTORS UNDER MAP
-                        ================================================== */}
-
+                        {/* AVAILABLE DOCTORS */}
                         {viewMode === "map" && (
                             <section className="doctor-list-section">
-
                                 <div className="list-section-header">
-
                                     <div>
-                                        <h2>
-                                            Available Doctors
-                                        </h2>
-
+                                        <h2>Available Doctors</h2>
                                         <p>
-                                            Browse doctors from the map
-                                            results
+                                            Browse doctors from the map results
                                         </p>
                                     </div>
 
                                     <button
                                         type="button"
-                                        onClick={() =>
-                                            setViewMode("list")
-                                        }
+                                        onClick={() => setViewMode("list")}
                                     >
                                         View All
                                     </button>
-
                                 </div>
 
                                 <div className="doctor-list">
-
                                     {filteredDoctors.length === 0 ? (
                                         <div className="no-doctors">
-                                            No doctors found.
+                                            No doctors found. Try changing your
+                                            search or filters.
                                         </div>
                                     ) : (
-                                        filteredDoctors.map(
-                                            (doctor) => (
-                                                <div
-                                                    className="doctor-result-card"
-                                                    key={doctor.id}
-                                                >
-
-                                                    <div className="doctor-result-avatar">
-                                                        {doctor.gender ===
-                                                        "Female"
-                                                            ? "SL"
-                                                            : "DR"}
-                                                    </div>
-
-                                                    <div className="doctor-result-info">
-
-                                                        <h3>
-                                                            {
-                                                                doctor.name
-                                                            }
-                                                        </h3>
-
-                                                        <p>
-                                                            {
-                                                                doctor.specialty
-                                                            }
-                                                        </p>
-
-                                                        <span>
-                                                            📍{" "}
-                                                            {
-                                                                doctor.location
-                                                            }
-                                                        </span>
-
-                                                    </div>
-
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => {
-                                                            setViewMode(
-                                                                "map"
-                                                            );
-                                                            selectDoctor(
-                                                                doctor.id
-                                                            );
-                                                        }}
-                                                    >
-                                                        VIEW ON MAP
-                                                    </button>
-
-                                                </div>
-                                            )
-                                        )
+                                        filteredDoctors.map(renderDoctorCard)
                                     )}
-
                                 </div>
-
                             </section>
                         )}
-
                     </section>
 
-                    {/* ==================================================
-                        FOOTER
-                    ================================================== */}
-
+                    {/* FOOTER */}
                     <footer className="dashboard-footer">
-
                         <p>
-                            ©️ 2026, made with ♥️ by
-                            MyPatientHUB for a better web.
+                            © 2026, made with ♥ by MyPatientHUB for a better web.
                         </p>
 
                         <div>
                             <button
                                 type="button"
-                                onClick={() =>
-                                    goTo("/dashboard")
-                                }
+                                onClick={() => goTo("/dashboard")}
                             >
                                 MyPatientHUB
                             </button>
-
-                            <button type="button">
+                            <button
+                                type="button"
+                                onClick={() => goTo("/about")}
+                            >
                                 About Us
                             </button>
-
-                            <button type="button">
+                            <button
+                                type="button"
+                                onClick={() => goTo("/blog")}
+                            >
                                 Blog
                             </button>
                         </div>
-
                     </footer>
-
                 </section>
-
             </main>
-
         </div>
     );
 }
