@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -56,7 +57,7 @@ const healthData = [
 ];
 
 /* =========================
-   REAL DONUT CHART
+   PROMOTION DONUT CHART
 ========================= */
 
 function PromotionChart({ data }) {
@@ -95,7 +96,7 @@ function PromotionChart({ data }) {
 }
 
 /* =========================
-   LEGEND — ORIGINAL CSS
+   CHART LEGEND
 ========================= */
 
 function ChartLegend({ data }) {
@@ -134,7 +135,7 @@ function Dashboard() {
     { label: "Chat", icon: "▤", path: "/chat" },
     { label: "Find Market-Place", icon: "▧", path: "/marketplace" },
     { label: "Find Pharmacy", icon: "✚", path: "/find-pharmacy" },
-  { label: "My Dependents", icon: "♧", path: "/my-dependents" },
+    { label: "My Dependents", icon: "♧", path: "/my-dependents" },
     { label: "My Account", icon: "♙", path: "/account" },
     { label: "Settings", icon: "⚙", path: "/settings" },
   ];
@@ -151,7 +152,6 @@ function Dashboard() {
         />
       )}
 
-<<<<<<< HEAD
       {/* SIDEBAR */}
       <aside
         className={`pharmacy-sidebar ${sidebarOpen ? "show" : ""}`}
@@ -161,11 +161,6 @@ function Dashboard() {
             M
             <span>HUB</span>
           </div>
-=======
-     
-      <aside className={`sidebar ${sidebarOpen ? "show" : ""}`}>
->>>>>>> 61803cb26f6ca6ecf4261761a99606df95b44066
-
           <div className="logo-text">MyPatientHUB</div>
         </div>
 
