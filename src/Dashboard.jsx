@@ -151,6 +151,7 @@ function Dashboard() {
         />
       )}
 
+<<<<<<< HEAD
       {/* SIDEBAR */}
       <aside
         className={`pharmacy-sidebar ${sidebarOpen ? "show" : ""}`}
@@ -160,6 +161,10 @@ function Dashboard() {
             M
             <span>HUB</span>
           </div>
+=======
+     
+      <aside className={`sidebar ${sidebarOpen ? "show" : ""}`}>
+>>>>>>> 61803cb26f6ca6ecf4261761a99606df95b44066
 
           <div className="logo-text">MyPatientHUB</div>
         </div>
