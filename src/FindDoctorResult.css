@@ -1,6 +1,7 @@
+
 /* =========================================================
-   FIND DOCTOR RESULTS
-   Complete responsive result page
+   FIND DOCTOR RESULTS - COMPLETE RESPONSIVE CSS
+   Sidebar styled like Find Pharmacy
 ========================================================= */
 
 .doctor-results-page-wrapper,
@@ -9,19 +10,202 @@
 }
 
 .doctor-results-page-wrapper {
+    position: relative;
+    isolation: isolate;
     width: 100%;
     min-height: 100vh;
 }
 
+.doctor-results-page-wrapper .main-content,
+.doctor-results-page-wrapper .dashboard-content {
+    min-width: 0;
+}
 
 /* =========================================================
-   MOBILE SIDEBAR OVERLAY
+   SIDEBAR - FIND PHARMACY DESIGN
 ========================================================= */
+
+.doctor-results-page-wrapper .sidebar {
+    width: 300px;
+    min-width: 300px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    flex-shrink: 0;
+    background: #ffffff;
+    border-right: 1px solid #edf0f4;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 1001;
+    padding-bottom: 25px;
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform 0.3s ease, visibility 0.3s ease;
+}
+
+/* Logo */
+.doctor-results-page-wrapper .sidebar .logo-area {
+    position: relative;
+    height: 110px;
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 0 35px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.doctor-results-page-wrapper .sidebar .logo-icon {
+    width: 40px;
+    height: 45px;
+    min-width: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #123f91;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.doctor-results-page-wrapper .sidebar .logo-text {
+    color: #34496b;
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Menu */
+.doctor-results-page-wrapper .sidebar .sidebar-menu {
+    width: 100%;
+    padding: 25px 15px;
+}
+
+.doctor-results-page-wrapper .sidebar .menu-item {
+    width: 100%;
+    height: 58px;
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 17px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 11px;
+    background: transparent;
+    color: #687b9b;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.doctor-results-page-wrapper .sidebar .menu-item:hover {
+    background: #f4f5f8;
+    color: #34496b;
+}
+
+.doctor-results-page-wrapper .sidebar .menu-item.active {
+    background: #ffffff;
+    color: #34496b;
+    font-weight: 700;
+    box-shadow: 0 8px 22px rgba(41, 54, 82, 0.09);
+}
+
+.doctor-results-page-wrapper .sidebar .menu-item.active .menu-text {
+    color: #34496b;
+}
+
+/* Menu icons */
+.doctor-results-page-wrapper .sidebar .menu-icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    flex: 0 0 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.11);
+    color: #697997;
+    font-size: 16px;
+}
+
+.doctor-results-page-wrapper .sidebar .menu-item.active .menu-icon,
+.doctor-results-page-wrapper .sidebar .menu-item.active-icon .menu-icon {
+    background: #e500a8;
+    color: #ffffff;
+    box-shadow: 0 6px 13px rgba(229, 0, 168, 0.25);
+}
+
+.doctor-results-page-wrapper .sidebar .menu-text {
+    min-width: 0;
+    color: inherit;
+    overflow-wrap: anywhere;
+}
+
+/* Help box - supports common class names */
+.doctor-results-page-wrapper .sidebar .help-box,
+.doctor-results-page-wrapper .sidebar .pharmacy-help {
+    margin: 15px;
+    padding: 14px;
+    border-radius: 12px;
+    background: #f7f8fb;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.doctor-results-page-wrapper .sidebar .help-icon {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 50%;
+    background: #34496b;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.doctor-sidebar-close {
+    display: none;
+    width: 32px;
+    height: 32px;
+    margin-left: auto;
+    flex-shrink: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 27px;
+    line-height: 1;
+    cursor: pointer;
+}
 
 .doctor-sidebar-overlay {
     display: none;
 }
 
+/* Main content */
+.doctor-results-page-wrapper .main-content {
+    width: calc(100% - 300px);
+    min-width: 0;
+    margin-left: 300px;
+}
+
+/* Keyboard accessibility */
+.doctor-results-page-wrapper button:focus-visible,
+.doctor-results-page-wrapper input:focus-visible,
+.doctor-results-page-wrapper select:focus-visible {
+    outline: 2px solid #ef38ac;
+    outline-offset: 3px;
+}
 
 /* =========================================================
    HERO
@@ -34,7 +218,6 @@
     padding: 0 30px 38px;
     overflow: hidden;
     border-radius: 0 0 18px 18px;
-
     background:
         radial-gradient(
             circle at 85% 20%,
@@ -47,14 +230,8 @@
             #9c1cae 45%,
             #ee38ac 100%
         );
-
     color: #ffffff;
 }
-
-
-/* =========================================================
-   DECORATIONS
-========================================================= */
 
 .hero-decoration {
     position: absolute;
@@ -78,7 +255,6 @@
     background: rgba(255, 255, 255, 0.05);
 }
 
-
 /* =========================================================
    TOP BAR
 ========================================================= */
@@ -86,16 +262,12 @@
 .doctor-result-topbar {
     position: relative;
     z-index: 5;
-
     width: 100%;
     min-height: 82px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 25px;
-
     color: #ffffff;
 }
 
@@ -108,16 +280,13 @@
 
 .result-hamburger {
     display: none;
-
     width: 42px;
     height: 42px;
-
+    flex-shrink: 0;
     border: none;
     border-radius: 10px;
-
     background: rgba(255, 255, 255, 0.15);
     color: #ffffff;
-
     font-size: 22px;
     cursor: pointer;
 }
@@ -131,11 +300,9 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 7px;
-
+    margin-bottom: 7px;
     font-size: 12px;
     opacity: 0.8;
-
-    margin-bottom: 7px;
 }
 
 .result-breadcrumb strong {
@@ -144,107 +311,80 @@
     font-weight: 600;
 }
 
-
-/* =========================================================
-   TOP RIGHT
-========================================================= */
-
 .doctor-result-top-right {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-
     gap: 18px;
-
     min-width: 0;
 }
 
-.top-search {
+.doctor-results-page-wrapper .top-search {
     width: 210px;
     height: 40px;
-
     display: flex;
     align-items: center;
-
     gap: 8px;
-
     padding: 0 12px;
-
-    border-radius: 8px;
-
-    background: rgba(255, 255, 255, 0.13);
     border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.13);
 }
 
-.top-search span {
+.doctor-results-page-wrapper .top-search span {
     font-size: 18px;
 }
 
-.top-search input {
+.doctor-results-page-wrapper .top-search input {
     width: 100%;
     height: 100%;
-
     border: none;
     outline: none;
-
     color: #ffffff;
     background: transparent;
-
     font-size: 12px;
 }
 
-.top-search input::placeholder {
+.doctor-results-page-wrapper .top-search input::placeholder {
     color: rgba(255, 255, 255, 0.75);
 }
 
-.logout-button {
+.doctor-results-page-wrapper .logout-button {
     border: none;
     background: transparent;
-
     color: #ffffff;
-
     font-size: 12px;
     font-weight: 600;
-
     cursor: pointer;
-
     white-space: nowrap;
 }
 
 .top-icon {
     width: 32px;
     height: 32px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
+    flex-shrink: 0;
     border-radius: 50%;
-
     background: rgba(255, 255, 255, 0.12);
-
     font-size: 14px;
 }
 
-
 /* =========================================================
-   HERO CONTENT
+   HERO CONTENT AND SEARCH
 ========================================================= */
 
 .doctor-result-hero-content {
     position: relative;
     z-index: 5;
-
     max-width: 1100px;
-
     margin: 28px auto 0;
 }
 
 .doctor-result-hero-content h1 {
     margin: 0 0 7px;
-
     color: #ffffff;
-
     font-size: 32px;
     line-height: 1.2;
     font-weight: 700;
@@ -252,67 +392,42 @@
 
 .doctor-result-hero-content p {
     margin: 0 0 24px;
-
     color: rgba(255, 255, 255, 0.82);
-
     font-size: 14px;
 }
 
-
-/* =========================================================
-   HERO SEARCH
-========================================================= */
-
 .hero-search-row {
     width: 100%;
-
     display: grid;
-
-    grid-template-columns:
-        minmax(0, 1fr)
-        minmax(0, 1fr)
-        125px;
-
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 125px;
     gap: 12px;
 }
 
 .hero-search-input {
     height: 54px;
-
     display: flex;
     align-items: center;
-
     gap: 10px;
-
     padding: 0 16px;
-
     border-radius: 9px;
-
     background: #ffffff;
-
-    box-shadow:
-        0 5px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
 }
 
 .hero-search-input span {
     flex: 0 0 auto;
-
     color: #7b809a;
-
     font-size: 18px;
 }
 
 .hero-search-input input {
     width: 100%;
     height: 100%;
-
+    min-width: 0;
     border: none;
     outline: none;
-
     background: transparent;
-
     color: #344767;
-
     font-size: 13px;
 }
 
@@ -322,22 +437,15 @@
 
 .hero-search-button {
     height: 54px;
-
     border: none;
     border-radius: 9px;
-
     background: #ef38ac;
     color: #ffffff;
-
     font-size: 12px;
     font-weight: 700;
-
     cursor: pointer;
-
-    box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.12);
-
-    transition: 0.2s ease;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+    transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .hero-search-button:hover {
@@ -345,95 +453,65 @@
     transform: translateY(-1px);
 }
 
-
 /* =========================================================
-   RESULTS CONTENT
+   RESULTS CONTENT AND TOOLBAR
 ========================================================= */
 
 .doctor-results-content {
     width: 100%;
-
+    min-width: 0;
     padding: 30px;
-
     background: #f8f9fc;
 }
 
-
-/* =========================================================
-   RESULTS TOOLBAR
-========================================================= */
-
 .results-toolbar {
     width: 100%;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 20px;
-
     margin-bottom: 20px;
 }
 
 .results-heading h2 {
     margin: 0 0 5px;
-
     color: #263238;
-
     font-size: 23px;
 }
 
 .results-heading p {
     margin: 0;
-
     color: #7b809a;
-
     font-size: 13px;
 }
 
 .results-toolbar-actions {
     display: flex;
     align-items: center;
-
     gap: 14px;
 }
 
-
-/* =========================================================
-   MAP / LIST SWITCH
-========================================================= */
-
+/* Map/list switch */
 .view-switcher {
     display: flex;
     align-items: center;
-
     padding: 4px;
-
-    border-radius: 8px;
-
-    background: #ffffff;
-
     border: 1px solid #e2e5ec;
+    border-radius: 8px;
+    background: #ffffff;
 }
 
 .view-switcher button {
     height: 34px;
-
     padding: 0 17px;
-
     border: none;
     border-radius: 6px;
-
     background: transparent;
-
     color: #7b809a;
-
     font-size: 12px;
     font-weight: 600;
-
     cursor: pointer;
-
-    transition: 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
 .view-switcher button.active {
@@ -441,145 +519,102 @@
     color: #ffffff;
 }
 
-
-/* =========================================================
-   SORT
-========================================================= */
-
+/* Sort */
 .sort-wrapper {
     display: flex;
     align-items: center;
-
     gap: 8px;
 }
 
 .sort-wrapper label {
     color: #67748e;
-
     font-size: 12px;
     white-space: nowrap;
 }
 
 .sort-wrapper select {
     height: 42px;
-
+    max-width: 100%;
     padding: 0 32px 0 12px;
-
     border: 1px solid #e2e5ec;
     border-radius: 8px;
-
     outline: none;
-
     background: #ffffff;
-
     color: #344767;
-
     font-size: 12px;
-
     cursor: pointer;
 }
 
-
 /* =========================================================
-   MAP LAYOUT
+   MAP LAYOUT AND FILTER PANEL
 ========================================================= */
 
 .doctor-map-layout {
     display: grid;
-
-    grid-template-columns:
-        280px
-        minmax(0, 1fr);
-
+    grid-template-columns: 280px minmax(0, 1fr);
     gap: 20px;
-
     width: 100%;
+    min-width: 0;
 }
-
-
-/* =========================================================
-   FILTER PANEL
-========================================================= */
 
 .doctor-filter-panel {
     align-self: start;
-
     width: 100%;
-
+    min-width: 0;
     padding: 21px;
-
-    background: #ffffff;
-
     border-radius: 12px;
-
-    box-shadow:
-        0 2px 12px rgba(0, 0, 0, 0.045);
+    background: #ffffff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.045);
 }
 
 .filter-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    gap: 10px;
     margin-bottom: 18px;
 }
 
 .filter-header h2 {
     margin: 0;
-
     color: #263238;
-
     font-size: 19px;
 }
 
 .filter-header button {
     border: none;
-
     background: transparent;
-
     color: #ef38ac;
-
     font-size: 12px;
-
     cursor: pointer;
 }
 
 .filter-section {
-    border-top: 1px solid #edf0f5;
-
     padding: 17px 0;
+    border-top: 1px solid #edf0f5;
 }
 
 .filter-section:first-of-type {
-    border-top: none;
     padding-top: 0;
+    border-top: none;
 }
 
 .filter-section h3 {
     margin: 0 0 12px;
-
     color: #344767;
-
     font-size: 13px;
 }
 
 .filter-section select {
     width: 100%;
     height: 43px;
-
     padding: 0 11px;
-
     border: 1px solid #dfe3eb;
     border-radius: 7px;
-
     outline: none;
-
     background: #ffffff;
-
     color: #475569;
-
     font-size: 12px;
-
     cursor: pointer;
 }
 
@@ -590,15 +625,10 @@
 .checkbox-row {
     display: flex;
     align-items: center;
-
     gap: 9px;
-
     margin-bottom: 11px;
-
     color: #67748e;
-
     font-size: 12px;
-
     cursor: pointer;
 }
 
@@ -609,113 +639,81 @@
 .checkbox-row input {
     width: 15px;
     height: 15px;
-
+    flex-shrink: 0;
     accent-color: #ef38ac;
-
     cursor: pointer;
 }
 
 .apply-filter-btn {
     width: 100%;
-    height: 44px;
-
+    min-height: 44px;
     margin-top: 4px;
-
     border: none;
     border-radius: 7px;
-
     background: #ef38ac;
     color: #ffffff;
-
     font-size: 11px;
     font-weight: 700;
-
     cursor: pointer;
-
-    transition: 0.2s ease;
+    transition: background 0.2s ease;
 }
 
 .apply-filter-btn:hover {
     background: #d92b99;
 }
 
-
 /* =========================================================
-   MAP
+   MAP CONTAINER
 ========================================================= */
 
 .doctor-map-container {
     width: 100%;
-
     min-width: 0;
-
     overflow: hidden;
-
-    background: #ffffff;
-
     border-radius: 12px;
-
-    box-shadow:
-        0 2px 12px rgba(0, 0, 0, 0.045);
+    background: #ffffff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.045);
 }
 
 .map-topbar {
     min-height: 68px;
-
     padding: 12px 18px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 15px;
-
     border-bottom: 1px solid #edf0f5;
 }
 
 .map-topbar strong {
     display: block;
-
     margin-bottom: 4px;
-
     color: #263238;
-
     font-size: 14px;
 }
 
 .map-topbar span {
     color: #7b809a;
-
     font-size: 11px;
 }
 
 .map-location-btn {
-    height: 38px;
-
+    min-height: 38px;
     padding: 0 13px;
-
     border: 1px solid #dfe3eb;
     border-radius: 7px;
-
     background: #ffffff;
-
     color: #344767;
-
     font-size: 11px;
-
     cursor: pointer;
-
     white-space: nowrap;
-
-    transition: 0.2s ease;
+    transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 .map-location-btn:hover {
     border-color: #ef38ac;
-
     color: #ef38ac;
 }
-
 
 /* =========================================================
    FAKE MAP
@@ -723,12 +721,9 @@
 
 .fake-map {
     position: relative;
-
     width: 100%;
     height: 530px;
-
     overflow: hidden;
-
     background:
         linear-gradient(
             30deg,
@@ -745,87 +740,57 @@
             transparent 52%
         ),
         #eef1ed;
-
     background-repeat: repeat;
-
     transition: background-size 0.2s ease;
 }
 
-
-/* =========================================================
-   ROADS
-========================================================= */
-
 .fake-road {
     position: absolute;
-
     background: #ffffff;
-
     box-shadow: 0 0 0 1px #dfe3df;
-
     pointer-events: none;
 }
 
 .road-a {
     width: 110%;
     height: 25px;
-
     top: 40%;
     left: -5%;
-
     transform: rotate(-8deg);
 }
 
 .road-b {
     width: 110%;
     height: 20px;
-
     top: 68%;
     left: -5%;
-
     transform: rotate(12deg);
 }
 
 .road-c {
     width: 25px;
     height: 110%;
-
     left: 45%;
     top: -5%;
-
     transform: rotate(8deg);
 }
 
 .road-d {
     width: 18px;
     height: 110%;
-
     left: 75%;
     top: -5%;
-
     transform: rotate(-15deg);
 }
 
-
-/* =========================================================
-   MAP LABELS
-========================================================= */
-
 .map-area-label {
     position: absolute;
-
     z-index: 2;
-
     padding: 6px 9px;
-
     border-radius: 5px;
-
     background: rgba(255, 255, 255, 0.82);
-
     color: #667085;
-
     font-size: 10px;
-
     pointer-events: none;
 }
 
@@ -844,60 +809,35 @@
     top: 38%;
 }
 
-
-/* =========================================================
-   DOCTOR MARKERS
-========================================================= */
-
+/* Doctor markers */
 .doctor-marker {
     position: absolute;
-
     z-index: 4;
-
     width: 46px;
     height: 46px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border: none;
     border-radius: 50%;
-
     background: #ffffff;
-
-    box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.18);
-
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
     font-size: 21px;
-
     cursor: pointer;
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .doctor-marker:hover {
     transform: scale(1.08);
-
-    box-shadow:
-        0 6px 16px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.23);
 }
 
-.selected-marker {
-    background: #ef38ac;
-
-    transform: scale(1.12);
-
-    box-shadow:
-        0 6px 20px rgba(239, 56, 172, 0.35);
-
+.doctor-marker.selected-marker {
     z-index: 10;
+    background: #ef38ac;
+    transform: scale(1.12);
+    box-shadow: 0 6px 20px rgba(239, 56, 172, 0.35);
 }
-
-
-/* MARKER POSITIONS */
 
 .marker-a {
     left: 20%;
@@ -924,60 +864,38 @@
     top: 70%;
 }
 
-
-/* =========================================================
-   CURRENT LOCATION
-========================================================= */
-
+/* Current location */
 .fake-current-location {
     position: absolute;
-
     z-index: 5;
-
     left: 52%;
     top: 43%;
-
     width: 20px;
     height: 20px;
-
-    border-radius: 50%;
-
-    background: #ef38ac;
-
     border: 4px solid rgba(255, 255, 255, 0.9);
-
+    border-radius: 50%;
+    background: #ef38ac;
     box-shadow:
         0 2px 8px rgba(0, 0, 0, 0.3),
         0 0 0 10px rgba(239, 56, 172, 0.12);
-
     opacity: 0.85;
-
-    transition: 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .fake-current-location.location-active {
     opacity: 1;
-
     transform: scale(1.15);
-
     box-shadow:
         0 2px 8px rgba(0, 0, 0, 0.3),
         0 0 0 14px rgba(239, 56, 172, 0.14);
 }
 
-
-/* =========================================================
-   MAP CONTROLS
-========================================================= */
-
+/* Map controls */
 .fake-map-controls {
     position: absolute;
-
     z-index: 20;
-
     right: 18px;
     bottom: 18px;
-
     display: flex;
     flex-direction: column;
 }
@@ -985,15 +903,10 @@
 .fake-map-controls button {
     width: 40px;
     height: 40px;
-
     border: 1px solid #ddd;
-
     background: #ffffff;
-
     color: #344767;
-
     font-size: 21px;
-
     cursor: pointer;
 }
 
@@ -1003,7 +916,6 @@
 
 .fake-map-controls button:last-child {
     border-top: none;
-
     border-radius: 0 0 7px 7px;
 }
 
@@ -1011,12 +923,12 @@
     background: #f8f9fc;
 }
 
-
 /* =========================================================
    DOCTOR LIST
 ========================================================= */
 
 .doctor-list-section {
+    min-width: 0;
     margin-top: 28px;
 }
 
@@ -1024,73 +936,51 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 20px;
-
     margin-bottom: 16px;
 }
 
 .list-section-header h2 {
     margin: 0 0 4px;
-
     color: #263238;
-
     font-size: 20px;
 }
 
 .list-section-header p {
     margin: 0;
-
     color: #7b809a;
-
     font-size: 12px;
 }
 
 .list-section-header > button {
-    height: 38px;
-
+    min-height: 38px;
     padding: 0 15px;
-
     border: 1px solid #ef38ac;
     border-radius: 7px;
-
     background: #ffffff;
-
     color: #ef38ac;
-
     font-size: 11px;
     font-weight: 600;
-
     cursor: pointer;
 }
 
 .doctor-list {
     display: grid;
-
-    grid-template-columns: 1fr;
-
+    grid-template-columns: minmax(0, 1fr);
     gap: 13px;
 }
 
 .doctor-result-card {
     width: 100%;
-
+    min-width: 0;
     display: flex;
     align-items: center;
-
     gap: 16px;
-
     padding: 16px;
-
-    background: #ffffff;
-
     border: 1px solid transparent;
-
     border-radius: 10px;
-
-    box-shadow:
-        0 2px 10px rgba(0, 0, 0, 0.04);
-
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
     transition:
         border-color 0.2s ease,
         box-shadow 0.2s ease,
@@ -1099,82 +989,60 @@
 
 .doctor-result-card:hover {
     border-color: #f3a6d3;
-
-    box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.07);
-
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
     transform: translateY(-1px);
 }
 
 .doctor-result-avatar {
     width: 56px;
     height: 56px;
-
     flex: 0 0 56px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
     background: #fce7f3;
-
     color: #ef38ac;
-
     font-size: 14px;
     font-weight: 700;
 }
 
 .doctor-result-info {
     flex: 1;
-
     min-width: 0;
 }
 
 .doctor-result-info h3 {
     margin: 0 0 4px;
-
     color: #263238;
-
     font-size: 15px;
 }
 
 .doctor-result-info p {
     margin: 0 0 5px;
-
     color: #ef38ac;
-
     font-size: 12px;
     font-weight: 600;
 }
 
 .doctor-result-info span {
     color: #7b809a;
-
     font-size: 11px;
 }
 
 .doctor-result-card button {
-    height: 38px;
-
+    min-height: 38px;
     padding: 0 14px;
-
+    flex-shrink: 0;
     border: 1px solid #ef38ac;
     border-radius: 7px;
-
     background: #ffffff;
-
     color: #ef38ac;
-
     font-size: 10px;
     font-weight: 700;
-
     cursor: pointer;
-
     white-space: nowrap;
-
-    transition: 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
 .doctor-result-card button:hover {
@@ -1182,38 +1050,21 @@
     color: #ffffff;
 }
 
-
-/* =========================================================
-   LIST ONLY
-========================================================= */
-
 .list-only-section {
     margin-top: 0;
 }
 
-
-/* =========================================================
-   NO RESULTS
-========================================================= */
-
+/* No results */
 .no-doctors {
     width: 100%;
-
     padding: 45px 20px;
-
     border: 1px dashed #d5dbe5;
-
     border-radius: 10px;
-
     background: #ffffff;
-
     color: #7b809a;
-
     text-align: center;
-
     font-size: 13px;
 }
-
 
 /* =========================================================
    FOOTER
@@ -1223,19 +1074,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 20px;
-
     padding: 25px 30px;
-
     background: #f8f9fc;
 }
 
 .dashboard-footer p {
     margin: 0;
-
     color: #7b809a;
-
     font-size: 11px;
 }
 
@@ -1246,22 +1092,30 @@
 
 .dashboard-footer button {
     border: none;
-
     background: transparent;
-
     color: #7b809a;
-
     font-size: 11px;
-
     cursor: pointer;
 }
 
-
 /* =========================================================
-   1100px
+   RESPONSIVE: 1200px
 ========================================================= */
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
+    .doctor-results-page-wrapper .sidebar {
+        width: 260px;
+        min-width: 260px;
+    }
+
+    .doctor-results-page-wrapper .sidebar .logo-area {
+        padding: 0 25px;
+    }
+
+    .doctor-results-page-wrapper .main-content {
+        width: calc(100% - 260px);
+        margin-left: 260px;
+    }
 
     .doctor-results-content {
         padding: 25px;
@@ -1276,7 +1130,7 @@
         padding-right: 25px;
     }
 
-    .top-search {
+    .doctor-results-page-wrapper .top-search {
         width: 170px;
     }
 
@@ -1285,12 +1139,35 @@
     }
 }
 
-
 /* =========================================================
-   900px
+   RESPONSIVE: 950px
 ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 950px) {
+    .doctor-results-page-wrapper .sidebar {
+        width: 260px;
+        min-width: 260px;
+        transform: translateX(-100%);
+        visibility: hidden;
+    }
+
+    .doctor-results-page-wrapper .sidebar.show {
+        transform: translateX(0);
+        visibility: visible;
+    }
+
+    .doctor-results-page-wrapper .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .doctor-sidebar-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.48);
+        z-index: 1000;
+    }
 
     .doctor-result-topbar {
         gap: 12px;
@@ -1300,12 +1177,12 @@
         gap: 10px;
     }
 
-    .top-search {
+    .doctor-results-page-wrapper .top-search {
         width: 150px;
     }
 
     .doctor-map-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .doctor-filter-panel {
@@ -1330,55 +1207,49 @@
     }
 }
 
-
 /* =========================================================
-   768px
+   RESPONSIVE: 768px
 ========================================================= */
 
 @media (max-width: 768px) {
-
     .doctor-results-page-wrapper .sidebar {
-        position: fixed;
-
-        left: -280px;
+        position: fixed !important;
         top: 0;
         bottom: 0;
-
-        width: 260px;
-
+        left: 0;
+        width: 270px;
+        min-width: 0;
+        max-width: 85vw;
+        height: 100vh;
+        height: 100dvh;
+        overflow-x: hidden;
+        overflow-y: auto;
+        transform: translateX(-105%);
+        visibility: hidden;
+        transition: transform 0.25s ease, visibility 0.25s ease;
         z-index: 1001;
-
-        transition: left 0.25s ease;
     }
 
     .doctor-results-page-wrapper .sidebar.show {
-        left: 0;
+        transform: translateX(0);
+        visibility: visible;
     }
 
-    .doctor-sidebar-overlay {
-        display: block;
-
-        position: fixed;
-
-        inset: 0;
-
-        z-index: 1000;
-
-        background: rgba(15, 23, 42, 0.38);
+    .doctor-sidebar-close {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .doctor-results-page-wrapper .main-content {
         width: 100%;
         margin-left: 0;
+        min-width: 0;
     }
 
     .doctor-results-hero {
         min-height: auto;
-
-        padding:
-            0
-            20px
-            30px;
+        padding: 0 20px 30px;
     }
 
     .doctor-result-topbar {
@@ -1391,7 +1262,7 @@
         justify-content: center;
     }
 
-    .top-search {
+    .doctor-results-page-wrapper .top-search {
         display: none;
     }
 
@@ -1404,7 +1275,7 @@
     }
 
     .hero-search-row {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
 
     .hero-search-button {
@@ -1417,15 +1288,12 @@
 
     .results-toolbar {
         flex-direction: column;
-
         align-items: stretch;
     }
 
     .results-toolbar-actions {
         width: 100%;
-
         flex-direction: row;
-
         align-items: center;
         justify-content: space-between;
     }
@@ -1435,18 +1303,13 @@
     }
 }
 
-
 /* =========================================================
-   600px
+   RESPONSIVE: 600px
 ========================================================= */
 
 @media (max-width: 600px) {
-
     .doctor-results-hero {
-        padding:
-            0
-            16px
-            26px;
+        padding: 0 16px 26px;
     }
 
     .doctor-result-topbar {
@@ -1463,8 +1326,8 @@
     }
 
     .breadcrumb-line {
-        font-size: 10px;
         gap: 5px;
+        font-size: 10px;
     }
 
     .result-breadcrumb strong {
@@ -1475,14 +1338,13 @@
         gap: 7px;
     }
 
-    .logout-button {
+    .doctor-results-page-wrapper .logout-button {
         font-size: 10px;
     }
 
     .top-icon {
         width: 28px;
         height: 28px;
-
         font-size: 12px;
     }
 
@@ -1495,13 +1357,12 @@
     }
 
     .doctor-result-hero-content p {
-        font-size: 12px;
-
         margin-bottom: 18px;
+        font-size: 12px;
     }
 
     .hero-search-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .hero-search-button {
@@ -1523,9 +1384,7 @@
 
     .results-toolbar-actions {
         flex-direction: column;
-
         align-items: stretch;
-
         gap: 10px;
     }
 
@@ -1539,19 +1398,17 @@
 
     .sort-wrapper {
         width: 100%;
-
         justify-content: space-between;
     }
 
     .sort-wrapper select {
         flex: 1;
+        min-width: 0;
     }
 
     .map-topbar {
         flex-direction: column;
-
         align-items: flex-start;
-
         padding: 13px 15px;
     }
 
@@ -1566,15 +1423,12 @@
     .doctor-marker {
         width: 42px;
         height: 42px;
-
         font-size: 18px;
     }
 
     .doctor-result-card {
         align-items: flex-start;
-
         flex-wrap: wrap;
-
         gap: 13px;
     }
 
@@ -1596,33 +1450,40 @@
 
     .dashboard-footer {
         flex-direction: column;
-
         align-items: flex-start;
-
         padding: 20px 16px;
     }
 
     .dashboard-footer div {
         flex-wrap: wrap;
-
         gap: 12px;
     }
 }
 
-
 /* =========================================================
-   400px
+   RESPONSIVE: 480px
 ========================================================= */
 
-@media (max-width: 400px) {
+@media (max-width: 480px) {
+    .doctor-results-page-wrapper .sidebar {
+        width: 260px;
+    }
+
+    .doctor-results-page-wrapper .sidebar .logo-area {
+        padding: 0 20px;
+    }
+
+    .doctor-results-page-wrapper .sidebar .sidebar-menu {
+        padding: 20px 12px;
+    }
 
     .doctor-results-hero {
         padding-left: 12px;
         padding-right: 12px;
     }
 
-    .doctor-results-content {
-        padding: 12px;
+    .doctor-results-page-wrapper .doctor-results-content {
+        padding: 14px;
     }
 
     .doctor-result-topbar {
@@ -1633,7 +1494,7 @@
         margin-top: 3px;
     }
 
-    .logout-button {
+    .doctor-results-page-wrapper .logout-button {
         display: none;
     }
 
@@ -1656,13 +1517,12 @@
     .doctor-marker {
         width: 38px;
         height: 38px;
-
         font-size: 16px;
     }
 
     .map-area-label {
-        font-size: 8px;
         padding: 4px 6px;
+        font-size: 8px;
     }
 
     .list-section-header {
@@ -1676,7 +1536,6 @@
     .doctor-result-avatar {
         width: 50px;
         height: 50px;
-
         flex-basis: 50px;
     }
 

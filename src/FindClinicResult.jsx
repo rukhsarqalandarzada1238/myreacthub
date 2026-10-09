@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./FindClinicResult.css";
 import "./Dashboard.css";
 
@@ -42,35 +42,45 @@ const clinics = [
   },
 ];
 
+const sidebarItems = [
+  { label: "Dashboard", icon: "▦", path: "/dashboard" },
+  { label: "Appointments", icon: "▤", path: "/appointments" },
+  { label: "Find Doctor", icon: "♙", path: "/find-doctor" },
+  { label: "Find Clinic", icon: "✚", path: "/find-clinic", active: true },
+  { label: "Chat", icon: "▣", path: "/chat" },
+  { label: "Find Market-Place", icon: "▤", path: "/marketplace" },
+  { label: "Find Pharmacy", icon: "✚", path: "/pharmacy" },
+  { label: "My Dependents", icon: "♧", path: "/dependents" },
+  { label: "My Account", icon: "♙", path: "/account" },
+  { label: "Settings", icon: "⚙", path: "/settings" },
+];
+
 function FindClinicResult() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  /* =========================
-     SIDEBAR
-  ========================= */
-
+  // SIDEBAR
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const closeSidebar = () => {
-    setSidebarOpen(false);
-  };
+  const closeSidebar = () => setSidebarOpen(false);
 
   const goTo = (path) => {
     closeSidebar();
     navigate(path);
   };
 
-  /* =========================
-     SEARCH
-  ========================= */
-
+  // SEARCH
   const [clinicSearch, setClinicSearch] = useState("");
   const [locationSearch, setLocationSearch] = useState("");
 
-  /* =========================
-     FILTERS
-  ========================= */
+  // Read search values when the URL changes.
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    setClinicSearch(params.get("clinic") || "");
+    setLocationSearch(params.get("location") || "");
+  }, [location.search]);
 
+  // FILTERS
   const [primaryCare, setPrimaryCare] = useState("");
   const [filterZip, setFilterZip] = useState("");
 
@@ -88,21 +98,15 @@ function FindClinicResult() {
     primaryCare: false,
   });
 
-  /* =========================
-     MAP
-  ========================= */
-
+  // MAP
   const [locationActive, setLocationActive] = useState(false);
   const [mapZoom, setMapZoom] = useState(1);
 
-  /* =========================
-     SEARCH + FILTER
-  ========================= */
-
+  // SEARCH + FILTER
   const filteredClinics = useMemo(() => {
     return clinics.filter((clinic) => {
       const search = clinicSearch.toLowerCase().trim();
-      const location = locationSearch.toLowerCase().trim();
+      const locationQuery = locationSearch.toLowerCase().trim();
       const zip = filterZip.toLowerCase().trim();
 
       const matchesSearch =
@@ -112,16 +116,14 @@ function FindClinicResult() {
         clinic.category.toLowerCase().includes(search);
 
       const matchesLocation =
-        !location ||
-        clinic.location.toLowerCase().includes(location);
+        !locationQuery ||
+        clinic.location.toLowerCase().includes(locationQuery);
 
       const matchesPrimaryCare =
-        !primaryCare ||
-        clinic.category === primaryCare;
+        !primaryCare || clinic.category === primaryCare;
 
       const matchesZip =
-        !zip ||
-        clinic.location.toLowerCase().includes(zip);
+        !zip || clinic.location.toLowerCase().includes(zip);
 
       return (
         matchesSearch &&
@@ -130,16 +132,7 @@ function FindClinicResult() {
         matchesZip
       );
     });
-  }, [
-    clinicSearch,
-    locationSearch,
-    primaryCare,
-    filterZip,
-  ]);
-
-  /* =========================
-     SEARCH
-  ========================= */
+  }, [clinicSearch, locationSearch, primaryCare, filterZip]);
 
   const searchClinics = () => {
     const params = new URLSearchParams();
@@ -159,23 +152,15 @@ function FindClinicResult() {
     );
   };
 
-  const handleSearchKeyDown = (e) => {
-    if (e.key === "Enter") {
+  const handleSearchKeyDown = (event) => {
+    if (event.key === "Enter") {
       searchClinics();
     }
   };
 
-  /* =========================
-     CURRENT LOCATION
-  ========================= */
-
   const showClinicLocation = () => {
     setLocationActive(true);
   };
-
-  /* =========================
-     CLEAR FILTERS
-  ========================= */
 
   const clearFilters = () => {
     setPrimaryCare("");
@@ -196,12 +181,10 @@ function FindClinicResult() {
     });
   };
 
-  /* =========================
-     APPLY FILTER
-  ========================= */
-
   const applyClinicFilters = () => {
-    console.log({
+    // Primary Care and ZIP filters are applied automatically.
+    // The remaining options are retained for future clinic data.
+    console.log("Clinic filters:", {
       primaryCare,
       filterZip,
       filterBy,
@@ -210,168 +193,88 @@ function FindClinicResult() {
     });
   };
 
-  /* =========================
-     MAP ZOOM
-  ========================= */
-
   const zoomIn = () => {
-    setMapZoom((prev) => Math.min(prev + 0.15, 1.6));
+    setMapZoom((previous) => Math.min(previous + 0.15, 1.6));
   };
 
   const zoomOut = () => {
-    setMapZoom((prev) => Math.max(prev - 0.15, 0.7));
+    setMapZoom((previous) => Math.max(previous - 0.15, 0.7));
   };
 
   return (
     <div className="clinic-result-page dashboard-body">
-      {/* ==================================
-          SIDEBAR
-      ================================== */}
-
+      {/* SIDEBAR */}
       <aside
-        className={`sidebar ${
+        className={`pharmacy-sidebar ${
           sidebarOpen ? "show" : ""
         }`}
-        id="sidebar"
+        id="clinic-result-sidebar"
+        aria-label="Main navigation"
       >
-        <div className="logo-area">
-          <div className="logo-icon">M</div>
-          <span>MyPatientHUB</span>
+        <div className="pharmacy-logo">
+          <div className="logo-mark">
+            M<span>HUB</span>
+          </div>
+
+          <div className="logo-text">MyPatientHUB</div>
         </div>
 
-        <nav className="sidebar-menu">
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => goTo("/dashboard")}
-          >
-            <span className="menu-icon">▣</span>
-            <span>Dashboard</span>
-          </button>
+        <nav className="pharmacy-sidebar-menu">
+          {sidebarItems.map((item) => (
+            <button
+              type="button"
+              key={item.label}
+              className={`pharmacy-menu-item ${
+                item.active ? "active" : ""
+              }`}
+              onClick={() => goTo(item.path)}
+              aria-current={item.active ? "page" : undefined}
+            >
+              <span className="pharmacy-menu-icon" aria-hidden="true">
+                {item.icon}
+              </span>
 
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => goTo("/appointments")}
-          >
-            <span className="menu-icon">▤</span>
-            <span>Appointments</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => goTo("/find-doctor")}
-          >
-            <span className="menu-icon">♟</span>
-            <span>Find Doctor</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item active"
-            onClick={() => goTo("/find-clinic")}
-          >
-            <span className="menu-icon">▦</span>
-            <span>Find Clinic</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => goTo("/chat")}
-          >
-            <span className="menu-icon">▣</span>
-            <span>Chat</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => goTo("/marketplace")}
-          >
-            <span className="menu-icon">▤</span>
-            <span>Find Market-Place</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => goTo("/pharmacy")}
-          >
-            <span className="menu-icon">▦</span>
-            <span>Find Pharmacy</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => goTo("/dependents")}
-          >
-            <span className="menu-icon">▤</span>
-            <span>My Dependents</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => goTo("/account")}
-          >
-            <span className="menu-icon">⚒</span>
-            <span>My Account</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => goTo("/settings")}
-          >
-            <span className="menu-icon">⚙</span>
-            <span>Settings</span>
-          </button>
+              <span>{item.label}</span>
+            </button>
+          ))}
         </nav>
 
-        <div className="help-box">
-          <span>?</span>
+        <div className="pharmacy-help">
+          <div className="pharmacy-help-icon">?</div>
+          <div>
+            <strong>Need Help?</strong>
+            <p>Contact our support team</p>
+          </div>
         </div>
       </aside>
 
-      {/* MOBILE SIDEBAR OVERLAY */}
-
+      {/* MOBILE OVERLAY */}
       {sidebarOpen && (
         <button
           type="button"
-          className="sidebar-overlay"
+          className="clinic-sidebar-overlay"
           aria-label="Close sidebar"
           onClick={closeSidebar}
         />
       )}
 
-      {/* ==================================
-          MAIN CONTENT
-      ================================== */}
-
+      {/* MAIN CONTENT */}
       <main className="main-content">
         <section className="dashboard-content">
-          {/* ==================================
-              CLINIC HERO
-          ================================== */}
-
+          {/* HERO */}
           <section className="clinic-hero">
             <div className="hero-decoration hero-decoration-one" />
             <div className="hero-decoration hero-decoration-two" />
-
-            {/* TOP BAR */}
 
             <div className="hero-topbar">
               <div className="hero-left">
                 <button
                   type="button"
                   className="hero-hamburger"
-                  onClick={() =>
-                    setSidebarOpen((prev) => !prev)
-                  }
+                  onClick={() => setSidebarOpen((previous) => !previous)}
                   aria-label="Toggle sidebar"
+                  aria-expanded={sidebarOpen}
+                  aria-controls="clinic-result-sidebar"
                 >
                   ☰
                 </button>
@@ -392,13 +295,34 @@ function FindClinicResult() {
               <div className="hero-right">
                 <div className="hero-search">
                   <span>⌕</span>
-
                   <input
                     type="text"
                     placeholder="Type here..."
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        searchClinics();
+                    aria-label="Quick search"
+                    onChange={(event) => {
+                      // Quick-search field; Enter applies the value
+                      // to the clinic search.
+                      if (event.target.value === "") {
+                        return;
+                      }
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        setClinicSearch(event.currentTarget.value);
+                        const params = new URLSearchParams(location.search);
+                        const value = event.currentTarget.value.trim();
+
+                        if (value) {
+                          params.set("clinic", value);
+                        } else {
+                          params.delete("clinic");
+                        }
+
+                        navigate(
+                          params.toString()
+                            ? `/find-clinic-results?${params.toString()}`
+                            : "/find-clinic-results"
+                        );
                       }
                     }}
                   />
@@ -432,14 +356,9 @@ function FindClinicResult() {
               </div>
             </div>
 
-            {/* HERO TITLE + SEARCH */}
-
             <div className="hero-title">
               <h1>Find a Clinic</h1>
-
-              <p>
-                Find clinics and healthcare services near you
-              </p>
+              <p>Find clinics and healthcare services near you</p>
 
               <div className="search-row">
                 <input
@@ -447,9 +366,7 @@ function FindClinicResult() {
                   className="search-input"
                   placeholder="Search clinic by name or service"
                   value={clinicSearch}
-                  onChange={(e) =>
-                    setClinicSearch(e.target.value)
-                  }
+                  onChange={(event) => setClinicSearch(event.target.value)}
                   onKeyDown={handleSearchKeyDown}
                 />
 
@@ -458,9 +375,7 @@ function FindClinicResult() {
                   className="search-input"
                   placeholder="City, Zip Code or Neighborhood"
                   value={locationSearch}
-                  onChange={(e) =>
-                    setLocationSearch(e.target.value)
-                  }
+                  onChange={(event) => setLocationSearch(event.target.value)}
                   onKeyDown={handleSearchKeyDown}
                 />
 
@@ -483,26 +398,16 @@ function FindClinicResult() {
             </div>
           </section>
 
-          {/* ==================================
-              RESULTS
-          ================================== */}
-
+          {/* RESULTS */}
           <section className="clinic-results-page">
-            {/* NO DUPLICATE TITLE / SEARCH HERE */}
-
             <div className="results-toolbar">
               <div className="results-summary">
                 <strong>
                   {filteredClinics.length}{" "}
-                  {filteredClinics.length === 1
-                    ? "Clinic"
-                    : "Clinics"}{" "}
-                  Found
+                  {filteredClinics.length === 1 ? "Clinic" : "Clinics"} Found
                 </strong>
 
-                <span>
-                  Search results based on your criteria
-                </span>
+                <span>Search results based on your criteria</span>
               </div>
 
               <button
@@ -514,78 +419,48 @@ function FindClinicResult() {
               </button>
             </div>
 
-            {/* ==================================
-                MAP + FILTER
-            ================================== */}
-
+            {/* FILTERS + MAP */}
             <div className="clinic-map-layout">
-              {/* FILTER */}
-
               <aside className="clinic-filter-panel">
                 <div className="filter-header">
                   <h2>Filters</h2>
 
-                  <button
-                    type="button"
-                    onClick={clearFilters}
-                  >
+                  <button type="button" onClick={clearFilters}>
                     Clear
                   </button>
                 </div>
 
-                {/* PRIMARY CARE */}
-
                 <div className="filter-section">
-                  <label className="filter-label">
+                  <label className="filter-label" htmlFor="clinic-category">
                     Primary Care
                   </label>
 
                   <select
+                    id="clinic-category"
                     value={primaryCare}
-                    onChange={(e) =>
-                      setPrimaryCare(e.target.value)
-                    }
+                    onChange={(event) => setPrimaryCare(event.target.value)}
                   >
-                    <option value="">
-                      Select Primary Care
-                    </option>
-
-                    <option value="Family Medicine">
-                      Family Medicine
-                    </option>
-
-                    <option value="Internal Medicine">
-                      Internal Medicine
-                    </option>
-
-                    <option value="General Practice">
-                      General Practice
-                    </option>
-
-                    <option value="Pediatrics">
-                      Pediatrics
-                    </option>
+                    <option value="">Select Primary Care</option>
+                    <option value="Family Medicine">Family Medicine</option>
+                    <option value="Internal Medicine">Internal Medicine</option>
+                    <option value="General Practice">General Practice</option>
+                    <option value="Pediatrics">Pediatrics</option>
                   </select>
                 </div>
 
-                {/* ZIP */}
-
                 <div className="filter-section">
-                  <label className="filter-label">
+                  <label className="filter-label" htmlFor="clinic-zip">
                     ZIP Code
                   </label>
 
                   <input
+                    id="clinic-zip"
                     type="text"
-                    placeholder="Enter ZIP Code"
+                    placeholder="Enter ZIP Code or area"
                     value={filterZip}
-                    onChange={(e) =>
-                      setFilterZip(e.target.value)
-                    }
+                    onChange={(event) => setFilterZip(event.target.value)}
                   />
                 </div>
-
-                {/* FILTER BY */}
 
                 <div className="filter-section">
                   <h3>Filter By</h3>
@@ -596,27 +471,21 @@ function FindClinicResult() {
                     ["condition", "Condition"],
                     ["languages", "Languages"],
                   ].map(([key, label]) => (
-                    <label
-                      className="checkbox-row"
-                      key={key}
-                    >
+                    <label className="checkbox-row" key={key}>
                       <input
                         type="checkbox"
                         checked={filterBy[key]}
-                        onChange={(e) =>
-                          setFilterBy({
-                            ...filterBy,
-                            [key]: e.target.checked,
-                          })
+                        onChange={(event) =>
+                          setFilterBy((previous) => ({
+                            ...previous,
+                            [key]: event.target.checked,
+                          }))
                         }
                       />
-
                       <span>{label}</span>
                     </label>
                   ))}
                 </div>
-
-                {/* AGE */}
 
                 <div className="filter-section">
                   <h3>Age</h3>
@@ -626,28 +495,20 @@ function FindClinicResult() {
                     ["children", "Children"],
                     ["adults", "Adults"],
                   ].map(([value, label]) => (
-                    <label
-                      className="checkbox-row"
-                      key={value}
-                    >
+                    <label className="checkbox-row" key={value}>
                       <input
                         type="checkbox"
                         checked={ageFilter === value}
                         onChange={() =>
-                          setAgeFilter(
-                            ageFilter === value
-                              ? ""
-                              : value
+                          setAgeFilter((previous) =>
+                            previous === value ? "" : value
                           )
                         }
                       />
-
                       <span>{label}</span>
                     </label>
                   ))}
                 </div>
-
-                {/* VIEW ONLY */}
 
                 <div className="filter-section">
                   <h3>View Only</h3>
@@ -655,36 +516,28 @@ function FindClinicResult() {
                   <label className="checkbox-row">
                     <input
                       type="checkbox"
-                      checked={
-                        viewOnly.onlineScheduling
-                      }
-                      onChange={(e) =>
-                        setViewOnly({
-                          ...viewOnly,
-                          onlineScheduling:
-                            e.target.checked,
-                        })
+                      checked={viewOnly.onlineScheduling}
+                      onChange={(event) =>
+                        setViewOnly((previous) => ({
+                          ...previous,
+                          onlineScheduling: event.target.checked,
+                        }))
                       }
                     />
-
                     <span>Online Scheduling</span>
                   </label>
 
                   <label className="checkbox-row">
                     <input
                       type="checkbox"
-                      checked={
-                        viewOnly.primaryCare
-                      }
-                      onChange={(e) =>
-                        setViewOnly({
-                          ...viewOnly,
-                          primaryCare:
-                            e.target.checked,
-                        })
+                      checked={viewOnly.primaryCare}
+                      onChange={(event) =>
+                        setViewOnly((previous) => ({
+                          ...previous,
+                          primaryCare: event.target.checked,
+                        }))
                       }
                     />
-
                     <span>Primary Care</span>
                   </label>
                 </div>
@@ -698,19 +551,12 @@ function FindClinicResult() {
                 </button>
               </aside>
 
-              {/* ==================================
-                  MAP
-              ================================== */}
-
+              {/* MAP */}
               <section className="clinic-map-container">
                 <div className="map-topbar">
                   <div>
                     <strong>Clinics Near You</strong>
-
-                    <span>
-                      {filteredClinics.length} clinics
-                      found
-                    </span>
+                    <span>{filteredClinics.length} clinics found</span>
                   </div>
 
                   <button
@@ -741,12 +587,8 @@ function FindClinicResult() {
                         key={clinic.id}
                         className={`map-marker ${clinic.marker}`}
                         title={clinic.name}
-                        onClick={() =>
-                          console.log(
-                            "Selected clinic:",
-                            clinic
-                          )
-                        }
+                        aria-label={`Select ${clinic.name}`}
+                        onClick={() => console.log("Selected clinic:", clinic)}
                       >
                         🏥
                       </button>
@@ -754,10 +596,13 @@ function FindClinicResult() {
 
                     <div
                       className={`current-location ${
-                        locationActive
-                          ? "location-active"
-                          : ""
+                        locationActive ? "location-active" : ""
                       }`}
+                      aria-label={
+                        locationActive
+                          ? "Current location selected"
+                          : "Current location"
+                      }
                     >
                       <span />
                     </div>
@@ -783,89 +628,53 @@ function FindClinicResult() {
                     <div className="map-label label-one">
                       Central District
                     </div>
-
                     <div className="map-label label-two">
                       Medical Center
                     </div>
-
-                    <div className="map-label label-three">
-                      Riverside
-                    </div>
+                    <div className="map-label label-three">Riverside</div>
                   </div>
                 </div>
               </section>
             </div>
 
-            {/* ==================================
-                CLINIC LIST
-            ================================== */}
-
+            {/* CLINIC LIST */}
             <section className="clinic-list-section">
               <div className="clinic-list-heading">
                 <div>
                   <h2>Available Clinics</h2>
-
-                  <p>
-                    Clinics matching your search
-                  </p>
+                  <p>Clinics matching your search</p>
                 </div>
               </div>
 
               <div className="clinic-list">
                 {filteredClinics.length === 0 ? (
                   <div className="no-results">
-                    <div className="no-results-icon">
-                      🏥
-                    </div>
-
+                    <div className="no-results-icon">🏥</div>
                     <h3>No clinics found</h3>
+                    <p>Try changing your search or filters.</p>
 
-                    <p>
-                      Try changing your search or
-                      filters.
-                    </p>
-
-                    <button
-                      type="button"
-                      onClick={clearFilters}
-                    >
+                    <button type="button" onClick={clearFilters}>
                       CLEAR FILTERS
                     </button>
                   </div>
                 ) : (
                   filteredClinics.map((clinic) => (
-                    <div
-                      className="clinic-card"
-                      key={clinic.id}
-                    >
-                      <div className="clinic-card-icon">
-                        🏥
-                      </div>
+                    <div className="clinic-card" key={clinic.id}>
+                      <div className="clinic-card-icon">🏥</div>
 
                       <div className="clinic-card-info">
                         <div className="clinic-card-title">
                           <h3>{clinic.name}</h3>
-
-                          <span className="clinic-type">
-                            {clinic.type}
-                          </span>
+                          <span className="clinic-type">{clinic.type}</span>
                         </div>
 
                         <p>{clinic.service}</p>
-
-                        <span>
-                          📍 {clinic.location}
-                        </span>
+                        <span>📍 {clinic.location}</span>
                       </div>
 
                       <button
                         type="button"
-                        onClick={() =>
-                          console.log(
-                            "Selected clinic:",
-                            clinic
-                          )
-                        }
+                        onClick={() => console.log("Selected clinic:", clinic)}
                       >
                         VIEW DETAILS
                       </button>
@@ -876,15 +685,9 @@ function FindClinicResult() {
             </section>
           </section>
 
-          {/* ==================================
-              FOOTER
-          ================================== */}
-
+          {/* FOOTER */}
           <footer className="dashboard-footer">
-            <p>
-              ©️ 2026, made with ♥️ by MyPatientHUB
-              for a better web.
-            </p>
+            <p>© 2026, made with ♥ by MyPatientHUB for a better web.</p>
 
             <div>
               <a href="/dashboard">MyPatientHUB</a>
