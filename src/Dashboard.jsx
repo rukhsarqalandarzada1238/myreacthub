@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ResponsiveContainer,
@@ -54,6 +54,27 @@ const healthData = [
   { month: "Oct", value: 91 },
   { month: "Nov", value: 85 },
   { month: "Dec", value: 96 },
+];
+
+/* =========================
+   SIDEBAR MENU / SEARCH DATA
+========================= */
+
+const menuItems = [
+  { label: "Dashboard", icon: "▦", path: "/dashboard" },
+  { label: "Appointments", icon: "▣", path: "/appointments" },
+  { label: "Find Doctor", icon: "⚕", path: "/find-doctor" },
+  { label: "Find Clinic", icon: "⌂", path: "/find-clinic" },
+  { label: "Chat", icon: "▤", path: "/chat" },
+  { label: "Find Market-Place", icon: "▧", path: "/marketplace" },
+  { label: "Find Pharmacy", icon: "✚", path: "/find-pharmacy" },
+  { label: "My Dependents", icon: "♧", path: "/my-dependents" },
+  { label: "My Account", icon: "♙", path: "/account" },
+  { label: "Settings", icon: "⚙", path: "/settings" },
+];
+
+const extraSearchPages = [
+  { label: "Notifications", icon: "♧", path: "/notifications" },
 ];
 
 /* =========================
@@ -119,30 +140,92 @@ function ChartLegend({ data }) {
 
 function Dashboard() {
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [search, setSearch] = useState("");
+  const [showSearchResults, setShowSearchResults] = useState(false);
+
+  const searchRef = useRef(null);
+
+  const searchPages = [...menuItems, ...extraSearchPages];
+
+  const filteredPages = search.trim()
+    ? searchPages.filter((page) =>
+        page.label.toLowerCase().includes(search.trim().toLowerCase())
+      )
+    : [];
+
+  /* CLOSE SEARCH WHEN CLICKING OUTSIDE */
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target)
+      ) {
+        setShowSearchResults(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+  /* NAVIGATION */
 
   const handleNavigation = (path) => {
     navigate(path);
     setSidebarOpen(false);
+    setShowSearchResults(false);
   };
 
-  const menuItems = [
-    { label: "Dashboard", icon: "▦", path: "/dashboard" },
-    { label: "Appointments", icon: "▣", path: "/appointments" },
-    { label: "Find Doctor", icon: "⚕", path: "/find-doctor" },
-    { label: "Find Clinic", icon: "⌂", path: "/find-clinic" },
-    { label: "Chat", icon: "▤", path: "/chat" },
-    { label: "Find Market-Place", icon: "▧", path: "/marketplace" },
-    { label: "Find Pharmacy", icon: "✚", path: "/find-pharmacy" },
-    { label: "My Dependents", icon: "♧", path: "/my-dependents" },
-    { label: "My Account", icon: "♙", path: "/account" },
-    { label: "Settings", icon: "⚙", path: "/settings" },
-  ];
+  const handleSearchNavigation = (path) => {
+    navigate(path);
+    setSearch("");
+    setShowSearchResults(false);
+    setSidebarOpen(false);
+  };
+
+  /* SEARCH KEYBOARD */
+
+  const handleSearchKeyDown = (event) => {
+    if (event.key === "Enter" && filteredPages.length > 0) {
+      event.preventDefault();
+      handleSearchNavigation(filteredPages[0].path);
+    }
+
+    if (event.key === "Escape") {
+      setShowSearchResults(false);
+    }
+  };
+
+  /* SIDEBAR KEYBOARD */
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
-    <div className="dashboard-body">
-      {/* MOBILE SIDEBAR OVERLAY */}
+    <div
+      className={`dashboard-body ${
+        sidebarOpen ? "sidebar-expanded" : "sidebar-collapsed"
+      }`}
+    >
+      {/* MOBILE / TABLET OVERLAY */}
+
       {sidebarOpen && (
         <button
           type="button"
@@ -153,14 +236,17 @@ function Dashboard() {
       )}
 
       {/* SIDEBAR */}
+
       <aside
         className={`pharmacy-sidebar ${sidebarOpen ? "show" : ""}`}
+        aria-hidden={!sidebarOpen}
       >
         <div className="pharmacy-logo">
           <div className="logo-mark">
             M
             <span>HUB</span>
           </div>
+
           <div className="logo-text">MyPatientHUB</div>
         </div>
 
@@ -173,6 +259,7 @@ function Dashboard() {
                 item.path === "/dashboard" ? "active" : ""
               }`}
               onClick={() => handleNavigation(item.path)}
+              tabIndex={sidebarOpen ? 0 : -1}
             >
               <span className="pharmacy-menu-icon">{item.icon}</span>
               <span>{item.label}</span>
@@ -182,6 +269,7 @@ function Dashboard() {
 
         <div className="pharmacy-help">
           <div className="help-icon">?</div>
+
           <div>
             <h4>Need Help?</h4>
             <p>Contact our support team.</p>
@@ -190,38 +278,91 @@ function Dashboard() {
       </aside>
 
       {/* MAIN CONTENT */}
+
       <main className="main-content">
         {/* HEADER */}
+
         <header className="top-header">
           <div className="header-left">
-            <button
-              type="button"
-              className="hamburger"
-              aria-label="Open menu"
-              onClick={() => setSidebarOpen(true)}
-            >
-              ☰
-            </button>
+            {/* HAMBURGER ON ALL SCREEN SIZES */}
 
-            <div>
+<button
+  type="button"
+  className={`hamburger ${sidebarOpen ? "is-open" : ""}`}
+  aria-label={sidebarOpen ? "Close menu" : "Open menu"}
+  aria-expanded={sidebarOpen}
+  onClick={() => setSidebarOpen((previous) => !previous)}
+>
+  <span>☰</span>
+</button>
+
+            <div className="header-heading">
               <div className="breadcrumb">
                 <span>Home</span>
                 <span>/</span>
                 <span>Dashboard</span>
               </div>
+
               <h2>Dashboard</h2>
             </div>
           </div>
 
           <div className="header-right">
-            <div className="search-box">
-              <span>⌕</span>
-              <input
-                type="search"
-                placeholder="Search..."
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-              />
+            {/* SEARCH */}
+
+            <div
+              className="dashboard-search-wrapper"
+              ref={searchRef}
+            >
+              <div className="search-box">
+                <span>⌕</span>
+
+                <input
+                  type="search"
+                  placeholder="Search pages..."
+                  value={search}
+                  onChange={(event) => {
+                    setSearch(event.target.value);
+                    setShowSearchResults(true);
+                  }}
+                  onFocus={() => setShowSearchResults(true)}
+                  onKeyDown={handleSearchKeyDown}
+                  aria-label="Search dashboard pages"
+                  aria-expanded={
+                    showSearchResults && search.trim().length > 0
+                  }
+                  autoComplete="off"
+                />
+              </div>
+
+              {showSearchResults && search.trim() !== "" && (
+                <div className="dashboard-search-results">
+                  {filteredPages.length > 0 ? (
+                    filteredPages.map((page) => (
+                      <button
+                        type="button"
+                        key={page.path}
+                        className="dashboard-search-result"
+                        onClick={() =>
+                          handleSearchNavigation(page.path)
+                        }
+                      >
+                        <span className="search-result-icon">
+                          {page.icon}
+                        </span>
+
+                        <span>{page.label}</span>
+
+                        <span className="search-result-arrow">→</span>
+                      </button>
+                    ))
+                  ) : (
+                    <div className="dashboard-search-empty">
+                      No pages found for "{search}"
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <button
@@ -253,12 +394,13 @@ function Dashboard() {
         </header>
 
         {/* DASHBOARD CONTENT */}
+
         <section className="dashboard-content">
           <h1>Dashboard Overview</h1>
 
           {/* CHART CARDS */}
+
           <div className="cards-grid">
-            {/* CLINIC CHART */}
             <article className="dashboard-card">
               <div className="card-title">
                 <h3>Promotion by Clinics</h3>
@@ -279,7 +421,6 @@ function Dashboard() {
               </button>
             </article>
 
-            {/* PHARMACY CHART */}
             <article className="dashboard-card">
               <div className="card-title">
                 <h3>Promotion by Pharmacies</h3>
@@ -300,7 +441,6 @@ function Dashboard() {
               </button>
             </article>
 
-            {/* MARKET CHART */}
             <article className="dashboard-card">
               <div className="card-title">
                 <h3>Smart Market Usage by App</h3>
@@ -321,7 +461,6 @@ function Dashboard() {
               </button>
             </article>
 
-            {/* HEALTH INDEX CHART */}
             <article className="dashboard-card">
               <div className="card-title">
                 <h3>Health Index</h3>
@@ -398,6 +537,7 @@ function Dashboard() {
           </div>
 
           {/* UPCOMING APPOINTMENTS */}
+
           <section className="appointment-card">
             <div className="appointment-header">
               <h3>Upcoming Appointments</h3>
@@ -413,6 +553,7 @@ function Dashboard() {
             <div className="appointment-row">
               <div className="doctor">
                 <div className="doctor-avatar">DR</div>
+
                 <div className="doctor-details">
                   <strong>Dr. Allan</strong>
                   <span>Cardiology</span>
@@ -421,13 +562,16 @@ function Dashboard() {
 
               <div className="appointment-info">
                 <strong>Appointment</strong>
-                <span>Check your appointment list for details</span>
+                <span>
+                  Check your appointment list for details
+                </span>
               </div>
             </div>
           </section>
         </section>
 
         {/* FOOTER */}
+
         <footer className="dashboard-footer">
           <p>
             © {new Date().getFullYear()} MyPatientHUB. All rights reserved.
