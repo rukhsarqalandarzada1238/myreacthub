@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./FindPharmacy.css";
@@ -133,18 +132,7 @@ const FindPharmacy = () => {
 
   const searchValue = search.trim().toLowerCase();
 
-
-  const filteredMedicines = medicines.filter((medicine) =>
-    [
-      medicine.name,
-      medicine.category,
-      medicine.pharmacy,
-      medicine.id,
-      medicine.price,
-      medicine.discount,
-    ].some((value) => value.toLowerCase().includes(searchValue))
-
-
+  // ✅ فقط یک بار تعریف شده
   const filteredMedicines = medicines.filter((medicine) => {
     return (
       medicine.name.toLowerCase().includes(searchValue) ||
@@ -166,11 +154,7 @@ const FindPharmacy = () => {
     );
   });
 
-  const displayedMedicines = filteredMedicines.slice(
-    0,
-    entriesPerPage
-  );
-
+  // ✅ فقط یک بار تعریف شده
   const displayedMedicines = filteredMedicines.slice(0, entriesPerPage);
 
   const handleNavigation = (path) => {
