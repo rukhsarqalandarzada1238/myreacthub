@@ -1,3 +1,7 @@
+/* =========================================================
+   ROOT VARIABLES
+========================================================= */
+
 :root {
   --primary-color: rgb(239, 56, 172);
   --primary-hover: rgb(220, 42, 154);
@@ -6,11 +10,25 @@
   --border-color: #e2e5ec;
   --page-background: #f8f9fc;
   --card-background: #ffffff;
+
+  --login-gradient: linear-gradient(
+    120deg,
+    #1769ff 0%,
+    #6d28d9 35%,
+    #c026d3 65%,
+    #ff1744 100%
+  );
+
+  --button-gradient: linear-gradient(
+    90deg,
+    #ed0094,
+    #a700c5
+  );
 }
 
-/* =========================
+/* =========================================================
    GLOBAL
-========================= */
+========================================================= */
 
 * {
   margin: 0;
@@ -40,10 +58,9 @@ input {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-
-/* =========================
+/* =========================================================
    LOGIN PAGE
-========================= */
+========================================================= */
 
 .login-page {
   min-height: 100vh;
@@ -52,148 +69,106 @@ input {
   overflow-x: hidden;
 }
 
-
-/* =========================
-   HERO
-========================= */
+/* =========================================================
+   HERO BACKGROUND
+========================================================= */
 
 .login-hero {
   width: calc(100% - 10px);
   height: 400px;
-
   margin: 5px;
-
-  background: linear-gradient(
-    120deg,
-    #1769ff 0%,
-    #6d28d9 35%,
-    #c026d3 65%,
-    #ff1744 100%
-  );
-
+  background: var(--login-gradient);
   border-radius: 5px;
 }
 
-
-/* =========================
+/* =========================================================
    LOGIN CONTAINER
-========================= */
+========================================================= */
 
 .login-container {
   width: 100%;
-
   display: flex;
   justify-content: center;
-
   padding: 0 15px;
 }
 
 .login-content {
   width: 375px;
   max-width: 100%;
-
   margin-top: -330px;
-
   position: relative;
   z-index: 2;
 }
 
-
-/* =========================
+/* =========================================================
    WELCOME TEXT
-========================= */
+========================================================= */
 
 .welcome-text {
   width: 100%;
-
   text-align: center;
-
   margin-bottom: 20px;
 }
 
 .welcome-text h1 {
   color: #ffffff;
-
   font-size: 32px;
   font-weight: 700;
-
   line-height: 1.2;
-
   margin-bottom: 8px;
-
   white-space: nowrap;
 }
 
 .welcome-text p {
   color: #ffffff;
-
   font-size: 14px;
   line-height: 1.5;
 }
 
-
-/* =========================
+/* =========================================================
    LOGIN CARD
-========================= */
+========================================================= */
 
 .login-card {
   width: 375px;
   max-width: 100%;
   min-height: 420px;
-
-  background: #ffffff;
-
-  border-radius: 14px;
-
   padding: 25px 20px;
-
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.10);
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
 .login-card h2 {
   color: #27364b;
-
   font-size: 17px;
   font-weight: 600;
-
   line-height: 1.3;
-
   margin-bottom: 25px;
 }
 
-
-/* =========================
+/* =========================================================
    SOCIAL LOGIN
-========================= */
+========================================================= */
 
 .social-login {
   display: flex;
-
   justify-content: center;
   align-items: center;
-
   gap: 8px;
-
   margin-bottom: 30px;
 }
 
 .social-btn {
   width: 64px;
   height: 50px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border: 1px solid #eeeeee;
-
   background: #ffffff;
-
   border-radius: 6px;
-
   font-size: 21px;
-
   cursor: pointer;
 
   transition:
@@ -204,66 +179,43 @@ input {
 
 .social-btn:hover {
   border-color: #d7d7d7;
-
-  box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.06);
-
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
   transform: translateY(-1px);
 }
 
 .facebook span {
   color: #3b5998;
-
   font-weight: bold;
 }
 
 .google span {
   color: #4285f4;
-
   font-weight: bold;
 }
 
-
-/* =========================
-   FORM
-========================= */
+/* =========================================================
+   LOGIN FORM
+========================================================= */
 
 .login-card form {
   width: 100%;
 }
 
-
-/* =========================
-   EMAIL + PASSWORD INPUTS
-========================= */
-
 .login-card input[type="email"],
 .login-card input[type="password"] {
   width: 100%;
   height: 35px;
-
   display: block;
-
   border: 1px solid #dcdcdc;
-
   border-radius: 7px;
-
   padding: 0 11px;
-
-  margin: 0 0 12px 0;
-
+  margin: 0 0 12px;
   outline: none;
-
   font-size: 12px;
   font-weight: 400;
-
-  line-height: 35px;
-
+  line-height: normal;
   background: #ffffff;
-
   color: #27364b;
-
-  box-sizing: border-box;
 
   transition:
     border-color 0.2s ease,
@@ -273,24 +225,17 @@ input {
 .login-card input[type="email"]::placeholder,
 .login-card input[type="password"]::placeholder {
   color: #9299a5;
-
   font-size: 12px;
-
   opacity: 1;
 }
 
 .login-card input[type="email"]:focus,
 .login-card input[type="password"]:focus {
   border-color: #c600a8;
-
-  box-shadow:
-    0 0 0 2px rgba(198, 0, 168, 0.08);
+  box-shadow: 0 0 0 2px rgba(198, 0, 168, 0.08);
 }
 
-
-/* =========================
-   INVALID EMAIL
-========================= */
+/* EMAIL VALIDATION */
 
 .login-card input[type="email"]:invalid:not(:placeholder-shown) {
   border-color: #e74c3c;
@@ -300,33 +245,21 @@ input {
   border-color: #dcdcdc;
 }
 
-
-/* =========================
+/* =========================================================
    SIGN IN BUTTON
-========================= */
+========================================================= */
 
 .signin-btn {
   width: 100%;
   height: 35px;
-
   display: block;
-
   border: none;
-
   border-radius: 6px;
-
   color: #ffffff;
-
   font-weight: bold;
   font-size: 11px;
-
   cursor: pointer;
-
-  background: linear-gradient(
-    90deg,
-    #ed0094,
-    #a700c5
-  );
+  background: var(--button-gradient);
 
   transition:
     opacity 0.2s ease,
@@ -336,40 +269,30 @@ input {
 
 .signin-btn:hover {
   opacity: 0.9;
-
-  box-shadow:
-    0 5px 12px rgba(167, 0, 197, 0.20);
+  box-shadow: 0 5px 12px rgba(167, 0, 197, 0.2);
 }
 
 .signin-btn:active {
   transform: translateY(1px);
 }
 
-
-/* =========================
+/* =========================================================
    LOGIN OPTIONS
-========================= */
+========================================================= */
 
 .login-options {
   width: 100%;
-
   display: flex;
-
   justify-content: space-between;
   align-items: center;
-
   gap: 10px;
-
   font-size: 11px;
-
   color: #9299a5;
-
   margin-top: 10px;
 }
 
 .login-options a {
   color: #7c8795;
-
   transition: color 0.2s ease;
 }
 
@@ -379,54 +302,39 @@ input {
 
 .login-options label {
   display: flex;
-
   align-items: center;
-
   gap: 5px;
-
   cursor: pointer;
-
   white-space: nowrap;
 }
 
 .login-options input[type="checkbox"] {
   width: 17px;
   height: 17px;
-
   margin: 0;
-
   cursor: pointer;
+  accent-color: var(--primary-color);
 }
 
-
-/* =========================
+/* =========================================================
    OR DIVIDER
-========================= */
+========================================================= */
 
 .or {
   width: 100%;
-
   display: flex;
-
   align-items: center;
-
   gap: 10px;
-
   color: #aaaaaa;
-
   font-size: 12px;
-
   margin: 15px 0;
 }
 
 .or::before,
 .or::after {
   content: "";
-
   height: 1px;
-
   background: #eeeeee;
-
   flex: 1;
 }
 
@@ -434,19 +342,15 @@ input {
   flex-shrink: 0;
 }
 
-
-/* =========================
+/* =========================================================
    SIGN UP BUTTON
-========================= */
+========================================================= */
 
 .signup-btn {
   width: 100%;
   height: 35px;
-
   display: block;
-
   border: none;
-
   border-radius: 6px;
 
   background: linear-gradient(
@@ -456,10 +360,8 @@ input {
   );
 
   color: #ffffff;
-
   font-weight: bold;
   font-size: 11px;
-
   cursor: pointer;
 
   transition:
@@ -470,40 +372,49 @@ input {
 
 .signup-btn:hover {
   opacity: 0.9;
-
-  box-shadow:
-    0 5px 12px rgba(36, 110, 241, 0.20);
+  box-shadow: 0 5px 12px rgba(36, 110, 241, 0.2);
 }
 
 .signup-btn:active {
   transform: translateY(1px);
 }
 
+/* =========================================================
+   REGISTER TEXT
+========================================================= */
 
-/* =========================
+.login-register-text {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #7b809a;
+}
+
+.login-register-text a {
+  color: #c600a8;
+  font-weight: bold;
+}
+
+.login-register-text a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
    FOOTER
-========================= */
+========================================================= */
 
 .login-footer {
   width: 100%;
-
   min-height: 120px;
-
   display: flex;
-
   justify-content: center;
   align-items: flex-end;
-
   flex-wrap: wrap;
-
   gap: 35px;
-
   padding: 30px 20px;
-
   color: #9099a7;
-
   font-size: 13px;
-
   text-align: center;
 }
 
@@ -515,10 +426,9 @@ input {
   color: #246ef1;
 }
 
-
-/* =========================
+/* =========================================================
    TABLET
-========================= */
+========================================================= */
 
 @media (max-width: 700px) {
   .login-hero {
@@ -542,23 +452,15 @@ input {
   }
 }
 
-
-/* =========================
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
 @media (max-width: 500px) {
-  .login-page {
-    min-height: 100vh;
-  }
-
   .login-hero {
     width: calc(100% - 10px);
-
     height: 390px;
-
     margin: 5px;
-
     border-radius: 5px;
   }
 
@@ -568,9 +470,7 @@ input {
 
   .login-content {
     width: 100%;
-
     max-width: 375px;
-
     margin-top: -320px;
   }
 
@@ -580,29 +480,23 @@ input {
 
   .welcome-text h1 {
     font-size: 25px;
-
     white-space: normal;
-
     line-height: 1.25;
   }
 
   .welcome-text p {
     font-size: 12px;
-
     padding: 0 10px;
   }
 
   .login-card {
     width: 100%;
-
     padding: 24px 18px;
-
     border-radius: 13px;
   }
 
   .login-card h2 {
     font-size: 16px;
-
     margin-bottom: 23px;
   }
 
@@ -615,12 +509,10 @@ input {
     height: 48px;
   }
 
-  /* EMAIL AND PASSWORD STAY EXACTLY THE SAME SIZE */
   .login-card input[type="email"],
   .login-card input[type="password"] {
     width: 100%;
     height: 35px;
-
     font-size: 12px;
   }
 
@@ -634,25 +526,23 @@ input {
     font-size: 10px;
   }
 
+  .login-register-text {
+    font-size: 11px;
+  }
+
   .login-footer {
     min-height: auto;
-
     margin-top: 10px;
-
     padding: 30px 15px 25px;
-
     gap: 14px 20px;
-
     font-size: 12px;
-
     align-items: center;
   }
 }
 
-
-/* =========================
+/* =========================================================
    VERY SMALL MOBILE
-========================= */
+========================================================= */
 
 @media (max-width: 360px) {
   .login-container {
@@ -699,7 +589,6 @@ input {
 
   .login-footer {
     font-size: 11px;
-
     gap: 12px 15px;
   }
 }

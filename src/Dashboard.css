@@ -1,6 +1,6 @@
 
 /* =========================================
-   GLOBAL
+   GLOBAL STYLES
 ========================================= */
 
 * {
@@ -22,67 +22,107 @@ body {
 }
 
 button,
-input {
+input,
+select,
+textarea {
   font-family: inherit;
 }
 
 button {
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #e500a8;
+  outline-offset: 2px;
+}
+
 
 /* =========================================
    DASHBOARD LAYOUT
 ========================================= */
 
 .dashboard-body {
+  --sidebar-width: 300px;
+
   display: flex;
+  position: relative;
+  width: 100%;
+  min-width: 0;
   min-height: 100vh;
+
   background: #f7f8fa;
   color: #34496b;
 }
 
-.dashboard-body button {
-  -webkit-tap-highlight-color: transparent;
+.dashboard-body button:focus-visible {
+  outline: 2px solid #e500a8;
+  outline-offset: 2px;
 }
 
+
 /* =========================================
-   SIDEBAR
+   DASHBOARD SIDEBAR
 ========================================= */
 
 .dashboard-body .pharmacy-sidebar {
-  width: 300px;
-  min-width: 300px;
-  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  display: block;
+  z-index: 1001;
+
+  display: flex;
+  flex-direction: column;
+
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  height: 100vh;
+  height: 100dvh;
+
+  padding-bottom: 20px;
+
   background: #fff;
   border-right: 1px solid #edf0f4;
+
   overflow-x: hidden;
   overflow-y: auto;
-  z-index: 1000;
-  padding-bottom: 25px;
-  transition: transform 0.3s ease;
+
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+
+  transition:
+    width 0.3s ease,
+    min-width 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s ease;
 }
 
 .dashboard-body .pharmacy-logo {
-  height: 110px;
   display: flex;
   align-items: center;
   gap: 11px;
-  padding: 0 35px;
+
+  height: 110px;
+  min-height: 110px;
+  padding: 0 30px;
+
   border-bottom: 1px solid #edf0f4;
 }
 
 .dashboard-body .logo-mark {
-  width: 40px;
-  height: 45px;
-  min-width: 40px;
   position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  width: 40px;
+  height: 45px;
+  min-width: 40px;
+
   color: #123f91;
   font-size: 30px;
   font-weight: 800;
@@ -90,13 +130,16 @@ button {
 
 .dashboard-body .logo-mark span {
   position: absolute;
-  bottom: 0;
   right: -7px;
+  bottom: 0;
+
+  padding: 2px 3px;
+
   background: #e500a8;
   color: #fff;
-  font-size: 7px;
-  padding: 2px 3px;
   border-radius: 2px;
+
+  font-size: 7px;
 }
 
 .dashboard-body .logo-text {
@@ -106,35 +149,40 @@ button {
   white-space: nowrap;
 }
 
-/* SIDEBAR MENU */
-
 .dashboard-body .pharmacy-sidebar-menu {
   width: 100%;
   padding: 25px 15px;
 }
 
 .dashboard-body .pharmacy-menu-item {
-  width: 100%;
-  height: 58px;
-  min-height: 58px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 0 17px;
+  gap: 13px;
+
+  width: 100%;
+  min-height: 54px;
   margin: 0 0 5px;
+  padding: 0 14px;
+
   border: none;
-  border-radius: 11px;
+  border-radius: 10px;
+
   background: transparent;
   color: #687b9b;
-  font-size: 15px;
+
+  font-size: 14px;
   font-weight: 500;
   text-align: left;
   white-space: nowrap;
-  transition: background 0.25s ease, color 0.25s ease;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .dashboard-body .pharmacy-menu-item:hover {
-  background: #f4f5f8;
+  background: #f7f4f8;
   color: #34496b;
 }
 
@@ -142,63 +190,72 @@ button {
   background: #fff;
   color: #34496b;
   font-weight: 700;
-  box-shadow: 0 8px 22px rgba(41, 54, 82, 0.09);
+  box-shadow: 0 5px 18px rgba(41, 54, 82, 0.09);
 }
 
-/* MENU ICONS */
-
 .dashboard-body .pharmacy-menu-icon {
-  width: 38px;
-  height: 38px;
-  min-width: 38px;
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
+  flex-shrink: 0;
+
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+
+  border-radius: 9px;
   background: #fff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.11);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.09);
+
   color: #697997;
   font-size: 16px;
-  transition: background 0.25s ease, color 0.25s ease;
 }
 
 .dashboard-body .pharmacy-menu-item.active .pharmacy-menu-icon {
   background: #e500a8;
   color: #fff;
-  box-shadow: 0 6px 13px rgba(229, 0, 168, 0.25);
+  box-shadow: 0 5px 12px rgba(229, 0, 168, 0.2);
 }
 
-/* HELP BOX */
+
+/* =========================================
+   SIDEBAR HELP
+========================================= */
 
 .dashboard-body .pharmacy-help {
-  margin: 15px;
-  padding: 14px;
   display: flex;
   align-items: center;
   gap: 10px;
+
+  margin: auto 15px 0;
+  padding: 14px;
+
   border-radius: 12px;
   background: #f7f8fb;
 }
 
 .dashboard-body .pharmacy-help .help-icon {
-  width: 34px;
-  height: 34px;
-  min-width: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+
   border-radius: 50%;
   background: #34496b;
   color: #fff;
+
   font-size: 14px;
   font-weight: bold;
 }
 
 .dashboard-body .pharmacy-help h4 {
-  margin: 0 0 3px;
+  margin: 0 0 4px;
   color: #34496b;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .dashboard-body .pharmacy-help p {
@@ -208,67 +265,201 @@ button {
   line-height: 1.5;
 }
 
-/* MOBILE OVERLAY */
 
-.dashboard-sidebar-overlay {
+/* =========================================
+   SIDEBAR OVERLAY
+========================================= */
+
+.dashboard-body .dashboard-sidebar-overlay {
   display: none;
 }
+
 
 /* =========================================
    MAIN CONTENT
 ========================================= */
 
 .dashboard-body .main-content {
-  margin-left: 300px;
+  display: flex;
+  flex-direction: column;
+
   width: calc(100% - 300px);
   min-width: 0;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  transition: margin-left 0.3s ease, width 0.3s ease;
+
+  margin-left: 300px;
+
+  transition:
+    margin-left 0.3s ease,
+    width 0.3s ease;
 }
 
+
 /* =========================================
-   HEADER
+   HAMBURGER BUTTON
+========================================= */
+
+.dashboard-body .hamburger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 32px;
+
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  margin: 0;
+  padding: 0;
+
+  border: 1px solid #e7eaf0;
+  border-radius: 7px;
+
+  background: #fff;
+  color: #34496b;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.dashboard-body .hamburger span {
+  display: block;
+  line-height: 1;
+}
+
+.dashboard-body .hamburger:hover,
+.dashboard-body .hamburger.is-open:hover {
+  background: #fff0f9;
+  color: #e500a8;
+  border-color: #e500a8;
+}
+
+
+/* =========================================
+   DESKTOP SIDEBAR COLLAPSE — ICONS ONLY
+========================================= */
+
+@media (min-width: 951px) {
+  .dashboard-body.sidebar-collapsed .pharmacy-sidebar {
+    width: 82px;
+    min-width: 82px;
+
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .dashboard-body.sidebar-collapsed .pharmacy-logo {
+    justify-content: center;
+    gap: 0;
+    padding: 0 10px;
+  }
+
+  .dashboard-body.sidebar-collapsed .logo-text {
+    display: none;
+  }
+
+  .dashboard-body.sidebar-collapsed .pharmacy-sidebar-menu {
+    padding: 25px 10px;
+  }
+
+  .dashboard-body.sidebar-collapsed .pharmacy-menu-item {
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+  }
+
+  .dashboard-body.sidebar-collapsed
+    .pharmacy-menu-item > span:not(.pharmacy-menu-icon) {
+    display: none;
+  }
+
+  .dashboard-body.sidebar-collapsed .pharmacy-menu-icon {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+  }
+
+  .dashboard-body.sidebar-collapsed .pharmacy-help {
+    justify-content: center;
+    gap: 0;
+    margin: auto 8px 0;
+    padding: 10px 0;
+  }
+
+  .dashboard-body.sidebar-collapsed .pharmacy-help > div {
+    display: none;
+  }
+
+  .dashboard-body.sidebar-collapsed .main-content {
+    width: calc(100% - 82px);
+    margin-left: 82px;
+  }
+
+  .dashboard-body .dashboard-sidebar-overlay {
+    display: none !important;
+  }
+
+  .dashboard-body .dashboard-search-wrapper {
+    width: 180px;
+  }
+}
+
+
+/* =========================================
+   TOP HEADER
 ========================================= */
 
 .dashboard-body .top-header {
-  min-height: 110px;
-  background: linear-gradient(100deg, #fff7ff, #fceaff, #fff);
-  border-bottom: 1px solid #edf0f4;
-  border-radius: 0 0 20px 20px;
-  box-shadow: 0 14px 30px rgba(54, 66, 90, 0.08);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 20px;
-  padding: 20px 35px;
+  justify-content: space-between;
+  gap: 16px;
+
+  min-height: 110px;
+  padding: 18px 28px;
+
+  background: linear-gradient(
+    100deg,
+    #fff7ff,
+    #fceaff,
+    #fff
+  );
+
+  border-bottom: 1px solid #edf0f4;
+  border-radius: 0 0 18px 18px;
+
+  box-shadow: 0 10px 25px rgba(54, 66, 90, 0.06);
 }
 
 .dashboard-body .header-left {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
+
   min-width: 0;
 }
 
-.dashboard-body .hamburger {
-  display: none;
-  flex-shrink: 0;
-  border: none;
-  background: transparent;
-  color: #34496b;
-  font-size: 26px;
-  padding: 5px;
+.dashboard-body .header-heading {
+  min-width: 0;
 }
 
 .dashboard-body .breadcrumb {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 7px;
+  gap: 9px;
+
+  margin-bottom: 6px;
+
   color: #8190a9;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .dashboard-body .header-left h2 {
@@ -282,32 +473,42 @@ button {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 18px;
-  color: #34496b;
+  gap: 14px;
+
+  min-width: 0;
 }
 
+
 /* =========================================
-   SEARCH BOX
+   DASHBOARD SEARCH
 ========================================= */
 
 .dashboard-body .dashboard-search-wrapper {
   position: relative;
-  width: 220px;
-  flex-shrink: 0;
   z-index: 1100;
+
+  width: 220px;
+  min-width: 0;
+  flex-shrink: 1;
 }
 
 .dashboard-body .search-box {
-  width: 100%;
-  height: 43px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 13px;
+  gap: 9px;
+
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+
   border: 1px solid #d5dbe5;
-  border-radius: 10px;
+  border-radius: 9px;
+
   background: #fff;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .dashboard-body .search-box:focus-within {
@@ -316,40 +517,45 @@ button {
 }
 
 .dashboard-body .search-box > span {
+  flex-shrink: 0;
   color: #34496b;
-  font-size: 22px;
-  font-weight: bold;
+  font-size: 21px;
 }
 
 .dashboard-body .search-box input {
   width: 100%;
   min-width: 0;
+  padding: 0;
+
   border: none;
   outline: none;
+
   background: transparent;
   color: #34496b;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .dashboard-body .search-box input::placeholder {
   color: #a2aec0;
 }
 
-/* SEARCH RESULTS DROPDOWN */
-
 .dashboard-body .dashboard-search-results {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 8px);
   left: 0;
   right: 0;
-  max-height: 320px;
+  z-index: 1200;
+
+  max-height: 300px;
   overflow-y: auto;
+  padding: 7px;
+
   background: #fff;
   border: 1px solid #edf0f4;
-  border-radius: 12px;
+  border-radius: 11px;
+
   box-shadow: 0 12px 30px rgba(48, 62, 90, 0.14);
-  padding: 7px;
-  z-index: 1200;
+
   animation: dashboardSearchIn 0.18s ease;
 }
 
@@ -366,19 +572,26 @@ button {
 }
 
 .dashboard-body .dashboard-search-result {
-  width: 100%;
-  min-height: 43px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
+  gap: 9px;
+
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 10px;
+
   border: none;
-  border-radius: 8px;
+  border-radius: 7px;
+
   background: #fff;
   color: #34496b;
-  font-size: 13px;
+
+  font-size: 12px;
   text-align: left;
-  transition: background 0.2s ease, color 0.2s ease;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .dashboard-body .dashboard-search-result:hover,
@@ -391,8 +604,8 @@ button {
 .dashboard-body .search-result-icon {
   width: 22px;
   min-width: 22px;
-  text-align: center;
   color: #e500a8;
+  text-align: center;
   font-size: 17px;
 }
 
@@ -403,35 +616,51 @@ button {
 }
 
 .dashboard-body .dashboard-search-empty {
-  padding: 15px 12px;
+  padding: 13px 10px;
   color: #8190a9;
   font-size: 12px;
   line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 
-/* HEADER ICONS */
+
+/* =========================================
+   HEADER ACTIONS
+========================================= */
 
 .dashboard-body .header-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+
+  width: 30px;
+  height: 34px;
+
   border: none;
+  border-radius: 7px;
+
   background: transparent;
   color: #34496b;
   font-size: 18px;
+
   transition: color 0.2s ease;
 }
 
 .dashboard-body .header-icon:hover {
+  background: #fff0f9;
   color: #e500a8;
 }
 
-/* LOGOUT */
-
 .dashboard-body .header-link {
   flex-shrink: 0;
+  padding: 7px 0;
+
   border: none;
   background: transparent;
+
   color: #34496b;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -440,25 +669,23 @@ button {
   color: #e500a8;
 }
 
+
 /* =========================================
-   DASHBOARD CONTENT
+   DASHBOARD CONTENT AND CARDS
 ========================================= */
 
 .dashboard-body .dashboard-content {
   width: 100%;
-  padding: 25px 30px;
+  min-width: 0;
+  padding: 25px 28px;
 }
 
 .dashboard-body .dashboard-content > h1 {
-  margin: 0 0 25px;
+  margin: 0 0 23px;
   color: #34496b;
   font-size: 24px;
   font-weight: 600;
 }
-
-/* =========================================
-   CARDS GRID
-========================================= */
 
 .dashboard-body .cards-grid {
   display: grid;
@@ -468,12 +695,15 @@ button {
 
 .dashboard-body .dashboard-card {
   min-width: 0;
-  min-height: 350px;
-  padding: 22px;
+  min-height: 340px;
+  padding: 21px;
+
   background: #fff;
   border: 1px solid #f0f2f6;
-  border-radius: 14px;
+  border-radius: 13px;
+
   box-shadow: 0 5px 20px rgba(48, 62, 90, 0.04);
+
   transition: box-shadow 0.2s ease;
 }
 
@@ -481,43 +711,47 @@ button {
   box-shadow: 0 9px 25px rgba(48, 62, 90, 0.08);
 }
 
-/* CARD TITLES */
-
 .dashboard-body .card-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 25px;
+  gap: 10px;
+
+  margin-bottom: 23px;
 }
 
 .dashboard-body .card-title h3 {
   margin: 0;
   color: #34496b;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
 }
 
-.dashboard-body .card-title span {
+.dashboard-body .card-title > span {
+  flex-shrink: 0;
   color: #a4abb4;
   cursor: help;
 }
 
+
 /* =========================================
-   DONUT CHARTS
+   DONUT CHARTS AND LEGENDS
 ========================================= */
 
 .dashboard-body .chart-content {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  gap: 18px;
+  gap: 15px;
+  min-width: 0;
 }
 
-.dashboard-body .donut {
+.dashboard-body .donut,
+.dashboard-body .real-donut {
   position: relative;
-  width: 165px;
-  height: 165px;
+  width: 155px;
+  height: 155px;
+  min-width: 0;
   flex-shrink: 0;
   border-radius: 50%;
 }
@@ -525,10 +759,12 @@ button {
 .dashboard-body .donut::after {
   content: "";
   position: absolute;
-  width: 88px;
-  height: 88px;
   top: 50%;
   left: 50%;
+
+  width: 82px;
+  height: 82px;
+
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background: #fff;
@@ -559,45 +795,61 @@ button {
   background: conic-gradient(
     #323964 0deg 90deg,
     #e90091 90deg 180deg,
-    #2c70ed 180deg 245deg,
+    #3171e7 180deg 245deg,
     #16aa4b 245deg 360deg
   );
 }
 
-/* CHART LEGEND */
-
-.dashboard-body .legend {
-  width: 48%;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  color: #606a78;
-  font-size: 11px;
+.dashboard-body .real-donut {
+  overflow: hidden;
 }
 
-.dashboard-body .legend div {
+.dashboard-body .real-donut::after {
+  display: none;
+}
+
+.dashboard-body .real-donut .recharts-responsive-container {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.dashboard-body .legend {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+
+  width: 48%;
+  min-width: 0;
+
+  color: #606a78;
+  font-size: 10px;
+}
+
+.dashboard-body .legend > div {
   display: grid;
-  grid-template-columns: 12px minmax(0, 1fr) 35px;
+  grid-template-columns: 10px minmax(0, 1fr) 32px;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   min-width: 0;
 }
 
 .dashboard-body .legend div span {
+  min-width: 0;
   overflow-wrap: anywhere;
+  line-height: 1.4;
 }
 
 .dashboard-body .legend i {
-  width: 9px;
-  height: 9px;
   display: inline-block;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
 }
 
 .dashboard-body .legend b {
   text-align: right;
-  font-weight: normal;
+  font-weight: 400;
+  white-space: nowrap;
 }
 
 .dashboard-body .pink {
@@ -624,20 +876,29 @@ button {
   background: #b9c7df;
 }
 
-/* DETAILS BUTTON */
+
+/* =========================================
+   CARD BUTTONS
+========================================= */
 
 .dashboard-body .details-btn {
-  width: 145px;
-  min-height: 36px;
-  margin: 22px 0 0 20px;
-  padding: 8px 12px;
+  width: auto;
+  min-height: 35px;
+  margin: 21px 0 0 15px;
+  padding: 9px 13px;
+
   border: none;
   border-radius: 7px;
+
   background: linear-gradient(90deg, #aab9d3, #7286a8);
   color: #fff;
+
   font-size: 10px;
   font-weight: 700;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .dashboard-body .details-btn:hover {
@@ -648,35 +909,45 @@ button {
   transform: translateY(1px);
 }
 
+
 /* =========================================
-   HEALTH INDEX LINE CHART
+   LINE CHARTS
 ========================================= */
 
-.dashboard-body .line-chart {
+.dashboard-body .line-chart,
+.dashboard-body .real-line-chart {
   width: 100%;
-  height: 230px;
-  display: flex;
-  align-items: center;
+  height: 220px;
+  min-width: 0;
+}
+
+.dashboard-body .real-line-chart {
+  display: block;
+}
+
+.dashboard-body .real-line-chart .recharts-responsive-container {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .dashboard-body .line-chart svg {
   display: block;
-  width: 100%;
-  height: 180px;
-  color: #596372;
-  overflow: visible;
+  max-width: 100%;
 }
 
+
 /* =========================================
-   UPCOMING APPOINTMENTS
+   APPOINTMENT CARD
 ========================================= */
 
 .dashboard-body .appointment-card {
   margin-top: 22px;
   padding: 22px;
+
   background: #fff;
   border: 1px solid #f0f2f6;
-  border-radius: 14px;
+  border-radius: 13px;
+
   box-shadow: 0 5px 20px rgba(48, 62, 90, 0.04);
 }
 
@@ -684,7 +955,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 15px;
+  gap: 12px;
   margin-bottom: 18px;
 }
 
@@ -697,14 +968,20 @@ button {
 
 .dashboard-body .appointment-header button {
   flex-shrink: 0;
+  padding: 9px 13px;
+
   border: none;
   border-radius: 7px;
-  padding: 10px 15px;
+
   background: #edf1f7;
   color: #63728a;
-  font-size: 11px;
+
+  font-size: 10px;
   font-weight: 700;
-  transition: background 0.2s ease, color 0.2s ease;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .dashboard-body .appointment-header button:hover {
@@ -717,6 +994,7 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+
   padding: 18px 0 5px;
   border-top: 1px solid #edf0f4;
 }
@@ -729,15 +1007,19 @@ button {
 }
 
 .dashboard-body .doctor-avatar {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+
   border-radius: 50%;
   background: #edf1f7;
   color: #4e6280;
+
   font-size: 12px;
   font-weight: 700;
 }
@@ -761,32 +1043,37 @@ button {
 .dashboard-body .appointment-info {
   display: flex;
   align-items: center;
-  gap: 65px;
-  font-size: 13px;
+  gap: 25px;
+  min-width: 0;
+  font-size: 12px;
 }
 
 .dashboard-body .appointment-info strong {
   color: #34496b;
+  white-space: nowrap;
 }
 
 .dashboard-body .appointment-info span {
   color: #8994a4;
 }
 
+
 /* =========================================
-   FOOTER
+   DASHBOARD FOOTER
 ========================================= */
 
 .dashboard-body .dashboard-footer {
-  min-height: 85px;
-  margin-top: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  padding: 25px 30px;
+  gap: 18px;
+
+  min-height: 80px;
+  margin-top: auto;
+  padding: 22px 28px;
+
   color: #7f8998;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .dashboard-body .dashboard-footer p {
@@ -794,11 +1081,11 @@ button {
   line-height: 1.6;
 }
 
-.dashboard-body .dashboard-footer div {
+.dashboard-body .dashboard-footer > div {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 28px;
+  gap: 20px;
 }
 
 .dashboard-body .dashboard-footer a {
@@ -811,108 +1098,113 @@ button {
   color: #e500a8;
 }
 
-/* =========================================
-   RESPONSIVE — 1200px
-========================================= */
-
-@media (max-width: 1200px) {
-  .dashboard-body .cards-grid {
-    gap: 15px;
-  }
-
-  .dashboard-body .dashboard-card {
-    padding: 18px;
-  }
-
-  .dashboard-body .chart-content {
-    gap: 12px;
-  }
-
-  .dashboard-body .donut {
-    width: 140px;
-    height: 140px;
-  }
-
-  .dashboard-body .donut::after {
-    width: 76px;
-    height: 76px;
-  }
-
-  .dashboard-body .legend {
-    gap: 13px;
-    font-size: 10px;
-  }
-
-  .dashboard-body .top-header {
-    padding-right: 25px;
-    padding-left: 25px;
-  }
-
-  .dashboard-body .dashboard-search-wrapper {
-    width: 180px;
-  }
-}
 
 /* =========================================
-   RESPONSIVE — 950px
+   TABLET RESPONSIVE
 ========================================= */
 
 @media (max-width: 950px) {
   .dashboard-body .pharmacy-sidebar {
     width: 280px;
-    min-width: 280px;
+    min-width: 0;
+    max-width: 85vw;
+
     transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+
     box-shadow: 5px 0 20px rgba(0, 0, 0, 0.08);
   }
 
   .dashboard-body .pharmacy-sidebar.show {
     transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
   }
 
-  .dashboard-body .main-content {
+  .dashboard-body .main-content,
+  .dashboard-body.sidebar-expanded .main-content,
+  .dashboard-body.sidebar-collapsed .main-content {
     width: 100%;
     margin-left: 0;
   }
 
-  .dashboard-body .hamburger {
-    display: flex;
-  }
-
   .dashboard-body .dashboard-sidebar-overlay {
-    display: block;
     position: fixed;
     inset: 0;
-    z-index: 999;
+    z-index: 1000;
+
+    display: block;
     width: 100%;
     height: 100%;
-    border: none;
+    height: 100dvh;
+
+    margin: 0;
     padding: 0;
+
+    border: none;
+    border-radius: 0;
+
     background: rgba(27, 38, 57, 0.35);
+    cursor: pointer;
   }
 
-  .dashboard-body .cards-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .dashboard-body .top-header {
+    flex-wrap: wrap;
   }
 
   .dashboard-body .header-right {
     gap: 12px;
   }
+
+  .dashboard-body .dashboard-search-wrapper {
+    width: 200px;
+  }
+
+  .dashboard-body .cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+  }
+
+  .dashboard-body .dashboard-card {
+    padding: 17px;
+  }
+
+  .dashboard-body .chart-content {
+    gap: 10px;
+  }
+
+  .dashboard-body .real-donut,
+  .dashboard-body .donut {
+    width: 125px;
+    height: 125px;
+  }
+
+  .dashboard-body .donut::after {
+    width: 68px;
+    height: 68px;
+  }
+
+  .dashboard-body .legend {
+    gap: 11px;
+    font-size: 9px;
+  }
 }
 
+
 /* =========================================
-   RESPONSIVE — 700px
+   MOBILE RESPONSIVE
 ========================================= */
 
 @media (max-width: 700px) {
   .dashboard-body .top-header {
     min-height: 90px;
-    padding: 18px 20px;
-    flex-wrap: wrap;
-    gap: 15px;
+    padding: 16px 20px;
+    gap: 14px;
   }
 
   .dashboard-body .header-left {
-    gap: 12px;
+    gap: 10px;
   }
 
   .dashboard-body .header-left h2 {
@@ -922,12 +1214,14 @@ button {
   .dashboard-body .header-right {
     width: 100%;
     justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   .dashboard-body .dashboard-search-wrapper {
-    flex: 1;
+    flex: 1 1 180px;
     width: auto;
-    min-width: 0;
+    min-width: 100px;
   }
 
   .dashboard-body .dashboard-content {
@@ -938,30 +1232,32 @@ button {
     font-size: 21px;
   }
 
-  .dashboard-body .dashboard-card {
-    min-height: 0;
-  }
-
-  .dashboard-body .chart-content {
-    justify-content: center;
-  }
-
   .dashboard-body .dashboard-footer {
-    padding: 25px 20px;
+    padding: 22px 20px;
   }
 }
 
-/* =========================================
-   RESPONSIVE — 500px
-========================================= */
-
 @media (max-width: 500px) {
   .dashboard-body .top-header {
-    padding: 15px;
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .dashboard-body .hamburger {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    flex-basis: 30px;
+    font-size: 15px;
+  }
+
+  .dashboard-body .header-left {
+    gap: 8px;
   }
 
   .dashboard-body .breadcrumb {
-    font-size: 12px;
+    gap: 6px;
+    font-size: 11px;
   }
 
   .dashboard-body .header-left h2 {
@@ -969,15 +1265,25 @@ button {
   }
 
   .dashboard-body .header-right {
-    gap: 10px;
+    gap: 9px;
+  }
+
+  .dashboard-body .dashboard-search-wrapper {
+    flex: 1 1 130px;
   }
 
   .dashboard-body .search-box {
-    height: 40px;
+    height: 38px;
+    padding: 0 9px;
+  }
+
+  .dashboard-body .header-icon {
+    width: 26px;
+    font-size: 16px;
   }
 
   .dashboard-body .header-link {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .dashboard-body .dashboard-content {
@@ -985,8 +1291,8 @@ button {
   }
 
   .dashboard-body .dashboard-content > h1 {
-    font-size: 19px;
     margin-bottom: 18px;
+    font-size: 19px;
   }
 
   .dashboard-body .cards-grid {
@@ -995,6 +1301,7 @@ button {
   }
 
   .dashboard-body .dashboard-card {
+    min-height: 0;
     padding: 18px;
   }
 
@@ -1003,11 +1310,11 @@ button {
   }
 
   .dashboard-body .chart-content {
-    flex-direction: row;
-    align-items: center;
+    justify-content: center;
     gap: 12px;
   }
 
+  .dashboard-body .real-donut,
   .dashboard-body .donut {
     width: 125px;
     height: 125px;
@@ -1021,12 +1328,12 @@ button {
   .dashboard-body .legend {
     width: auto;
     flex: 1;
-    gap: 13px;
+    gap: 12px;
     font-size: 10px;
   }
 
-  .dashboard-body .legend div {
-    grid-template-columns: 10px minmax(0, 1fr) 30px;
+  .dashboard-body .legend > div {
+    grid-template-columns: 9px minmax(0, 1fr) 30px;
     gap: 4px;
   }
 
@@ -1034,8 +1341,8 @@ button {
     margin-left: 0;
   }
 
-  .dashboard-body .line-chart {
-    height: 180px;
+  .dashboard-body .real-line-chart {
+    height: 190px;
   }
 
   .dashboard-body .appointment-card {
@@ -1047,48 +1354,53 @@ button {
   }
 
   .dashboard-body .appointment-header button {
-    padding: 9px 10px;
+    padding: 8px 10px;
     font-size: 10px;
   }
 
   .dashboard-body .appointment-row {
     align-items: flex-start;
     flex-direction: column;
-    gap: 16px;
+    gap: 15px;
   }
 
   .dashboard-body .appointment-info {
     width: 100%;
     justify-content: space-between;
-    gap: 15px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .dashboard-body .appointment-info span {
+    flex: 1 1 150px;
   }
 
   .dashboard-body .dashboard-footer {
     flex-direction: column;
     justify-content: center;
-    gap: 15px;
+    gap: 13px;
+    padding: 22px 14px;
     text-align: center;
-    padding: 22px 15px;
   }
 
-  .dashboard-body .dashboard-footer div {
+  .dashboard-body .dashboard-footer > div {
     justify-content: center;
-    gap: 18px;
+    gap: 15px;
   }
 }
-
-/* =========================================
-   RESPONSIVE — 360px
-========================================= */
 
 @media (max-width: 360px) {
   .dashboard-body .pharmacy-sidebar {
     width: 250px;
-    min-width: 250px;
+    max-width: 85vw;
   }
 
   .dashboard-body .pharmacy-logo {
     padding: 0 20px;
+  }
+
+  .dashboard-body .logo-text {
+    font-size: 16px;
   }
 
   .dashboard-body .pharmacy-sidebar-menu {
@@ -1098,11 +1410,28 @@ button {
   .dashboard-body .pharmacy-menu-item {
     gap: 10px;
     padding: 0 12px;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .dashboard-body .pharmacy-help {
-    margin: 12px;
+    margin-right: 12px;
+    margin-left: 12px;
+  }
+
+  .dashboard-body .top-header {
+    padding: 12px 10px;
+  }
+
+  .dashboard-body .header-left {
+    gap: 7px;
+  }
+
+  .dashboard-body .header-left h2 {
+    font-size: 16px;
+  }
+
+  .dashboard-body .header-right {
+    gap: 7px;
   }
 
   .dashboard-body .dashboard-content {
@@ -1113,6 +1442,7 @@ button {
     padding: 14px;
   }
 
+  .dashboard-body .real-donut,
   .dashboard-body .donut {
     width: 105px;
     height: 105px;
@@ -1127,83 +1457,39 @@ button {
     font-size: 9px;
   }
 
-  .dashboard-body .header-left {
-    gap: 8px;
-  }
-
-  .dashboard-body .header-left h2 {
-    font-size: 16px;
+  .dashboard-body .dashboard-search-wrapper {
+    flex-basis: 115px;
   }
 
   .dashboard-body .header-link {
-    font-size: 11px;
+    font-size: 10px;
+  }
+
+  .dashboard-body .appointment-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dashboard-body .dashboard-footer > div {
+    gap: 12px;
+    font-size: 10px;
   }
 }
+
 
 /* =========================================
-   RECHARTS — REAL DONUTS AND LINE CHART
+   ACCOUNT ALERTS
 ========================================= */
 
-.dashboard-body .real-donut {
-  position: relative;
-  width: 165px;
-  height: 165px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.dashboard-body .real-donut::after {
-  display: none;
-}
-
-.dashboard-body .real-donut .recharts-responsive-container {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.dashboard-body .real-line-chart {
-  display: block;
-  min-width: 0;
-  height: 230px;
-}
-
-.dashboard-body .real-line-chart .recharts-responsive-container {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-@media (max-width: 1200px) {
-  .dashboard-body .real-donut {
-    width: 140px;
-    height: 140px;
-  }
-}
-
-@media (max-width: 500px) {
-  .dashboard-body .real-donut {
-    width: 125px;
-    height: 125px;
-  }
-
-  .dashboard-body .real-line-chart {
-    height: 180px;
-  }
-}
-
-@media (max-width: 360px) {
-  .dashboard-body .real-donut {
-    width: 105px;
-    height: 105px;
-  }
-}
-/* Account Alert Messages */
 .account-alert {
   padding: 12px 18px;
-  border-radius: 8px;
   margin-bottom: 15px;
+
+  border-radius: 8px;
+
   font-weight: 600;
   font-size: 0.9rem;
+
   animation: fadeIn 0.3s ease;
 }
 
@@ -1220,11 +1506,20 @@ button {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
+
 /* =========================================
-   ACCOUNT SETTING PAGE (Settings)
+   ACCOUNT SETTINGS PAGE
 ========================================= */
 
 .account-page {
@@ -1235,12 +1530,16 @@ button {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* ===== Sidebar Menu ===== */
 .account-sidebar {
-  background: #fff;
-  border-radius: 12px;
+  width: 240px;
+  min-width: 240px;
+  flex-shrink: 0;
+
   padding: 12px 10px;
   margin-bottom: 20px;
+
+  background: #fff;
+  border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
 
@@ -1248,10 +1547,13 @@ button {
   display: flex;
   align-items: center;
   gap: 15px;
+
   padding: 14px 20px;
   border-radius: 10px;
+
   cursor: pointer;
   transition: 0.2s;
+
   color: #2c3e50;
   font-size: 0.95rem;
   font-weight: 500;
@@ -1267,78 +1569,82 @@ button {
 }
 
 .account-menu-icon {
-  font-size: 1.2rem;
   width: 25px;
-  text-align: center;
   color: #2c3e50;
+  font-size: 1.2rem;
+  text-align: center;
 }
 
-/* ===== Cards ===== */
 .account-card {
-  background: #fff;
-  border-radius: 12px;
   padding: 25px;
   margin-bottom: 20px;
+
+  background: #fff;
+  border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
 
 .account-title {
-  font-size: 1.2rem;
-  color: #2c3e50;
   margin: 0 0 20px;
+  color: #2c3e50;
+  font-size: 1.2rem;
   font-weight: 700;
 }
 
 .account-subtitle {
-  font-size: 0.95rem;
-  color: #2c3e50;
-  font-weight: 600;
   margin: 0 0 8px;
+  color: #2c3e50;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .account-muted {
-  font-size: 0.85rem;
-  color: #888;
   margin: 0 0 12px;
+  color: #888;
+  font-size: 0.85rem;
 }
 
 .account-label {
   display: block;
-  font-size: 0.85rem;
-  color: #2c3e50;
-  font-weight: 600;
   margin: 0 0 8px;
+  color: #2c3e50;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .account-input {
   width: 100%;
   padding: 14px 15px;
+  margin-bottom: 18px;
+
   border: 1px solid #ddd;
   border-radius: 8px;
-  font-size: 0.95rem;
-  outline: none;
-  margin-bottom: 18px;
-  transition: border 0.3s;
+
   background: #fff;
   color: #333;
+
   font-family: inherit;
-  box-sizing: border-box;
+  font-size: 0.95rem;
+
+  outline: none;
+  transition: border 0.3s;
 }
 
 .account-input:focus {
   border-color: #d63384;
 }
 
-.account-row {
+.account-row,
+.profile-switch-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   gap: 15px;
 }
 
 .account-switch-label {
-  font-size: 0.95rem;
   color: #2c3e50;
+  font-size: 0.95rem;
   font-weight: 500;
 }
 
@@ -1348,24 +1654,29 @@ button {
 }
 
 .account-section:first-of-type {
-  border-top: none;
   padding-top: 0;
+  border-top: none;
 }
 
 .account-list {
   padding-left: 20px;
+  margin: 0 0 15px;
+
   color: #555;
   font-size: 0.9rem;
   line-height: 1.9;
-  margin: 0 0 15px;
 }
 
 .account-btn-right {
-  text-align: right;
   margin-top: 15px;
+  text-align: right;
 }
 
-/* ===== Profile Card ===== */
+
+/* =========================================
+   PROFILE
+========================================= */
+
 .profile-row {
   display: flex;
   align-items: center;
@@ -1386,39 +1697,46 @@ button {
 }
 
 .profile-name {
-  font-size: 1.4rem;
-  color: #2c3e50;
-  font-weight: 700;
   margin: 0 0 5px;
+  color: #2c3e50;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
 .profile-role {
-  font-size: 0.9rem;
-  color: #888;
   margin: 0;
+  color: #888;
+  font-size: 0.9rem;
 }
 
 .profile-switch-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding-top: 15px;
   border-top: 1px solid #f0f0f0;
 }
 
-/* ===== Buttons ===== */
-.btn-dark {
-  background: #2c3e50;
-  color: #fff;
-  border: none;
+
+/* =========================================
+   ACCOUNT BUTTONS
+========================================= */
+
+.btn-dark,
+.btn-outline,
+.btn-red {
   padding: 12px 25px;
   border-radius: 8px;
-  font-weight: 700;
+
+  font-family: inherit;
   font-size: 0.8rem;
-  cursor: pointer;
+  font-weight: 700;
+
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-family: inherit;
+}
+
+.btn-dark {
+  border: none;
+  background: #2c3e50;
+  color: #fff;
 }
 
 .btn-dark:hover {
@@ -1426,17 +1744,10 @@ button {
 }
 
 .btn-outline {
+  padding: 10px 22px;
+  border: 1px solid #2c3e50;
   background: #fff;
   color: #2c3e50;
-  border: 1px solid #2c3e50;
-  padding: 10px 22px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.75rem;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-family: inherit;
 }
 
 .btn-outline:hover {
@@ -1444,87 +1755,98 @@ button {
 }
 
 .btn-red {
+  border: none;
   background: #e74c3c;
   color: #fff;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.75rem;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-family: inherit;
 }
 
 .btn-red:hover {
   background: #c0392b;
 }
 
-/* ===== Badges ===== */
+
+/* =========================================
+   ACCOUNT BADGES
+========================================= */
+
 .badge-enabled,
 .badge-active {
-  background: #c8f0a0;
-  color: #2e7d32;
   padding: 5px 12px;
   border-radius: 6px;
+
+  background: #c8f0a0;
+  color: #2e7d32;
+
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.5px;
 }
 
-/* ===== Switch (Toggle) ===== */
+
+/* =========================================
+   ACCOUNT SWITCH
+========================================= */
+
 .switch {
   position: relative;
   display: inline-block;
+  flex-shrink: 0;
+
   width: 50px;
   height: 26px;
-  flex-shrink: 0;
 }
 
 .switch input {
-  opacity: 0;
   width: 0;
   height: 0;
+  opacity: 0;
 }
 
 .slider {
   position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: 0.4s;
+  inset: 0;
+
   border-radius: 26px;
+  background: #ccc;
+
+  cursor: pointer;
+  transition: 0.4s;
 }
 
-.slider:before {
-  position: absolute;
+.slider::before {
   content: "";
-  height: 18px;
-  width: 18px;
+
+  position: absolute;
   left: 4px;
   bottom: 4px;
-  background-color: #fff;
-  transition: 0.4s;
+
+  width: 18px;
+  height: 18px;
+
   border-radius: 50%;
+  background: #fff;
+
+  transition: 0.4s;
 }
 
-input:checked + .slider {
-  background-color: #2c3e50;
+.switch input:checked + .slider {
+  background: #2c3e50;
 }
 
-input:checked + .slider:before {
+.switch input:checked + .slider::before {
   transform: translateX(24px);
 }
 
-/* ===== Sessions ===== */
+
+/* =========================================
+   ACCOUNT SESSIONS
+========================================= */
+
 .session-item {
   display: flex;
   align-items: center;
   gap: 15px;
+
   padding: 15px 0;
   border-bottom: 1px solid #f0f0f0;
 }
@@ -1534,8 +1856,8 @@ input:checked + .slider:before {
 }
 
 .session-icon {
-  font-size: 1.4rem;
   color: #888;
+  font-size: 1.4rem;
   font-style: normal;
 }
 
@@ -1545,96 +1867,89 @@ input:checked + .slider:before {
 
 .session-info strong {
   display: block;
+  margin-bottom: 2px;
   color: #2c3e50;
   font-size: 0.9rem;
-  margin-bottom: 2px;
 }
 
-.session-info span {
-  font-size: 0.8rem;
-  color: #888;
-}
-
+.session-info span,
 .session-loc {
-  font-size: 0.8rem;
   color: #888;
+  font-size: 0.8rem;
 }
 
 .session-action {
   color: #00bcd4;
   font-size: 0.8rem;
   font-weight: 600;
-  cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .session-action:hover {
   text-decoration: underline;
 }
 
-/* ===== Alert Messages ===== */
-.account-alert {
-  padding: 12px 18px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
 
-.account-alert-success {
-  background: #e7f8ef;
-  color: #18a66a;
-  border-left: 4px solid #18a66a;
-}
-
-.account-alert-error {
-  background: #fdecea;
-  color: #c0392b;
-  border-left: 4px solid #c0392b;
-}
 /* =========================================
-   MAIN LAYOUT & SIDEBAR
+   GENERAL APP LAYOUT
 ========================================= */
+
 .app-layout {
   display: flex;
   min-height: 100vh;
+
   background: #f5f7fa;
   color: #27364b;
+
   font-family: Arial, Helvetica, sans-serif;
 }
 
 .app-sidebar {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+
   width: 240px;
   min-width: 240px;
   min-height: 100vh;
-  background: #ffffff;
-  border-right: 1px solid #e2e5ec;
-  display: flex;
-  flex-direction: column;
   padding: 24px 14px;
+
+  background: #fff;
+  border-right: 1px solid #e2e5ec;
+
+  transition:
+    width 0.3s ease,
+    min-width 0.3s ease;
 }
 
 .sidebar-brand {
   display: flex;
   align-items: center;
   gap: 10px;
+
   padding: 0 10px;
   margin-bottom: 32px;
+
+  color: #27364b;
   font-size: 18px;
   font-weight: 700;
   white-space: nowrap;
-  color: #27364b;
 }
 
 .sidebar-logo {
-  width: 36px;
-  height: 36px;
   display: grid;
   place-items: center;
-  color: white;
-  background: linear-gradient(135deg, #ef38ac, #8b5cf6);
+  flex-shrink: 0;
+
+  width: 36px;
+  height: 36px;
+
   border-radius: 11px;
+  background: linear-gradient(135deg, #ef38ac, #8b5cf6);
+  color: #fff;
+
   font-size: 21px;
   font-weight: bold;
 }
@@ -1650,14 +1965,18 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
   gap: 13px;
+
   min-height: 44px;
   padding: 10px 12px;
+
   border-radius: 9px;
+
   color: #697386;
   font-size: 13px;
+  text-decoration: none;
+
   transition: 0.2s ease;
   cursor: pointer;
-  text-decoration: none;
 }
 
 .sidebar-link:hover,
@@ -1667,16 +1986,16 @@ input:checked + .slider:before {
 }
 
 .sidebar-link.active {
-  color: #ffffff;
   background: linear-gradient(90deg, #ed38aa, #c13ad0);
+  color: #fff;
   box-shadow: 0 5px 12px rgba(220, 42, 154, 0.18);
 }
 
 .sidebar-link-icon {
   width: 20px;
+  flex-shrink: 0;
   text-align: center;
   font-size: 18px;
-  flex-shrink: 0;
 }
 
 .sidebar-link-label {
@@ -1688,15 +2007,59 @@ input:checked + .slider:before {
 }
 
 .help-question {
-  width: 21px;
-  height: 21px;
-  border: 1px solid #9ba3b2;
-  border-radius: 50%;
   display: grid;
   place-items: center;
+  flex-shrink: 0;
+
+  width: 21px;
+  height: 21px;
+
+  border: 1px solid #9ba3b2;
+  border-radius: 50%;
 }
 
-/* ===== Main content ===== */
+
+/* =========================================
+   APP SIDEBAR COLLAPSED STATE
+========================================= */
+
+.app-sidebar.collapsed {
+  width: 70px;
+  min-width: 70px;
+  padding: 24px 8px;
+}
+
+.app-sidebar.collapsed .sidebar-brand {
+  justify-content: center;
+  padding: 0;
+  margin-bottom: 32px;
+}
+
+.app-sidebar.collapsed .sidebar-brand > span:not(.sidebar-logo) {
+  display: none;
+}
+
+.app-sidebar.collapsed .sidebar-link,
+.app-sidebar.collapsed .sidebar-help {
+  justify-content: center;
+  gap: 0;
+  padding: 10px 5px;
+}
+
+.app-sidebar.collapsed .sidebar-link-label,
+.app-sidebar.collapsed .sidebar-help > span:not(.help-question) {
+  display: none;
+}
+
+.app-sidebar.collapsed .sidebar-link-icon {
+  margin: 0;
+}
+
+
+/* =========================================
+   APP MAIN CONTENT
+========================================= */
+
 .app-main {
   flex: 1;
   min-width: 0;
@@ -1704,32 +2067,35 @@ input:checked + .slider:before {
 }
 
 .dashboard-topbar {
-  min-height: 94px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  border-bottom: 1px solid #e8eaf0;
+
+  min-height: 94px;
   margin-bottom: 24px;
+
+  border-bottom: 1px solid #e8eaf0;
 }
 
 .dashboard-heading-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
   min-width: 0;
 }
 
-.breadcrumb {
+.dashboard-heading-left > div:last-child,
+.dashboard-heading-text {
   display: flex;
-  align-items: center;
-  gap: 9px;
-  color: #8a92a3;
-  font-size: 12px;
-  margin-bottom: 7px;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .dashboard-heading-left h2 {
-  font-size: 21px;
-  color: #263238;
   margin: 0;
+  color: #263238;
+  font-size: 21px;
 }
 
 .dashboard-topbar-actions {
@@ -1739,26 +2105,30 @@ input:checked + .slider:before {
 }
 
 .dashboard-search {
-  width: 190px;
-  height: 38px;
   display: flex;
   align-items: center;
   gap: 8px;
+
+  width: 190px;
+  height: 38px;
   padding: 0 11px;
-  background: white;
+
   border: 1px solid #e1e5ed;
   border-radius: 8px;
+
+  background: #fff;
   color: #8a92a3;
 }
 
 .dashboard-search input {
   width: 100%;
   min-width: 0;
+
   border: 0;
   outline: none;
+
   background: transparent;
   font-size: 12px;
-  font-family: inherit;
 }
 
 .topbar-action,
@@ -1773,61 +2143,49 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
   gap: 6px;
-  white-space: nowrap;
+
   font-size: 12px;
+  white-space: nowrap;
 }
 
 .topbar-icon-button {
-  width: 34px;
-  height: 34px;
-  border: 1px solid #e3e6ed;
-  border-radius: 9px;
-  font-size: 17px;
   display: grid;
   place-items: center;
+
+  width: 34px;
+  height: 34px;
+
+  border: 1px solid #e3e6ed;
+  border-radius: 9px;
+
+  font-size: 17px;
 }
 
 .topbar-action:hover,
 .topbar-icon-button:hover {
   color: #ec47b0;
 }
-/* ===== Sidebar Collapse ===== */
-.app-sidebar {
-  transition: width 0.3s ease, min-width 0.3s ease;
-}
 
-.app-sidebar.collapsed {
-  width: 70px;
-  min-width: 70px;
-  padding: 24px 8px;
-}
-
-.app-sidebar.collapsed .sidebar-brand {
-  justify-content: center;
-  padding: 0;
-  margin-bottom: 32px;
-}
-
-.app-sidebar.collapsed .sidebar-link,
-.app-sidebar.collapsed .sidebar-help {
-  justify-content: center;
-  padding: 10px 5px;
-}
-
-.app-sidebar.collapsed .sidebar-link-icon {
-  margin: 0;
-}
-
-/* ===== Hamburger Button ===== */
 .hamburger-btn {
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  min-width: 32px;
+  min-height: 32px;
+  padding: 5px 8px;
+  margin-right: 5px;
+
   border: none;
-  font-size: 22px;
-  color: #34496b;
-  cursor: pointer;
-  padding: 5px 10px;
   border-radius: 6px;
-  margin-right: 10px;
+
+  background: transparent;
+  color: #34496b;
+
+  font-size: 20px;
+  cursor: pointer;
+
   transition: 0.2s;
 }
 
@@ -1836,83 +2194,44 @@ input:checked + .slider:before {
   color: #e72ba2;
 }
 
-/* ===== Dashboard Heading Left ===== */
-.dashboard-heading-left {
+
+/* =========================================
+   ACCOUNT LAYOUT AND GRIDS
+========================================= */
+
+.account-layout {
   display: flex;
-  align-items: center;
-  gap: 15px;
+  align-items: flex-start;
+  gap: 20px;
 }
 
-.dashboard-heading-left > div:last-child {
-  display: flex;
-  flex-direction: column;
-}
-/* =========================
-   SIDEBAR COLLAPSE
-========================= */
-.app-sidebar {
-  transition: width 0.3s ease, min-width 0.3s ease;
+.account-content {
+  flex: 1;
+  min-width: 0;
 }
 
-.app-sidebar.collapsed {
-  width: 70px;
-  min-width: 70px;
-  padding: 24px 8px;
+.account-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 8px;
 }
 
-.app-sidebar.collapsed .sidebar-brand {
-  justify-content: center;
-  padding: 0;
-  margin-bottom: 32px;
+.account-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
 
-.app-sidebar.collapsed .sidebar-link,
-.app-sidebar.collapsed .sidebar-help {
-  justify-content: center;
-  padding: 10px 5px;
-}
 
-.app-sidebar.collapsed .sidebar-link-icon {
-  margin: 0;
-}
-
-/* =========================
-   HAMBURGER BUTTON
-========================= */
-.hamburger-btn {
-  background: transparent;
-  border: none;
-  font-size: 22px;
-  color: #34496b;
-  cursor: pointer;
-  padding: 5px 10px;
-  border-radius: 6px;
-  margin-right: 10px;
-  transition: 0.2s;
-}
-
-.hamburger-btn:hover {
-  background: #f0f2f7;
-  color: #e72ba2;
-}
-
-.dashboard-heading-left {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.dashboard-heading-text {
-  display: flex;
-  flex-direction: column;
-}
-
-/* =========================
+/* =========================================
    DOWNLOAD APP CARD
-========================= */
+========================================= */
+
 .download-app-card {
   margin: 15px 8px 20px;
   padding: 18px 15px;
+
   border-radius: 14px;
   background: linear-gradient(135deg, #d63384 0%, #8b5cf6 100%);
   color: #fff;
@@ -1920,28 +2239,31 @@ input:checked + .slider:before {
 }
 
 .download-app-question {
+  display: grid;
+  place-items: center;
+
   width: 32px;
   height: 32px;
+  margin-bottom: 12px;
+
   border-radius: 8px;
   background: #fff;
   color: #d63384;
-  display: grid;
-  place-items: center;
-  font-weight: bold;
+
   font-size: 18px;
-  margin-bottom: 12px;
+  font-weight: bold;
 }
 
 .download-app-title {
+  margin-bottom: 2px;
   font-size: 16px;
   font-weight: 700;
-  margin-bottom: 2px;
 }
 
 .download-app-subtitle {
+  margin-bottom: 14px;
   font-size: 12px;
   opacity: 0.9;
-  margin-bottom: 14px;
 }
 
 .download-app-buttons {
@@ -1951,12 +2273,15 @@ input:checked + .slider:before {
 
 .download-store-btn {
   flex: 1;
-  background: #fff;
+  padding: 8px 5px;
+
   border: none;
   border-radius: 8px;
-  padding: 8px 5px;
+
+  background: #fff;
   font-size: 16px;
   cursor: pointer;
+
   transition: 0.2s;
 }
 
@@ -1964,56 +2289,82 @@ input:checked + .slider:before {
   background: #f5f5f5;
 }
 
-/* =========================
-   ACCOUNT LAYOUT (Menu + Content)
-========================= */
-.account-layout {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
 
-.account-sidebar {
-  width: 240px;
-  min-width: 240px;
-  background: #fff;
-  border-radius: 12px;
-  padding: 12px 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-  flex-shrink: 0;
-}
-
-.account-content {
-  flex: 1;
-  min-width: 0;
-}
-
-/* =========================
-   ACCOUNT GRID LAYOUT (2 columns)
-========================= */
-.account-grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  margin-bottom: 8px;
-}
-
-.account-grid-3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
-}
+/* =========================================
+   RESPONSIVE ACCOUNT AND APP LAYOUT
+========================================= */
 
 @media (max-width: 768px) {
   .account-layout {
     flex-direction: column;
   }
+
   .account-sidebar {
     width: 100%;
     min-width: 0;
   }
+
   .account-grid-2,
   .account-grid-3 {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .app-sidebar {
+    width: 70px;
+    min-width: 70px;
+    padding: 24px 8px;
+  }
+
+  .app-sidebar .sidebar-brand {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .app-sidebar .sidebar-brand > span:not(.sidebar-logo),
+  .app-sidebar .sidebar-link-label,
+  .app-sidebar .sidebar-help > span:not(.help-question) {
+    display: none;
+  }
+
+  .app-sidebar .sidebar-link,
+  .app-sidebar .sidebar-help {
+    justify-content: center;
+    gap: 0;
+    padding: 10px 5px;
+  }
+
+  .app-main {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .dashboard-topbar {
+    flex-wrap: wrap;
+    padding: 15px 0;
+  }
+
+  .dashboard-topbar-actions {
+    flex-wrap: wrap;
+  }
+
+  .dashboard-search {
+    width: min(190px, 100%);
+  }
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-body *,
+  .dashboard-body *::before,
+  .dashboard-body *::after,
+  .app-layout *,
+  .app-layout *::before,
+  .app-layout *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

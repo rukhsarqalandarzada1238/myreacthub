@@ -5,7 +5,7 @@ import "./FindDoctor.css";
 import "./Dashboard.css";
 
 function FindDoctor() {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(true);
     const [doctorSearch, setDoctorSearch] = useState("");
     const [locationSearch, setLocationSearch] = useState("");
     const [headerSearch, setHeaderSearch] = useState("");
@@ -42,7 +42,9 @@ function FindDoctor() {
     };
 
     const handleEnter = (event) => {
-        if (event.key === "Enter") handleSearch();
+        if (event.key === "Enter") {
+            handleSearch();
+        }
     };
 
     const handleHeaderSearch = (event) => {
@@ -71,27 +73,34 @@ function FindDoctor() {
     ];
 
     return (
-        <div className="doctor-page">
+        <div
+            className={`doctor-page ${
+                sidebarOpen ? "doctor-sidebar-open" : "doctor-sidebar-closed"
+            }`}
+        >
             <div className="dashboard-body">
 
-                {/* MOBILE SIDEBAR OVERLAY */}
+                {/* SIDEBAR OVERLAY: TABLET AND MOBILE */}
                 {sidebarOpen && (
                     <div
                         className="doctor-sidebar-overlay"
                         onClick={closeSidebar}
+                        aria-hidden="true"
                     />
                 )}
 
-                {/* SIDEBAR — SAME DESIGN AS FIND PHARMACY */}
+                {/* SIDEBAR */}
                 <aside
                     className={`pharmacy-sidebar ${
                         sidebarOpen ? "show" : ""
                     }`}
+                    aria-label="Main navigation"
                 >
                     <div className="pharmacy-logo">
                         <div className="logo-mark">
                             M<span>HUB</span>
                         </div>
+
                         <span className="logo-text">MyPatientHUB</span>
                     </div>
 
@@ -125,6 +134,7 @@ function FindDoctor() {
 
                     <div className="pharmacy-help">
                         <div className="help-icon">?</div>
+
                         <div>
                             <h4>Need Help?</h4>
                             <p>Contact our support team</p>
@@ -132,41 +142,49 @@ function FindDoctor() {
                     </div>
                 </aside>
 
-                {/* MAIN CONTENT — ORIGINAL CONTENT PRESERVED */}
+                {/* MAIN CONTENT */}
                 <main className="main-content">
                     <section className="dashboard-content">
 
                         {/* HERO */}
                         <section className="doctor-hero">
                             <header className="hero-topbar">
+
                                 <div className="hero-left">
-                                    <button
-                                        type="button"
-                                        className="hero-hamburger"
-                                        onClick={() =>
-                                            setSidebarOpen((previous) => !previous)
-                                        }
-                                        aria-label="Toggle sidebar"
-                                    >
-                                        ☰
-                                    </button>
+
+                                    {/* HAMBURGER: ALWAYS VISIBLE */}
+                                   <button
+    type="button"
+    className="hero-hamburger"
+    onClick={() => setSidebarOpen((previous) => !previous)}
+    aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
+    aria-expanded={sidebarOpen}
+>
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
 
                                     <div className="hero-breadcrumb">
                                         <div>
                                             <span className="breadcrumb-home">
                                                 ⌂
                                             </span>
+
                                             <span className="breadcrumb-slash">
                                                 /
                                             </span>
+
                                             <strong>Find Doctor</strong>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="hero-right">
+
                                     <div className="hero-search">
                                         <span>⌕</span>
+
                                         <input
                                             type="text"
                                             placeholder="Type here..."
@@ -175,6 +193,7 @@ function FindDoctor() {
                                                 setHeaderSearch(event.target.value)
                                             }
                                             onKeyDown={handleHeaderSearch}
+                                            aria-label="Search doctors"
                                         />
                                     </div>
 
@@ -199,6 +218,7 @@ function FindDoctor() {
                                         type="button"
                                         className="hero-icon"
                                         aria-label="Profile"
+                                        onClick={() => goTo("/account")}
                                     >
                                         ♟
                                     </button>
@@ -207,6 +227,7 @@ function FindDoctor() {
 
                             <div className="hero-title">
                                 <h1>Find a Doctor</h1>
+
                                 <p>
                                     Search Doctors and schedule an appointment
                                 </p>
@@ -221,6 +242,7 @@ function FindDoctor() {
                                             setDoctorSearch(event.target.value)
                                         }
                                         onKeyDown={handleEnter}
+                                        aria-label="Doctor name or specialty"
                                     />
 
                                     <input
@@ -232,6 +254,7 @@ function FindDoctor() {
                                             setLocationSearch(event.target.value)
                                         }
                                         onKeyDown={handleEnter}
+                                        aria-label="Location"
                                     />
 
                                     <button
@@ -270,6 +293,7 @@ function FindDoctor() {
                                     }
                                 >
                                     <div className="service-icon">🩺</div>
+
                                     <div className="service-text">
                                         <h3>Primary Care and Internal MD</h3>
                                         <p>
@@ -277,6 +301,7 @@ function FindDoctor() {
                                             you reach your wellness
                                         </p>
                                     </div>
+
                                     <span className="arrow">›</span>
                                 </button>
 
@@ -290,6 +315,7 @@ function FindDoctor() {
                                     }
                                 >
                                     <div className="service-icon">🫀</div>
+
                                     <div className="service-text">
                                         <h3>Emergency Care</h3>
                                         <p>
@@ -297,6 +323,7 @@ function FindDoctor() {
                                             and children
                                         </p>
                                     </div>
+
                                     <span className="arrow">›</span>
                                 </button>
 
@@ -310,6 +337,7 @@ function FindDoctor() {
                                     }
                                 >
                                     <div className="service-icon">❤️</div>
+
                                     <div className="service-text">
                                         <h3>Imaging Services</h3>
                                         <p>
@@ -317,6 +345,7 @@ function FindDoctor() {
                                             comprehensive imaging services
                                         </p>
                                     </div>
+
                                     <span className="arrow">›</span>
                                 </button>
 
@@ -330,6 +359,7 @@ function FindDoctor() {
                                     }
                                 >
                                     <div className="service-icon">⊕</div>
+
                                     <div className="service-text">
                                         <h3>Urgent Care</h3>
                                         <p>
@@ -337,6 +367,7 @@ function FindDoctor() {
                                             non-emergency medical needs
                                         </p>
                                     </div>
+
                                     <span className="arrow">›</span>
                                 </button>
                             </div>
@@ -375,6 +406,7 @@ function FindDoctor() {
                                         }
                                     >
                                         <span>{specialty}</span>
+
                                         <span className="specialty-arrow">
                                             ›
                                         </span>

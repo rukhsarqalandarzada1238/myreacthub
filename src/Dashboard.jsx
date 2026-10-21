@@ -141,7 +141,7 @@ function ChartLegend({ data }) {
 function Dashboard() {
   const navigate = useNavigate();
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [search, setSearch] = useState("");
   const [showSearchResults, setShowSearchResults] = useState(false);
 
@@ -155,7 +155,7 @@ function Dashboard() {
       )
     : [];
 
-  /* CLOSE SEARCH DROPDOWN WHEN CLICKING OUTSIDE */
+  /* CLOSE SEARCH WHEN CLICKING OUTSIDE */
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -174,11 +174,29 @@ function Dashboard() {
     };
   }, []);
 
+  /* SIDEBAR KEYBOARD */
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setSidebarOpen(false);
+        setShowSearchResults(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   /* NAVIGATION */
 
   const handleNavigation = (path) => {
     navigate(path);
     setSidebarOpen(false);
+    setShowSearchResults(false);
   };
 
   const handleSearchNavigation = (path) => {
@@ -188,7 +206,7 @@ function Dashboard() {
     setSidebarOpen(false);
   };
 
-  /* KEYBOARD SEARCH */
+  /* SEARCH KEYBOARD */
 
   const handleSearchKeyDown = (event) => {
     if (event.key === "Enter" && filteredPages.length > 0) {
@@ -202,8 +220,12 @@ function Dashboard() {
   };
 
   return (
-    <div className="dashboard-body">
-      {/* MOBILE SIDEBAR OVERLAY */}
+    <div
+      className={`dashboard-body ${
+        sidebarOpen ? "sidebar-expanded" : "sidebar-collapsed"
+      }`}
+    >
+      {/* MOBILE / TABLET OVERLAY */}
 
       {sidebarOpen && (
         <button
@@ -218,6 +240,7 @@ function Dashboard() {
 
       <aside
         className={`pharmacy-sidebar ${sidebarOpen ? "show" : ""}`}
+        aria-hidden={!sidebarOpen}
       >
         <div className="pharmacy-logo">
           <div className="logo-mark">
@@ -237,6 +260,7 @@ function Dashboard() {
                 item.path === "/dashboard" ? "active" : ""
               }`}
               onClick={() => handleNavigation(item.path)}
+              tabIndex={sidebarOpen ? 0 : -1}
             >
               <span className="pharmacy-menu-icon">
                 {item.icon}
@@ -264,16 +288,19 @@ function Dashboard() {
 
         <header className="top-header">
           <div className="header-left">
+            {/* HAMBURGER ON ALL SCREEN SIZES */}
+
             <button
               type="button"
-              className="hamburger"
-              aria-label="Open menu"
-              onClick={() => setSidebarOpen(true)}
+              className={`hamburger ${sidebarOpen ? "is-open" : ""}`}
+              aria-label={sidebarOpen ? "Close menu" : "Open menu"}
+              aria-expanded={sidebarOpen}
+              onClick={() => setSidebarOpen((previous) => !previous)}
             >
-              ☰
+              <span>☰</span>
             </button>
 
-            <div>
+            <div className="header-heading">
               <div className="breadcrumb">
                 <span>Home</span>
                 <span>/</span>
