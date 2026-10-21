@@ -30,84 +30,84 @@ function Marketplace() {
   };
 
   // ===== MEDICAL PRODUCTS (Patient HUB) =====
-        const products = [
-          {
-            id: 1,
-            name: "Digital Thermometer",
-            price: "25 RM",
-            category: "Medical Device",
-            description: "Fast and accurate body temperature reading for home and clinical use.",
-            color: "medical-blue",
-            image: "public/images/tm.webp",
-          },
-    {
-      id: 2,
-      name: "Blood Pressure Monitor",
-      price: "120 RM",
-      category: "Medical Device",
-      description: "Automatic upper arm blood pressure monitor with memory and large display.",
-      color: "medical-red",
-      image: "public/images/bp.webp",
-    },
-    {
-      id: 3,
-      name: "First Aid Kit",
-      price: "45 RM",
-      category: "Emergency Care",
-      description: "Complete first aid kit with bandages, antiseptics, and essential tools.",
-      color: "medical-green",
-      image: "public/images/fa.webp",
-    },
-    {
-      id: 4,
-      name: "Vitamin D3 Supplement",
-      price: "35 RM",
-      category: "Pharmacy",
-      description: "Daily vitamin D3 supplement to support bone health and immunity.",
-      color: "medical-purple",
-      image: "public/images/vs.webp",
-    },
-  ];
+// ===== MEDICAL PRODUCTS (Patient HUB) =====
+const products = [
+  {
+    id: 1,
+    name: "Digital Thermometer",
+    price: "25 RM",
+    category: "Medical Device",
+    description: "Fast and accurate body temperature reading for home and clinical use.",
+    color: "medical-blue",
+    image: "/images/tm.webp",        // ✅ درست
+  },
+  {
+    id: 2,
+    name: "Blood Pressure Monitor",
+    price: "120 RM",
+    category: "Medical Device",
+    description: "Automatic upper arm blood pressure monitor with memory and large display.",
+    color: "medical-red",
+    image: "/images/bp.webp",        // ✅ درست
+  },
+  {
+    id: 3,
+    name: "First Aid Kit",
+    price: "45 RM",
+    category: "Emergency Care",
+    description: "Complete first aid kit with bandages, antiseptics, and essential tools.",
+    color: "medical-green",
+    image: "/images/fa.webp",        // ✅ درست
+  },
+  {
+    id: 4,
+    name: "Vitamin D3 Supplement",
+    price: "35 RM",
+    category: "Pharmacy",
+    description: "Daily vitamin D3 supplement to support bone health and immunity.",
+    color: "medical-purple",
+    image: "/images/vs.webp",        // ✅ درست
+  },
+];
 
-  const tableResults = [
-    {
-      name: "Digital Thermometer",
-      category: "Device",
-      service: "MediCare Store",
-      discount: "0",
-      price: "25 RM",
-      id: "MED-1001",
-      image: "/public/images/tm.webp",
-    },
-    {
-      name: "Blood Pressure Monitor",
-      category: "Device",
-      service: "HealthPlus",
-      discount: "5",
-      price: "120 RM",
-      id: "MED-1002",
-      image: "/public/images/bp.webp",
-    },
-    {
-      name: "First Aid Kit",
-      category: "Emergency",
-      service: "SafeCare",
-      discount: "10",
-      price: "45 RM",
-      id: "MED-1003",
-      image: "/public/images/fa.webp",
-    },
-    {
-      name: "Vitamin D3",
-      category: "Pharmacy",
-      service: "PharmaCare",
-      discount: "5",
-      price: "35 RM",
-      id: "MED-1004",
-      image: "/public/images/vs.webp",
-    },
-  ];
-
+const tableResults = [
+  {
+    name: "Digital Thermometer",
+    category: "Device",
+    service: "MediCare Store",
+    discount: "0",
+    price: "25 RM",
+    id: "MED-1001",
+    image: "/images/tm.webp",        // ✅ درست
+  },
+  {
+    name: "Blood Pressure Monitor",
+    category: "Device",
+    service: "HealthPlus",
+    discount: "5",
+    price: "120 RM",
+    id: "MED-1002",
+    image: "/images/bp.webp",        // ✅ درست
+  },
+  {
+    name: "First Aid Kit",
+    category: "Emergency",
+    service: "SafeCare",
+    discount: "10",
+    price: "45 RM",
+    id: "MED-1003",
+    image: "/images/fa.webp",        // ✅ درست
+  },
+  {
+    name: "Vitamin D3",
+    category: "Pharmacy",
+    service: "PharmaCare",
+    discount: "5",
+    price: "35 RM",
+    id: "MED-1004",
+    image: "/images/vs.webp",        // ✅ درست
+  },
+];
   const searchValue = search.trim().toLowerCase();
 
   const filteredProducts = products.filter((product) =>
