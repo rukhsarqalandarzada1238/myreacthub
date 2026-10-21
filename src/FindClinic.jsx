@@ -5,7 +5,7 @@ import "./FindClinic.css";
 import "./Dashboard.css";
 
 function FindClinic() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+ const [sidebarOpen, setSidebarOpen] = useState(true);
   const [clinicSearch, setClinicSearch] = useState("");
   const [locationSearch, setLocationSearch] = useState("");
 
@@ -24,157 +24,108 @@ function FindClinic() {
     navigate("/find-clinic-results?mode=current");
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    if (e) e.preventDefault();
+
     const params = new URLSearchParams();
+    const clinic = clinicSearch.trim();
+    const location = locationSearch.trim();
 
-    if (clinicSearch.trim() !== "") {
-      params.set("clinic", clinicSearch.trim());
-    }
-
-    if (locationSearch.trim() !== "") {
-      params.set("location", locationSearch.trim());
-    }
+    if (clinic) params.set("clinic", clinic);
+    if (location) params.set("location", location);
 
     const query = params.toString();
 
-    if (query) {
-      navigate(`/find-clinic-results?${query}`);
-    } else {
-      navigate("/find-clinic-results");
-    }
+    navigate(
+      query
+        ? `/find-clinic-results?${query}`
+        : "/find-clinic-results"
+    );
   };
 
+  const menuItems = [
+    { label: "Dashboard", icon: "▣", path: "/dashboard" },
+    { label: "Appointments", icon: "▤", path: "/appointments" },
+    { label: "Find Doctor", icon: "▥", path: "/find-doctor" },
+    { label: "Find Clinic", icon: "▣", path: "/find-clinic", active: true },
+    { label: "Chat", icon: "▤", path: "/chat" },
+    { label: "Find MarketPlace", icon: "▰", path: "/marketplace" },
+    { label: "Find Pharmacy", icon: "🚀", path: "/pharmacy" },
+    { label: "My Dependents", icon: "▤", path: "/my-dependents" },
+    { label: "My Account", icon: "♟", path: "/account" },
+    { label: "Settings", icon: "⚙", path: "/settings" },
+  ];
+
   return (
-    <div className="clinic-page">
+    <div
+      className={`clinic-page ${
+        sidebarOpen ? "clinic-sidebar-open" : "clinic-sidebar-closed"
+      }`}
+    >
       <div className="dashboard-body">
-
-        {/* ================= SIDEBAR ================= */}
-
+        {/* SIDEBAR */}
         <aside
-          className={`pharmacy-sidebar ${sidebarOpen ? "show" : ""
-            }`}
+          className={`pharmacy-sidebar ${
+            sidebarOpen ? "show" : ""
+          }`}
         >
           <div className="pharmacy-logo">
             <div className="logo-mark">
               M<span>HUB</span>
             </div>
 
-            <div className="logo-text">
-              MyPatientHUB
-            </div>
+            <div className="logo-text">MyPatientHUB</div>
           </div>
 
           <nav className="pharmacy-sidebar-menu">
-            <button
-              type="button"
-              className="pharmacy-menu-item"
-              onClick={() => handleNavigation("/dashboard")}
-            >
-              <span className="pharmacy-menu-icon">▣</span>
-              <span>Dashboard</span>
-            </button>
+            {menuItems.map((item) => (
+              <button
+                key={item.path}
+                type="button"
+                className={`pharmacy-menu-item ${
+                  item.active ? "active" : ""
+                }`}
+                onClick={() => handleNavigation(item.path)}
+                title={!sidebarOpen ? item.label : undefined}
+              >
+                <span
+                  className={`pharmacy-menu-icon ${
+                    item.active ? "active-icon" : ""
+                  }`}
+                >
+                  {item.icon}
+                </span>
 
-            <button
-              type="button"
-              className="pharmacy-menu-item"
-              onClick={() => handleNavigation("/appointments")}
-            >
-              <span className="pharmacy-menu-icon">▤</span>
-              <span>Appointments</span>
-            </button>
-
-            <button
-              type="button"
-              className="pharmacy-menu-item"
-              onClick={() => handleNavigation("/find-doctor")}
-            >
-              <span className="pharmacy-menu-icon">▥</span>
-              <span>Find Doctor</span>
-            </button>
-
-            <button
-              type="button"
-              className="pharmacy-menu-item active"
-              onClick={() => handleNavigation("/find-clinic")}
-            >
-              <span className="pharmacy-menu-icon active-icon">
-                ▣
-              </span>
-              <span>Find Clinic</span>
-            </button>
-
-            <button
-              type="button"
-              className="pharmacy-menu-item"
-              onClick={() => handleNavigation("/chat")}
-            >
-              <span className="pharmacy-menu-icon">▤</span>
-              <span>Chat</span>
-            </button>
-
-            <button
-              type="button"
-              className="pharmacy-menu-item"
-              onClick={() => handleNavigation("/marketplace")}
-            >
-              <span className="pharmacy-menu-icon">▰</span>
-              <span>Find MarketPlace</span>
-            </button>
-
-            <button
-              type="button"
-              className="pharmacy-menu-item"
-              onClick={() => handleNavigation("/pharmacy")}
-            >
-              <span className="pharmacy-menu-icon">🚀</span>
-              <span>Find Pharmacy</span>
-            </button>
-
-            <button
-              type="button"
-              className="pharmacy-menu-item"
-              onClick={() => handleNavigation("/my-dependents")}
-            >
-              <span className="pharmacy-menu-icon">▤</span>
-              <span>My Dependents</span>
-            </button>
-
-            <button
-              type="button"
-              className="pharmacy-menu-item"
-              onClick={() => handleNavigation("/account")}
-            >
-              <span className="pharmacy-menu-icon">♟</span>
-              <span>My Account</span>
-            </button>
-
-            <button
-              type="button"
-              className="pharmacy-menu-item"
-              onClick={() => handleNavigation("/settings")}
-            >
-              <span className="pharmacy-menu-icon">⚙</span>
-              <span>Settings</span>
-            </button>
+                <span className="pharmacy-menu-label">
+                  {item.label}
+                </span>
+              </button>
+            ))}
           </nav>
 
           <div className="pharmacy-help">
             <div className="help-icon">?</div>
 
-            <div>
+            <div className="pharmacy-help-text">
               <h4>Need Help?</h4>
               <p>Contact our support team</p>
             </div>
           </div>
         </aside>
 
-        {/* ================= MAIN ================= */}
+        {/* MOBILE SIDEBAR OVERLAY */}
+        <div
+          className={`clinic-sidebar-overlay ${
+            sidebarOpen ? "visible" : ""
+          }`}
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden="true"
+        />
 
+        {/* MAIN CONTENT */}
         <main className="main-content">
           <section className="dashboard-content">
-
-            {/* ================= HERO ================= */}
-
+            {/* HERO */}
             <section className="clinic-hero">
               <div className="hero-topbar">
                 <div className="hero-left">
@@ -182,10 +133,14 @@ function FindClinic() {
                     type="button"
                     className="hero-hamburger"
                     onClick={toggleSidebar}
-                    aria-label="Open menu"
+                    aria-label={
+                      sidebarOpen ? "Close sidebar" : "Open sidebar"
+                    }
                     aria-expanded={sidebarOpen}
                   >
-                    ☰
+                    <span />
+                    <span />
+                    <span />
                   </button>
 
                   <div className="hero-breadcrumb">
@@ -205,6 +160,7 @@ function FindClinic() {
                     <input
                       type="text"
                       placeholder="Type here..."
+                      aria-label="Search"
                     />
                   </div>
 
@@ -216,13 +172,27 @@ function FindClinic() {
                     ◉ Log out
                   </button>
 
-                  <span className="hero-icon">⚙</span>
-                  <span className="hero-icon">♟</span>
+                  <button
+                    type="button"
+                    className="hero-icon"
+                    onClick={() => navigate("/settings")}
+                    aria-label="Settings"
+                  >
+                    ⚙
+                  </button>
+
+                  <button
+                    type="button"
+                    className="hero-icon"
+                    onClick={() => navigate("/account")}
+                    aria-label="My account"
+                  >
+                    ♟
+                  </button>
                 </div>
               </div>
 
-              {/* ================= HERO TITLE ================= */}
-
+              {/* HERO TITLE AND SEARCH */}
               <div className="hero-title">
                 <h1>Find a Clinic</h1>
 
@@ -230,22 +200,16 @@ function FindClinic() {
                   Discover healthcare clinics and find the right care for you
                 </p>
 
-                {/* ================= SEARCH ================= */}
-
-                <div className="search-row">
+                <form
+                  className="search-row"
+                  onSubmit={handleSearch}
+                >
                   <input
                     type="text"
                     className="search-input"
                     placeholder="Search clinic by name or service"
                     value={clinicSearch}
-                    onChange={(e) =>
-                      setClinicSearch(e.target.value)
-                    }
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        handleSearch();
-                      }
-                    }}
+                    onChange={(e) => setClinicSearch(e.target.value)}
                   />
 
                   <input
@@ -253,14 +217,7 @@ function FindClinic() {
                     className="search-input"
                     placeholder="Zip Code or Neighborhood"
                     value={locationSearch}
-                    onChange={(e) =>
-                      setLocationSearch(e.target.value)
-                    }
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        handleSearch();
-                      }
-                    }}
+                    onChange={(e) => setLocationSearch(e.target.value)}
                   />
 
                   <button
@@ -272,120 +229,98 @@ function FindClinic() {
                   </button>
 
                   <button
-                    type="button"
+                    type="submit"
                     className="search-button"
-                    onClick={handleSearch}
                   >
                     SEARCH
                   </button>
-                </div>
+                </form>
               </div>
             </section>
 
-            {/* ================= CLINIC SERVICES ================= */}
-
+            {/* CLINIC SERVICES */}
             <section className="section">
-              <h2 className="section-title">
-                Clinic Services
-              </h2>
+              <h2 className="section-title">Clinic Services</h2>
 
               <div className="service-grid">
                 <div className="service-card">
                   <div className="service-icon">🏥</div>
-
                   <div className="service-text">
                     <h3>General Medical Care</h3>
                     <p>
-                      Everyday healthcare, health checks,
-                      consultations and treatment.
+                      Everyday healthcare, health checks, consultations and
+                      treatment.
                     </p>
                   </div>
-
                   <span className="arrow">⌄</span>
                 </div>
 
                 <div className="service-card">
                   <div className="service-icon">🦷</div>
-
                   <div className="service-text">
                     <h3>Dental Services</h3>
                     <p>
-                      Professional dental checkups,
-                      cleaning and oral care.
+                      Professional dental checkups, cleaning and oral care.
                     </p>
                   </div>
-
                   <span className="arrow">⌄</span>
                 </div>
 
                 <div className="service-card">
                   <div className="service-icon">🧪</div>
-
                   <div className="service-text">
                     <h3>Laboratory Services</h3>
                     <p>
-                      Medical testing and laboratory
-                      services for your healthcare needs.
+                      Medical testing and laboratory services for your
+                      healthcare needs.
                     </p>
                   </div>
-
                   <span className="arrow">⌄</span>
                 </div>
 
                 <div className="service-card">
                   <div className="service-icon">🩻</div>
-
                   <div className="service-text">
                     <h3>Diagnostic Imaging</h3>
                     <p>
-                      Access imaging and diagnostic
-                      services in one place.
+                      Access imaging and diagnostic services in one place.
                     </p>
                   </div>
-
                   <span className="arrow">⌄</span>
                 </div>
 
                 <div className="service-card">
                   <div className="service-icon">🧘</div>
-
                   <div className="service-text">
                     <h3>Physiotherapy</h3>
                     <p>
-                      Rehabilitation and physical therapy
-                      services for better recovery.
+                      Rehabilitation and physical therapy services for better
+                      recovery.
                     </p>
                   </div>
-
                   <span className="arrow">⌄</span>
                 </div>
 
                 <div className="service-card">
                   <div className="service-icon">👩‍⚕️</div>
-
                   <div className="service-text">
                     <h3>Women's Health</h3>
                     <p>
-                      Healthcare services designed around
-                      women's health and wellbeing.
+                      Healthcare services designed around women's health and
+                      wellbeing.
                     </p>
                   </div>
-
                   <span className="arrow">⌄</span>
                 </div>
               </div>
             </section>
 
-            {/* ================= CLINIC TYPES ================= */}
-
+            {/* CLINIC TYPES */}
             <section className="section">
-              <h2 className="section-title">
-                Find Clinics By Type
-              </h2>
+              <h2 className="section-title">Find Clinics By Type</h2>
 
               <p className="section-subtitle">
-                Choose a clinic type to explore available
-                healthcare services
+                Choose a clinic type to explore available healthcare services
               </p>
 
               <div className="specialty-grid">
@@ -431,21 +366,18 @@ function FindClinic() {
               </div>
             </section>
 
-            {/* ================= FOOTER ================= */}
-
+            {/* FOOTER */}
             <footer className="dashboard-footer">
               <p>
-                ©️ 2026, made with ♥️ by MyPatientHUB
-                for a better web.
+                © 2026, made with ♥ by MyPatientHUB for a better web.
               </p>
 
               <div>
-                <a href="#">MyPatientHUB</a>
-                <a href="#">About Us</a>
-                <a href="#">Blog</a>
+                <a href="#top">MyPatientHUB</a>
+                <a href="#about">About Us</a>
+                <a href="#blog">Blog</a>
               </div>
             </footer>
-
           </section>
         </main>
       </div>

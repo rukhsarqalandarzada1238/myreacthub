@@ -1,1051 +1,155 @@
 
-.clinic-page .clinic-hero {
-    position: relative;
-
-    width: 100%;
-    min-height: 390px;
-
-    padding: 18px 26px 30px;
-
-    border-radius: 10px;
-
-    overflow: hidden;
-
-    color: white;
-
-    background:
-        radial-gradient(
-            ellipse at 8% 90%,
-            rgba(255, 0, 190, .90) 0%,
-            rgba(255, 0, 190, .55) 28%,
-            transparent 60%
-        ),
-
-        radial-gradient(
-            ellipse at 95% 15%,
-            rgba(70, 0, 255, .90) 0%,
-            rgba(90, 0, 220, .60) 35%,
-            transparent 70%
-        ),
-
-        linear-gradient(
-            120deg,
-            #b900a2 0%,
-            #e300a7 35%,
-            #9218cf 65%,
-            #423ca8 100%
-        );
-
-    box-shadow:
-        0 8px 25px rgba(130, 0, 150, .12);
-}
-
-
-.clinic-page .clinic-hero::before {
-    content: "";
-
-    position: absolute;
-
-    width: 850px;
-    height: 250px;
-
-    left: -180px;
-    bottom: -150px;
-
-    border-radius: 50%;
-
-    border-top:
-        2px solid rgba(255,255,255,.18);
-
-    transform:
-        rotate(-10deg);
-
-    pointer-events: none;
-}
-
-
-.clinic-page .clinic-hero::after {
-    content: "";
-
-    position: absolute;
-
-    width: 700px;
-    height: 260px;
-
-    right: -160px;
-    top: -180px;
-
-    border-radius: 50%;
-
-    border-bottom:
-        2px solid rgba(255,255,255,.18);
-
-    transform:
-        rotate(-12deg);
-
-    pointer-events: none;
-}
-
-.clinic-page .hero-topbar {
-    position: relative;
-
-    z-index: 10;
-
-    width: 100%;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: flex-start;
-}
-
-
-.clinic-page .hero-left {
-    display: flex;
-
-    align-items: flex-start;
-
-    gap: 22px;
-}
-
-
-.clinic-page .hero-hamburger {
-    border: none;
-
-    background: transparent;
-
-    color: white;
-
-    font-size: 25px;
-
-    line-height: 1;
-
-    cursor: pointer;
-
-    padding: 4px;
-
-    display: none;
-}
-
-
-.clinic-page .hero-breadcrumb {
-    font-size: 9px;
-
-    color: white;
-
-    line-height: 1.6;
-}
-
-
-.clinic-page .hero-breadcrumb div {
-    display: flex;
-
-    align-items: center;
-
-    gap: 6px;
-
-    opacity: .95;
-}
-
-
-.clinic-page .hero-breadcrumb span {
-    opacity: .7;
-}
-
-
-.clinic-page .hero-breadcrumb strong {
-    display: block;
-
-    font-size: 12px;
-
-    margin-top: 2px;
-}
-
-
 /* =========================================================
-   HERO RIGHT
+   FIND CLINIC - GLOBAL
 ========================================================= */
 
-.clinic-page .hero-right {
-    display: flex;
-
-    align-items: center;
-
-    gap: 14px;
-
-    color: white;
+.clinic-page {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: clip;
+  background: #f7f8fa;
+  color: #34496b;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
 }
 
-
-.clinic-page .hero-search {
-    width: 210px;
-
-    height: 38px;
-
-    background: white;
-
-    border-radius: 7px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    padding: 0 11px;
-
-    color: #777;
+.clinic-page *,
+.clinic-page *::before,
+.clinic-page *::after {
+  box-sizing: border-box;
 }
 
-
-.clinic-page .hero-search span {
-    font-size: 18px;
-
-    line-height: 1;
+.clinic-page button,
+.clinic-page input {
+  font-family: inherit;
 }
 
-
-.clinic-page .hero-search input {
-    border: none;
-
-    outline: none;
-
-    width: 100%;
-
-    font-size: 10px;
-
-    color: #555;
-
-    background: transparent;
+.clinic-page button {
+  cursor: pointer;
 }
 
-
-.clinic-page .hero-search input::placeholder {
-    color: #999;
-}
-
-
-.clinic-page .hero-logout {
-    color: white;
-
-    font-size: 10px;
-
-    white-space: nowrap;
-
-    text-decoration: none;
-
-    border: none;
-
-    background: transparent;
-
-    cursor: pointer;
-}
-
-
-.clinic-page .hero-icon {
-    color: white;
-
-    font-size: 13px;
-
-    cursor: pointer;
-}
-
-
-/* =========================================================
-   HERO TITLE
-========================================================= */
-
-.clinic-page .hero-title {
-    position: relative;
-
-    z-index: 5;
-
-    text-align: center;
-
-    margin-top: 48px;
-}
-
-
-.clinic-page .hero-title h1 {
-    color: white;
-
-    font-size: 32px;
-
-    font-weight: bold;
-
-    margin: 0 0 6px;
-}
-
-
-.clinic-page .hero-title p {
-    color: white;
-
-    font-size: 12px;
-
-    margin: 0 0 28px;
-}
-
-
-/* =========================================================
-   SEARCH ROW
-========================================================= */
-
-.clinic-page .search-row {
-    position: relative;
-
-    z-index: 5;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 8px;
-}
-
-
-.clinic-page .search-input {
-    height: 48px;
-
-    width: 280px;
-
-    padding: 0 15px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    outline: none;
-
-    background: white;
-
-    color: #555;
-
-    font-size: 11px;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,.08);
-}
-
-
-.clinic-page .search-input::placeholder {
-    color: #aaa;
-}
-
-
-.clinic-page .search-input:focus {
-    box-shadow:
-        0 0 0 2px rgba(255,255,255,.7);
-}
-
-
-.clinic-page .search-button {
-    height: 48px;
-
-    min-width: 105px;
-
-    padding: 0 18px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background: #10b9df;
-
-    color: white;
-
-    font-size: 10px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: .2s;
-
-    box-shadow:
-        0 3px 10px rgba(0,0,0,.10);
-}
-
-
-.clinic-page .search-button:hover {
-    background: #079fc5;
-
-    transform: translateY(-1px);
-}
-
-
-.clinic-page .search-button:active {
-    transform: scale(.97);
-}
-
-
-.clinic-page .current-button {
-    background: #12b9df;
-}
-
-
-/* =========================================================
-   SECTION
-========================================================= */
-
-.clinic-page .section {
-    background: white;
-
-    border-radius: 9px;
-
-    padding: 20px;
-
-    margin-top: 20px;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,.04);
-}
-
-
-.clinic-page .section-title {
-    text-align: center;
-
-    font-size: 13px;
-
-    font-weight: bold;
-
-    color: #555;
-
-    margin: 0 0 4px;
-}
-
-
-.clinic-page .section-subtitle {
-    text-align: center;
-
-    font-size: 8px;
-
-    color: #888;
-
-    margin: 0 0 14px;
-}
-
-
-/* =========================================================
-   SERVICES
-========================================================= */
-
-.clinic-page .service-grid {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 8px;
-}
-
-
-.clinic-page .service-card {
-    min-height: 65px;
-
-    border: 1px solid #ddd;
-
-    border-radius: 2px;
-
-    display: flex;
-
-    align-items: center;
-
-    padding: 9px;
-
-    position: relative;
-
-    cursor: pointer;
-
-    background: white;
-
-    transition: .2s;
-}
-
-
-.clinic-page .service-card:hover {
-    box-shadow:
-        0 2px 7px rgba(0,0,0,.08);
-
-    transform: translateY(-1px);
-}
-
-
-.clinic-page .service-icon {
-    width: 34px;
-
-    height: 34px;
-
-    border-radius: 6px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    font-size: 18px;
-
-    margin-right: 8px;
-
-    flex-shrink: 0;
-}
-
-
-.clinic-page .service-text {
-    flex: 1;
-}
-
-
-.clinic-page .service-text h3 {
-    font-size: 9px;
-
-    color: #444;
-
-    margin: 0 0 4px;
-}
-
-
-.clinic-page .service-text p {
-    font-size: 7px;
-
-    color: #888;
-
-    line-height: 1.4;
-
-    margin: 0;
-}
-
-
-.clinic-page .arrow {
-    position: absolute;
-
-    right: 8px;
-
-    top: 8px;
-
-    color: #999;
-
-    font-size: 9px;
-}
-
-
-/* =========================================================
-   CLINIC TYPES
-========================================================= */
-
-.clinic-page .specialty-grid {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 5px 10px;
-}
-
-
-.clinic-page .specialty {
-    height: 42px;
-
-    border-bottom: 1px solid #ddd;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    padding: 0 8px;
-
-    font-size: 9px;
-
-    color: #555;
-
-    cursor: pointer;
-
-    transition: .2s;
-}
-
-
-.clinic-page .specialty:hover {
-    background: #fafafa;
-}
-
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (max-width: 768px) {
-
-    .clinic-page .clinic-hero {
-        min-height: 310px;
-
-        padding: 12px 12px 20px;
-
-        border-radius: 8px;
-    }
-
-
-    .clinic-page .hero-hamburger {
-        display: block;
-
-        font-size: 20px;
-    }
-
-
-    .clinic-page .hero-left {
-        gap: 8px;
-    }
-
-
-    .clinic-page .hero-breadcrumb {
-        font-size: 7px;
-    }
-
-
-    .clinic-page .hero-breadcrumb strong {
-        font-size: 9px;
-    }
-
-
-    .clinic-page .hero-right {
-        gap: 7px;
-    }
-
-
-    .clinic-page .hero-search {
-        width: 110px;
-
-        height: 30px;
-
-        padding: 0 7px;
-    }
-
-
-    .clinic-page .hero-search span {
-        font-size: 14px;
-    }
-
-
-    .clinic-page .hero-search input {
-        font-size: 7px;
-    }
-
-
-    .clinic-page .hero-logout {
-        font-size: 7px;
-    }
-
-
-    .clinic-page .hero-icon {
-        font-size: 9px;
-    }
-
-
-    .clinic-page .hero-title {
-        margin-top: 45px;
-    }
-
-
-    .clinic-page .hero-title h1 {
-        font-size: 24px;
-    }
-
-
-    .clinic-page .hero-title p {
-        font-size: 8px;
-
-        margin-bottom: 17px;
-    }
-
-
-    .clinic-page .search-row {
-        display: grid;
-
-        grid-template-columns: 1fr 1fr;
-
-        gap: 6px;
-    }
-
-
-    .clinic-page .search-input {
-        width: 100%;
-
-        height: 34px;
-
-        font-size: 8px;
-    }
-
-
-    .clinic-page .search-button {
-        height: 34px;
-
-        min-width: 0;
-
-        width: 100%;
-
-        font-size: 8px;
-    }
-
-
-    .clinic-page .service-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-
-    .clinic-page .specialty-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 500px) {
-
-    .clinic-page .clinic-hero {
-        min-height: 205px;
-
-        padding: 9px 10px 13px;
-    }
-
-
-    .clinic-page .hero-topbar {
-        align-items: center;
-    }
-
-
-    .clinic-page .hero-hamburger {
-        font-size: 17px;
-
-        padding: 2px;
-    }
-
-
-    .clinic-page .hero-left {
-        gap: 5px;
-    }
-
-
-    .clinic-page .hero-breadcrumb {
-        font-size: 5.5px;
-    }
-
-
-    .clinic-page .hero-breadcrumb strong {
-        font-size: 7px;
-    }
-
-
-    .clinic-page .hero-right {
-        gap: 5px;
-    }
-
-
-    .clinic-page .hero-search {
-        width: 100px;
-
-        height: 25px;
-
-        border-radius: 5px;
-
-        padding: 0 6px;
-    }
-
-
-    .clinic-page .hero-search span {
-        font-size: 11px;
-    }
-
-
-    .clinic-page .hero-search input {
-        font-size: 6px;
-    }
-
-
-    .clinic-page .hero-logout {
-        font-size: 6px;
-    }
-
-
-    .clinic-page .hero-icon {
-        font-size: 7px;
-    }
-
-
-    .clinic-page .hero-title {
-        margin-top: 27px;
-    }
-
-
-    .clinic-page .hero-title h1 {
-        font-size: 21px;
-
-        margin-bottom: 3px;
-    }
-
-
-    .clinic-page .hero-title p {
-        font-size: 7px;
-
-        margin-bottom: 11px;
-    }
-
-
-    .clinic-page .search-row {
-        grid-template-columns: 1fr 1fr;
-
-        gap: 4px;
-    }
-
-
-    .clinic-page .search-input {
-        height: 27px;
-
-        padding: 0 7px;
-
-        font-size: 6.5px;
-
-        border-radius: 4px;
-    }
-
-
-    .clinic-page .search-button {
-        height: 27px;
-
-        font-size: 6.5px;
-
-        border-radius: 4px;
-    }
-
-
-    .clinic-page .section {
-        padding: 15px;
-
-        margin-top: 18px;
-    }
-
-
-    .clinic-page .section-title {
-        font-size: 12px;
-    }
-
-
-    .clinic-page .section-subtitle {
-        font-size: 7px;
-
-        margin-bottom: 10px;
-    }
-
-
-    .clinic-page .service-grid {
-        grid-template-columns: 1fr 1fr;
-
-        gap: 6px;
-    }
-
-
-    .clinic-page .service-card {
-        min-height: 62px;
-
-        padding: 7px;
-    }
-
-
-    .clinic-page .service-icon {
-        width: 27px;
-
-        height: 27px;
-
-        font-size: 15px;
-
-        margin-right: 5px;
-    }
-
-
-    .clinic-page .service-text h3 {
-        font-size: 7.5px;
-    }
-
-
-    .clinic-page .service-text p {
-        font-size: 6px;
-    }
-
-
-    .clinic-page .arrow {
-        right: 5px;
-
-        top: 5px;
-    }
-
-
-    .clinic-page .specialty-grid {
-        grid-template-columns: 1fr 1fr;
-
-        gap: 5px;
-    }
-
-
-    .clinic-page .specialty {
-        height: 35px;
-
-        padding: 0 7px;
-
-        font-size: 7.5px;
-    }
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media (max-width: 380px) {
-
-    .clinic-page .clinic-hero {
-        min-height: 195px;
-
-        padding: 8px;
-    }
-
-
-    .clinic-page .hero-search {
-        width: 85px;
-    }
-
-
-    .clinic-page .hero-title h1 {
-        font-size: 18px;
-    }
-
-
-    .clinic-page .hero-title p {
-        font-size: 6px;
-    }
-
-
-    .clinic-page .search-input {
-        font-size: 6px;
-    }
-
-
-    .clinic-page .search-button {
-        font-size: 6px;
-    }
+.clinic-page .dashboard-body {
+  width: 100%;
+  min-height: 100vh;
 }
 
 /* =========================================================
-   FIND CLINIC SIDEBAR
-   Matches FindPharmacy sidebar design
-   Existing clinic content styles remain unchanged
+   SIDEBAR
 ========================================================= */
 
 .clinic-page .pharmacy-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
   width: 300px;
   min-width: 300px;
+  max-width: 85vw;
   height: 100vh;
 
-  position: fixed;
-  left: 0;
-  top: 0;
+  display: flex;
+  flex-direction: column;
 
-  background: #ffffff;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 20px;
+
+  background: #fff;
   border-right: 1px solid #edf0f4;
 
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  z-index: 1000;
-  padding-bottom: 25px;
-  box-sizing: border-box;
-
   transform: translateX(0);
-  transition: transform 0.3s ease;
+  transition:
+    width 0.25s ease,
+    min-width 0.25s ease,
+    transform 0.25s ease;
 }
 
 .clinic-page .pharmacy-logo {
-  height: 110px;
+  min-height: 110px;
+  flex-shrink: 0;
 
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 12px;
 
-  padding: 0 35px;
+  padding: 0 30px;
   border-bottom: 1px solid #edf0f4;
-
-  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .clinic-page .logo-mark {
   position: relative;
-
-  width: 40px;
-  min-width: 40px;
-  height: 45px;
+  flex-shrink: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  width: 40px;
+  height: 45px;
+
   color: #123f91;
   font-size: 30px;
   font-weight: 800;
+  line-height: 1;
 }
 
 .clinic-page .logo-mark span {
   position: absolute;
-  bottom: 0;
   right: -7px;
-
-  font-size: 7px;
-  font-weight: 700;
-
-  background: #e600a9;
-  color: white;
+  bottom: 0;
 
   padding: 2px 3px;
   border-radius: 2px;
+
+  background: #e600a9;
+  color: #fff;
+
+  font-size: 7px;
+  font-weight: 700;
 }
 
 .clinic-page .pharmacy-logo .logo-text {
+  color: #34496b;
   font-size: 18px;
   font-weight: 600;
-  color: #34496b;
   white-space: nowrap;
 }
 
 .clinic-page .pharmacy-sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
   padding: 25px 15px;
 }
 
 .clinic-page .pharmacy-menu-item {
   width: 100%;
-  height: 58px;
-
-  border: none;
-  background: transparent;
+  min-width: 0;
+  min-height: 58px;
+  flex-shrink: 0;
 
   display: flex;
   align-items: center;
   gap: 14px;
 
-  padding: 0 17px;
-  margin-bottom: 5px;
+  margin: 0;
+  padding: 0 15px;
 
+  border: 0;
   border-radius: 11px;
 
+  background: transparent;
   color: #687b9b;
-  font-family: inherit;
-  font-size: 15px;
+
+  font-size: 14px;
   font-weight: 500;
   text-align: left;
+  white-space: nowrap;
 
-  cursor: pointer;
-  transition: all 0.25s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .clinic-page .pharmacy-menu-item:hover {
@@ -1054,26 +158,25 @@
 }
 
 .clinic-page .pharmacy-menu-item.active {
-  background: #ffffff;
+  background: #fff;
   color: #34496b;
   font-weight: 700;
-
-  box-shadow: 0 8px 22px rgba(41, 54, 82, 0.09);
+  box-shadow: 0 4px 14px rgba(35, 54, 89, 0.09);
 }
 
 .clinic-page .pharmacy-menu-icon {
   width: 38px;
   height: 38px;
   min-width: 38px;
-
-  border-radius: 10px;
-  background: #ffffff;
-
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.11);
+  flex-shrink: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(35, 54, 89, 0.08);
 
   color: #697997;
   font-size: 16px;
@@ -1082,88 +185,1120 @@
 .clinic-page .pharmacy-menu-item.active .pharmacy-menu-icon,
 .clinic-page .pharmacy-menu-icon.active-icon {
   background: #e500a8;
-  color: #ffffff;
-
-  box-shadow: 0 6px 13px rgba(229, 0, 168, 0.25);
+  color: #fff;
+  box-shadow: 0 5px 12px rgba(229, 0, 168, 0.2);
 }
 
 .clinic-page .pharmacy-help {
-  margin: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: auto 15px 15px;
   padding: 14px;
 
   border-radius: 12px;
   background: #f7f8fb;
-
-  display: flex;
-  gap: 10px;
-  align-items: center;
 }
 
 .clinic-page .pharmacy-help .help-icon {
   width: 34px;
   height: 34px;
   min-width: 34px;
-
-  border-radius: 50%;
-  background: #34496b;
-  color: #ffffff;
+  flex-shrink: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 14px;
-  font-weight: bold;
+  border-radius: 50%;
+  background: #34496b;
+  color: #fff;
+
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .clinic-page .pharmacy-help h4 {
-  margin: 0 0 3px;
+  margin: 0 0 4px;
   color: #34496b;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .clinic-page .pharmacy-help p {
   margin: 0;
-  font-size: 11px;
   color: #8190a9;
+  font-size: 11px;
+  line-height: 1.5;
 }
 
-/* Sidebar spacing for clinic main content */
+.clinic-page .pharmacy-help-text {
+  min-width: 0;
+}
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
 .clinic-page .main-content {
-  margin-left: 300px;
   width: calc(100% - 300px);
   min-width: 0;
-  box-sizing: border-box;
+  min-height: 100vh;
+  margin-left: 300px;
+
+  transition: width 0.25s ease, margin-left 0.25s ease;
 }
 
-/* Responsive sidebar */
-@media (max-width: 1200px) {
+.clinic-page .dashboard-content {
+  width: 100%;
+  min-width: 0;
+  padding: 0 20px;
+}
+
+/* =========================================================
+   HAMBURGER
+========================================================= */
+
+.clinic-page .hero-hamburger {
+  position: relative;
+  z-index: 1101;
+
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  margin: 0;
+  padding: 5px;
+
+  border: 0;
+  border-radius: 7px;
+
+  background: transparent;
+  color: #fff;
+
+  cursor: pointer;
+  visibility: visible;
+  opacity: 1;
+}
+
+.clinic-page .hero-hamburger:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.clinic-page .hero-hamburger span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  min-height: 2px;
+  flex-shrink: 0;
+
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.clinic-page .hero-hamburger:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   DESKTOP SIDEBAR - FULL / ICONS ONLY
+========================================================= */
+
+@media (min-width: 951px) {
   .clinic-page .pharmacy-sidebar {
+    width: 300px;
+    min-width: 300px;
+    max-width: none;
+    transform: translateX(0);
+  }
+
+  .clinic-page.clinic-sidebar-open .pharmacy-sidebar {
+    width: 300px;
+    min-width: 300px;
+  }
+
+  .clinic-page.clinic-sidebar-open .main-content {
+    width: calc(100% - 300px);
+    margin-left: 300px;
+  }
+
+  .clinic-page.clinic-sidebar-closed .pharmacy-sidebar {
+    width: 82px;
+    min-width: 82px;
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .clinic-page.clinic-sidebar-closed .pharmacy-logo {
+    justify-content: center;
+    gap: 0;
+    padding: 0 10px;
+  }
+
+  .clinic-page.clinic-sidebar-closed .pharmacy-logo .logo-text {
+    display: none !important;
+  }
+
+  .clinic-page.clinic-sidebar-closed .pharmacy-sidebar-menu {
+    padding: 25px 10px;
+  }
+
+  .clinic-page.clinic-sidebar-closed .pharmacy-menu-item {
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .clinic-page.clinic-sidebar-closed
+    .pharmacy-menu-item > span:not(.pharmacy-menu-icon) {
+    display: none !important;
+  }
+
+  .clinic-page.clinic-sidebar-closed .pharmacy-menu-icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    margin: 0;
+  }
+
+  .clinic-page.clinic-sidebar-closed .pharmacy-help {
+    justify-content: center;
+    gap: 0;
+    margin: auto 8px 15px;
+    padding: 10px 0;
+  }
+
+  .clinic-page.clinic-sidebar-closed .pharmacy-help-text {
+    display: none !important;
+  }
+
+  .clinic-page.clinic-sidebar-closed .pharmacy-help h4,
+  .clinic-page.clinic-sidebar-closed .pharmacy-help p {
+    display: none !important;
+  }
+
+  .clinic-page.clinic-sidebar-closed .main-content {
+    width: calc(100% - 82px);
+    margin-left: 82px;
+  }
+
+  .clinic-page .clinic-sidebar-overlay {
+    display: none !important;
+  }
+}
+
+/* =========================================================
+   SIDEBAR OVERLAY
+========================================================= */
+
+.clinic-page .clinic-sidebar-overlay {
+  display: none;
+}
+
+/* =========================================================
+   CLINIC HERO
+========================================================= */
+
+.clinic-page .clinic-hero {
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 390px;
+
+  padding: 18px 26px 30px;
+  border-radius: 10px;
+  overflow: hidden;
+
+  color: #fff;
+
+  background:
+    radial-gradient(
+      ellipse at 8% 90%,
+      rgba(255, 0, 190, 0.9) 0%,
+      rgba(255, 0, 190, 0.55) 28%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 95% 15%,
+      rgba(70, 0, 255, 0.9) 0%,
+      rgba(90, 0, 220, 0.6) 35%,
+      transparent 70%
+    ),
+    linear-gradient(
+      120deg,
+      #b900a2 0%,
+      #e300a7 35%,
+      #9218cf 65%,
+      #423ca8 100%
+    );
+
+  box-shadow: 0 8px 25px rgba(130, 0, 150, 0.12);
+}
+
+.clinic-page .clinic-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+
+  width: 850px;
+  height: 250px;
+
+  left: -180px;
+  bottom: -150px;
+
+  border-radius: 50%;
+  border-top: 2px solid rgba(255, 255, 255, 0.18);
+  transform: rotate(-10deg);
+
+  pointer-events: none;
+}
+
+.clinic-page .clinic-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+
+  width: 700px;
+  height: 260px;
+
+  right: -160px;
+  top: -180px;
+
+  border-radius: 50%;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.18);
+  transform: rotate(-12deg);
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   HERO HEADER
+========================================================= */
+
+.clinic-page .hero-topbar {
+  position: relative;
+  z-index: 5;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.clinic-page .hero-left {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.clinic-page .hero-breadcrumb {
+  min-width: 0;
+  color: #fff;
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.clinic-page .hero-breadcrumb > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.95;
+}
+
+.clinic-page .hero-breadcrumb span {
+  opacity: 0.8;
+}
+
+.clinic-page .hero-breadcrumb strong {
+  display: block;
+  margin-top: 2px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   HERO RIGHT
+========================================================= */
+
+.clinic-page .hero-right {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.clinic-page .hero-search {
+  width: 210px;
+  height: 38px;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 0 11px;
+  border-radius: 7px;
+
+  background: #fff;
+  color: #777;
+}
+
+.clinic-page .hero-search > span {
+  flex-shrink: 0;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.clinic-page .hero-search input {
+  width: 100%;
+  min-width: 0;
+
+  border: 0;
+  outline: none;
+
+  background: transparent;
+  color: #555;
+  font-size: 10px;
+}
+
+.clinic-page .hero-search input::placeholder {
+  color: #999;
+}
+
+.clinic-page .hero-logout {
+  padding: 5px;
+
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #fff;
+
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.clinic-page .hero-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+}
+
+.clinic-page .hero-icon:hover,
+.clinic-page .hero-logout:hover {
+  background: rgba(255, 255, 255, 0.13);
+}
+
+/* =========================================================
+   HERO TITLE
+========================================================= */
+
+.clinic-page .hero-title {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  min-width: 0;
+  margin-top: 48px;
+
+  text-align: center;
+}
+
+.clinic-page .hero-title h1 {
+  margin: 0 0 6px;
+  color: #fff;
+
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.clinic-page .hero-title > p {
+  margin: 0 0 28px;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   SEARCH ROW
+========================================================= */
+
+.clinic-page .search-row {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  min-width: 0;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.clinic-page .search-input {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+
+  padding: 0 15px;
+
+  border: 0;
+  border-radius: 8px;
+  outline: none;
+
+  background: #fff;
+  color: #555;
+  font-size: 11px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.clinic-page .search-input::placeholder {
+  color: #aaa;
+}
+
+.clinic-page .search-input:focus {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7);
+}
+
+.clinic-page .search-button {
+  min-width: 90px;
+  height: 48px;
+  flex-shrink: 0;
+
+  padding: 0 15px;
+  border: 0;
+  border-radius: 8px;
+
+  background: #10b9df;
+  color: #fff;
+
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.clinic-page .search-button:hover {
+  background: #079fc5;
+  transform: translateY(-1px);
+}
+
+.clinic-page .search-button:active {
+  transform: scale(0.97);
+}
+
+.clinic-page .current-button {
+  background: #12b9df;
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.clinic-page .section {
+  width: 100%;
+  min-width: 0;
+
+  margin-top: 20px;
+  padding: 20px;
+
+  border-radius: 9px;
+  background: #fff;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.clinic-page .section-title {
+  margin: 0 0 8px;
+
+  color: #555;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.clinic-page .section-subtitle {
+  margin: 0 0 14px;
+
+  color: #888;
+  font-size: 9px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* =========================================================
+   SERVICE GRID
+========================================================= */
+
+.clinic-page .service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+
+  width: 100%;
+}
+
+.clinic-page .service-card {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 75px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 25px 10px 10px;
+
+  border: 1px solid #ddd;
+  border-radius: 5px;
+
+  background: #fff;
+  text-align: left;
+
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.clinic-page .service-card:hover {
+  border-color: #d0d0d0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.clinic-page .service-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 6px;
+  font-size: 18px;
+}
+
+.clinic-page .service-text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.clinic-page .service-text h3 {
+  margin: 0 0 4px;
+
+  color: #444;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.clinic-page .service-text p {
+  margin: 0;
+
+  color: #888;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.clinic-page .arrow {
+  position: absolute;
+  top: 50%;
+  right: 9px;
+
+  color: #999;
+  font-size: 17px;
+  line-height: 1;
+
+  transform: translateY(-50%);
+}
+
+/* =========================================================
+   CLINIC TYPES
+========================================================= */
+
+.clinic-page .specialty-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px 10px;
+
+  width: 100%;
+}
+
+.clinic-page .specialty {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  padding: 0 8px;
+
+  border: 0;
+  border-bottom: 1px solid #ddd;
+
+  background: #fff;
+  color: #555;
+
+  font-size: 10px;
+  text-align: left;
+  overflow-wrap: anywhere;
+
+  transition: background 0.2s ease, padding 0.2s ease;
+}
+
+.clinic-page .specialty:hover {
+  padding-left: 11px;
+  background: #fafafa;
+}
+
+.clinic-page .specialty-arrow {
+  flex-shrink: 0;
+  color: #999;
+  font-size: 16px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.clinic-page .dashboard-footer {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+
+  margin-top: 25px;
+  padding: 15px 5px 20px;
+
+  color: #888;
+}
+
+.clinic-page .dashboard-footer p {
+  margin: 0;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.clinic-page .dashboard-footer > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+.clinic-page .dashboard-footer a {
+  color: #777;
+  font-size: 9px;
+  text-decoration: none;
+}
+
+.clinic-page .dashboard-footer a:hover {
+  color: #333;
+}
+
+/* =========================================================
+   MEDIUM DESKTOP
+========================================================= */
+
+@media (min-width: 951px) and (max-width: 1200px) {
+  .clinic-page.clinic-sidebar-open .pharmacy-sidebar {
     width: 260px;
     min-width: 260px;
   }
 
-  .clinic-page .pharmacy-logo {
-    padding: 0 25px;
+  .clinic-page.clinic-sidebar-open .pharmacy-logo {
+    padding: 0 22px;
   }
 
-  .clinic-page .main-content {
-    margin-left: 260px;
+  .clinic-page.clinic-sidebar-open .main-content {
     width: calc(100% - 260px);
+    margin-left: 260px;
+  }
+
+  .clinic-page .hero-search {
+    width: 150px;
+  }
+
+  .clinic-page .hero-right {
+    gap: 6px;
+  }
+
+  .clinic-page .clinic-hero {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .clinic-page .search-button {
+    min-width: 75px;
+    padding: 0 10px;
   }
 }
 
+/* =========================================================
+   TABLET AND MOBILE DRAWER
+========================================================= */
+
 @media (max-width: 950px) {
   .clinic-page .pharmacy-sidebar {
-    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+
+    width: 300px;
+    min-width: 0;
+    max-width: 85vw;
+    height: 100vh;
+
+    transform: translateX(-105%);
+    transition: transform 0.25s ease;
   }
 
   .clinic-page .pharmacy-sidebar.show {
     transform: translateX(0);
   }
 
-  .clinic-page .main-content {
-    margin-left: 0;
+  .clinic-page .main-content,
+  .clinic-page.clinic-sidebar-open .main-content,
+  .clinic-page.clinic-sidebar-closed .main-content {
     width: 100%;
+    margin-left: 0;
+  }
+
+  .clinic-page .clinic-sidebar-overlay.visible {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+
+    display: block;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+  }
+
+  .clinic-page .dashboard-content {
+    padding: 0 14px;
+  }
+
+  .clinic-page .clinic-hero {
+    min-height: 330px;
+    padding: 12px 14px 22px;
+  }
+
+  .clinic-page .hero-topbar {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .clinic-page .hero-left {
+    gap: 8px;
+  }
+
+  .clinic-page .hero-right {
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .clinic-page .hero-search {
+    width: 150px;
+  }
+
+  .clinic-page .hero-title {
+    margin-top: 32px;
+  }
+
+  .clinic-page .hero-title h1 {
+    font-size: 27px;
+  }
+
+  .clinic-page .hero-title > p {
+    margin-bottom: 20px;
+    font-size: 11px;
+  }
+
+  .clinic-page .search-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .clinic-page .search-input,
+  .clinic-page .search-button {
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+  }
+
+  .clinic-page .search-input {
+    font-size: 10px;
+  }
+
+  .clinic-page .search-button {
+    padding: 0 10px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .clinic-page .dashboard-content {
+    padding: 0 10px;
+  }
+
+  .clinic-page .clinic-hero {
+    min-height: 0;
+    padding: 10px 10px 18px;
+    border-radius: 8px;
+  }
+
+  .clinic-page .hero-topbar {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .clinic-page .hero-left {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .clinic-page .hero-breadcrumb {
+    font-size: 8px;
+  }
+
+  .clinic-page .hero-breadcrumb strong {
+    font-size: 11px;
+  }
+
+  .clinic-page .hero-right {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+    gap: 7px;
+  }
+
+  .clinic-page .hero-search {
+    flex: 1 1 100%;
+    width: 100%;
+    height: 34px;
+  }
+
+  .clinic-page .hero-search input {
+    font-size: 10px;
+  }
+
+  .clinic-page .hero-logout {
+    font-size: 10px;
+  }
+
+  .clinic-page .hero-title {
+    margin-top: 25px;
+  }
+
+  .clinic-page .hero-title h1 {
+    font-size: 24px;
+  }
+
+  .clinic-page .hero-title > p {
+    margin: 8px 0 17px;
+    font-size: 10px;
+    line-height: 1.6;
+  }
+
+  .clinic-page .search-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 9px;
+  }
+
+  .clinic-page .search-input,
+  .clinic-page .search-button {
+    width: 100%;
+    height: 42px;
+    font-size: 11px;
+  }
+
+  .clinic-page .section {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 7px;
+  }
+
+  .clinic-page .section-title {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .clinic-page .section-subtitle {
+    font-size: 10px;
+    line-height: 1.5;
+  }
+
+  .clinic-page .service-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 9px;
+  }
+
+  .clinic-page .service-card {
+    min-height: 78px;
+    gap: 10px;
+    padding: 11px 26px 11px 10px;
+  }
+
+  .clinic-page .service-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
+
+  .clinic-page .service-text h3 {
+    font-size: 11px;
+  }
+
+  .clinic-page .service-text p {
+    font-size: 9px;
+  }
+
+  .clinic-page .arrow {
+    right: 9px;
+  }
+
+  .clinic-page .specialty-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .clinic-page .specialty {
+    min-height: 40px;
+    padding: 0 8px;
+    font-size: 10px;
+  }
+
+  .clinic-page .dashboard-footer {
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+
+    margin-top: 16px;
+    padding: 12px 4px 18px;
+  }
+
+  .clinic-page .dashboard-footer p,
+  .clinic-page .dashboard-footer a {
+    font-size: 9px;
+  }
+
+  .clinic-page .dashboard-footer > div {
+    justify-content: center;
+    gap: 14px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+  .clinic-page .dashboard-content {
+    padding: 0 7px;
+  }
+
+  .clinic-page .pharmacy-sidebar {
+    width: 280px;
+    max-width: 88vw;
+  }
+
+  .clinic-page .pharmacy-logo {
+    padding: 0 20px;
+  }
+
+  .clinic-page .pharmacy-menu-item {
+    gap: 10px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+
+  .clinic-page .clinic-hero {
+    padding: 9px 8px 15px;
+  }
+
+  .clinic-page .hero-title h1 {
+    font-size: 22px;
+  }
+
+  .clinic-page .hero-title > p {
+    font-size: 9px;
+  }
+
+  .clinic-page .section {
+    padding: 11px;
+  }
+
+  .clinic-page .service-card {
+    min-height: 74px;
+    padding: 9px 24px 9px 8px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .clinic-page *,
+  .clinic-page *::before,
+  .clinic-page *::after {
+    transition-duration: 0.01ms !important;
   }
 }

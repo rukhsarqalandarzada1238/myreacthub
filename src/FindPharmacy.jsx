@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./FindPharmacy.css";
@@ -11,7 +12,13 @@ const FindPharmacy = () => {
 
   const [search, setSearch] = useState("");
   const [entriesPerPage, setEntriesPerPage] = useState(7);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Desktop: sidebar full on refresh.
+  // Mobile/tablet: sidebar starts closed.
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return window.innerWidth > 950;
+  });
 
   const menuItems = [
     { label: "Dashboard", icon: "▣", path: "/dashboard" },
@@ -126,7 +133,18 @@ const FindPharmacy = () => {
 
   const searchValue = search.trim().toLowerCase();
 
-  // ===== فیلتر جدول =====
+
+  const filteredMedicines = medicines.filter((medicine) =>
+    [
+      medicine.name,
+      medicine.category,
+      medicine.pharmacy,
+      medicine.id,
+      medicine.price,
+      medicine.discount,
+    ].some((value) => value.toLowerCase().includes(searchValue))
+
+
   const filteredMedicines = medicines.filter((medicine) => {
     return (
       medicine.name.toLowerCase().includes(searchValue) ||
@@ -153,9 +171,15 @@ const FindPharmacy = () => {
     entriesPerPage
   );
 
+  const displayedMedicines = filteredMedicines.slice(0, entriesPerPage);
+
   const handleNavigation = (path) => {
-    navigate(path);
     setSidebarOpen(false);
+    navigate(path);
+  };
+
+  const toggleSidebar = () => {
+    setSidebarOpen((previous) => !previous);
   };
 
   const handleImageError = (event) => {
@@ -164,10 +188,15 @@ const FindPharmacy = () => {
   };
 
   return (
-    <div className="pharmacy-page">
+    <div
+      className={`pharmacy-page ${
+        sidebarOpen ? "sidebar-open" : "sidebar-closed"
+      }`}
+    >
       {/* SIDEBAR */}
       <aside
         className={`pharmacy-sidebar ${sidebarOpen ? "show" : ""}`}
+        aria-label="Main navigation"
       >
         <div className="pharmacy-logo">
           <div className="logo-mark">
@@ -178,7 +207,7 @@ const FindPharmacy = () => {
           <div className="logo-text">MyPatientHUB</div>
         </div>
 
-        <div className="pharmacy-sidebar-menu">
+        <nav className="pharmacy-sidebar-menu">
           {menuItems.map((item) => {
             const isActive = location.pathname === item.path;
 
@@ -186,6 +215,8 @@ const FindPharmacy = () => {
               <button
                 key={item.label}
                 type="button"
+                title={item.label}
+                aria-label={item.label}
                 className={`pharmacy-menu-item ${
                   isActive ? "active" : ""
                 }`}
@@ -194,40 +225,57 @@ const FindPharmacy = () => {
                 <span className="pharmacy-menu-icon">
                   {item.icon}
                 </span>
-                <span>{item.label}</span>
+
+                <span className="menu-label">{item.label}</span>
               </button>
             );
           })}
-        </div>
+        </nav>
 
         <div className="pharmacy-help">
           <div className="help-icon">?</div>
-          <div>
+          <div className="help-text">
             <h4>Need Help?</h4>
             <p>Contact our support team</p>
           </div>
         </div>
       </aside>
 
+      {/* MOBILE OVERLAY */}
+      {sidebarOpen && (
+        <button
+          type="button"
+          className="pharmacy-sidebar-overlay"
+          aria-label="Close navigation menu"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* MAIN CONTENT */}
       <main className="pharmacy-main">
         {/* HEADER */}
         <header className="pharmacy-header">
           <div className="pharmacy-header-left">
-            <button
-              type="button"
-              className="mobile-menu-button"
-              aria-label="Toggle sidebar"
-              aria-expanded={sidebarOpen}
-              onClick={() => setSidebarOpen((previous) => !previous)}
-            >
-              ☰
-            </button>
+            <div className="header-title-row">
+              <button
+                type="button"
+                className="mobile-menu-button"
+                aria-label={
+                  sidebarOpen ? "Collapse sidebar" : "Open sidebar"
+                }
+                aria-expanded={sidebarOpen}
+                onClick={toggleSidebar}
+              >
+                <span />
+                <span />
+                <span />
+              </button>
 
-            <div className="breadcrumb">
-              <span>⌂</span>
-              <span>/</span>
-              <span>Pharmacyplace</span>
+              <div className="breadcrumb">
+                <span>⌂</span>
+                <span>/</span>
+                <span>Pharmacyplace</span>
+              </div>
             </div>
 
             <h2>Pharmacyplace</h2>
@@ -257,6 +305,7 @@ const FindPharmacy = () => {
               type="button"
               className="header-icon"
               aria-label="Settings"
+              title="Settings"
               onClick={() => navigate("/settings")}
             >
               ⚙
@@ -266,6 +315,7 @@ const FindPharmacy = () => {
               type="button"
               className="header-icon"
               aria-label="My account"
+              title="My account"
               onClick={() => navigate("/account")}
             >
               ♟
@@ -294,9 +344,7 @@ const FindPharmacy = () => {
                 </div>
 
                 <div className="pharmacy-name">
-                  <div className="pharmacy-avatar">
-                    {item.initials}
-                  </div>
+                  <div className="pharmacy-avatar">{item.initials}</div>
                   <h3>{item.pharmacy}</h3>
                 </div>
 
@@ -324,11 +372,10 @@ const FindPharmacy = () => {
         <section className="pharmacy-table-container">
           <h1>
             {filteredMedicines.length} Medicine
-            {filteredMedicines.length !== 1 ? "s" : ""} returned
-            for the keyword {search.trim() || "Esso"}
+            {filteredMedicines.length !== 1 ? "s" : ""} returned for the
+            keyword {search.trim() || "Esso"}
           </h1>
 
-          {/* TABLE CONTROLS */}
           <div className="table-controls">
             <div className="entries-control">
               <select
@@ -358,29 +405,16 @@ const FindPharmacy = () => {
             </div>
           </div>
 
-          {/* TABLE */}
           <div className="pharmacy-table-wrapper">
             <table className="pharmacy-table">
               <thead>
                 <tr>
-                  <th>
-                    NAME <span className="sort-icon">↕</span>
-                  </th>
-                  <th>
-                    CATEGORY <span className="sort-icon">↕</span>
-                  </th>
-                  <th>
-                    SERVICE BY <span className="sort-icon">↕</span>
-                  </th>
-                  <th>
-                    DISCOUNT <span className="sort-icon">↕</span>
-                  </th>
-                  <th>
-                    PRICE <span className="sort-icon">↕</span>
-                  </th>
-                  <th>
-                    ID <span className="sort-icon">↕</span>
-                  </th>
+                  <th>NAME <span className="sort-icon">↕</span></th>
+                  <th>CATEGORY <span className="sort-icon">↕</span></th>
+                  <th>SERVICE BY <span className="sort-icon">↕</span></th>
+                  <th>DISCOUNT <span className="sort-icon">↕</span></th>
+                  <th>PRICE <span className="sort-icon">↕</span></th>
+                  <th>ID <span className="sort-icon">↕</span></th>
                 </tr>
               </thead>
 
@@ -428,12 +462,10 @@ const FindPharmacy = () => {
             </table>
           </div>
 
-          {/* TABLE FOOTER */}
           <div className="table-bottom">
             <span>
               Showing {displayedMedicines.length > 0 ? 1 : 0} to{" "}
-              {displayedMedicines.length} of {filteredMedicines.length}{" "}
-              entries
+              {displayedMedicines.length} of {filteredMedicines.length} entries
             </span>
           </div>
         </section>
@@ -441,8 +473,7 @@ const FindPharmacy = () => {
         {/* FOOTER */}
         <footer className="pharmacy-footer">
           <p>
-            © 2026, made with ♥ by <strong>MyPiHUB</strong> for a
-            better web.
+            © 2026, made with ♥ by <strong>MyPiHUB</strong> for a better web.
           </p>
 
           <div className="footer-links">
