@@ -10,7 +10,7 @@ function Marketplace() {
   const [entriesPerPage, setEntriesPerPage] = useState(7);
 
   const navigate = useNavigate();
-  const location = useLocation(); // برای تشخیص اینکه در کدام صفحه هستیم
+  const location = useLocation();
 
   const handleHamburger = () => {
     if (window.matchMedia("(max-width: 950px)").matches) {
@@ -29,77 +29,85 @@ function Marketplace() {
     closeSidebar();
   };
 
-  // اضافه کردن عکس واقعی برای هر محصول
-  const products = [
-    {
-      id: 1,
-      name: "Food Panda",
-      price: "5 RM",
-      category: "Healthy Diet",
-      description: "As Uber works through a huge amount of internal management turmoil.",
-      color: "food-panda",
-      image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80", // عکس غذا
-    },
+  // ===== MEDICAL PRODUCTS (Patient HUB) =====
+        const products = [
+          {
+            id: 1,
+            name: "Digital Thermometer",
+            price: "25 RM",
+            category: "Medical Device",
+            description: "Fast and accurate body temperature reading for home and clinical use.",
+            color: "medical-blue",
+            image: "public/images/tm.webp",
+          },
     {
       id: 2,
-      name: "Grab Food",
-      price: "10 RM",
-      category: "Healthy Diet",
-      description: "Music is something that every person has or ing that every person has his or.",
-      color: "grab-food",
-      image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80", // عکس سالاد
+      name: "Blood Pressure Monitor",
+      price: "120 RM",
+      category: "Medical Device",
+      description: "Automatic upper arm blood pressure monitor with memory and large display.",
+      color: "medical-red",
+      image: "public/images/bp.webp",
     },
     {
       id: 3,
-      name: "Deliveroo",
-      price: "15 RM",
-      category: "Healthy Diet",
-      description: "Different people have different taste, and various types of music.",
-      color: "deliveroo",
-      image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=400&q=80", // عکس غذا
+      name: "First Aid Kit",
+      price: "45 RM",
+      category: "Emergency Care",
+      description: "Complete first aid kit with bandages, antiseptics, and essential tools.",
+      color: "medical-green",
+      image: "public/images/fa.webp",
     },
     {
       id: 4,
-      name: "Minimalist",
-      price: "20 RM",
-      category: "Healthy Diet",
-      description: "Different people have different taste, and various types of music.",
-      color: "minimalist",
-      image: "https://images.unsplash.com/photo-1498837167922-41c00ff4c4b1?auto=format&fit=crop&w=400&q=80", // عکس غذا
+      name: "Vitamin D3 Supplement",
+      price: "35 RM",
+      category: "Pharmacy",
+      description: "Daily vitamin D3 supplement to support bone health and immunity.",
+      color: "medical-purple",
+      image: "public/images/vs.webp",
     },
   ];
 
   const tableResults = [
     {
-      name: "Healthy Diet",
-      category: "Food",
-      service: "Food panda",
+      name: "Digital Thermometer",
+      category: "Device",
+      service: "MediCare Store",
       discount: "0",
-      price: "10 RM",
-      id: "243598234",
-      image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=100&q=80",
+      price: "25 RM",
+      id: "MED-1001",
+      image: "/public/images/tm.webp",
     },
     {
-      name: "Healthy Diet",
-      category: "Food",
-      service: "Grab Food",
+      name: "Blood Pressure Monitor",
+      category: "Device",
+      service: "HealthPlus",
       discount: "5",
-      price: "15 RM",
-      id: "243598235",
-      image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=100&q=80",
+      price: "120 RM",
+      id: "MED-1002",
+      image: "/public/images/bp.webp",
     },
     {
-      name: "Healthy Diet",
-      category: "Food",
-      service: "Deliveroo",
+      name: "First Aid Kit",
+      category: "Emergency",
+      service: "SafeCare",
       discount: "10",
-      price: "20 RM",
-      id: "243598236",
-      image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=100&q=80",
+      price: "45 RM",
+      id: "MED-1003",
+      image: "/public/images/fa.webp",
+    },
+    {
+      name: "Vitamin D3",
+      category: "Pharmacy",
+      service: "PharmaCare",
+      discount: "5",
+      price: "35 RM",
+      id: "MED-1004",
+      image: "/public/images/vs.webp",
     },
   ];
 
-  // فقط بر اساس اسم محصول جستجو میکند
   const searchValue = search.trim().toLowerCase();
 
   const filteredProducts = products.filter((product) =>
@@ -121,7 +129,11 @@ function Marketplace() {
   };
 
   const handleImageError = (event) => {
-    event.currentTarget.src = "https://via.placeholder.com/150?text=No+Image";
+    event.currentTarget.src =
+      "data:image/svg+xml;charset=UTF-8," +
+      encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150"><rect width="150" height="150" fill="#eef1f5"/><text x="50%" y="50%" font-family="Arial" font-size="12" fill="#9aa3b0" text-anchor="middle" dominant-baseline="middle">No Image</text></svg>'
+      );
   };
 
   const menuItems = [
@@ -139,7 +151,6 @@ function Marketplace() {
 
   return (
     <div className={`marketplace-body ${desktopCollapsed ? "sidebar-collapsed" : ""}`}>
-      {/* MOBILE OVERLAY */}
       {sidebarOpen && (
         <button
           type="button"
@@ -149,7 +160,6 @@ function Marketplace() {
         />
       )}
 
-      {/* SIDEBAR */}
       <aside className={`sidebar ${sidebarOpen ? "show" : ""}`}>
         <div className="logo-area">
           <div className="logo-icon">M</div>
@@ -158,7 +168,6 @@ function Marketplace() {
 
         <nav className="sidebar-menu" aria-label="Main navigation">
           {menuItems.map((item) => {
-            // چک میکنیم کاربر در کدام صفحه است تا آیکون را فعال کند
             const isActive = location.pathname === item.path;
 
             return (
@@ -184,9 +193,7 @@ function Marketplace() {
         </div>
       </aside>
 
-      {/* MAIN CONTENT */}
       <main className="main-content">
-        {/* HEADER */}
         <header className="top-header">
           <div className="header-left">
             <button
@@ -213,7 +220,7 @@ function Marketplace() {
               <span aria-hidden="true">⌕</span>
               <input
                 type="search"
-                placeholder="Type product name here..."
+                placeholder="Search medical product here..."
                 aria-label="Search marketplace results"
                 value={headerSearch}
                 onChange={(event) => setHeaderSearch(event.target.value)}
@@ -228,7 +235,6 @@ function Marketplace() {
               ◉ Log out
             </button>
 
-            {/* دکمه تنظیمات (چرخ دنده) */}
             <button
               type="button"
               className="header-icon"
@@ -238,7 +244,6 @@ function Marketplace() {
               ⚙
             </button>
 
-            {/* دکمه حساب کاربری (آدمک) */}
             <button
               type="button"
               className="header-icon"
@@ -250,24 +255,26 @@ function Marketplace() {
           </div>
         </header>
 
-        {/* MARKETPLACE CONTENT */}
         <section className="marketplace-content">
           <div className="marketplace-intro">
-            Explore available marketplaces and find what you need.
+            Explore medical products, pharmacy items, and health devices — trusted by MyPatientHUB.
           </div>
 
           <div className="marketplace-card">
-            <h1>Search Marketplaces and order what you need</h1>
+            <h1>Search medical products and order what you need</h1>
 
             <div className="product-grid">
               {filteredProducts.map((product) => (
                 <article className="product-card" key={product.id}>
-                  {/* عکس واقعی محصول به جای CSS */}
-                  <div className={`product-image ${product.color}`}>
+                  <div
+                    className={`product-image ${product.color}`}
+                    style={{ padding: 0, overflow: "hidden", display: "flex" }}
+                  >
                     <img
                       src={product.image}
                       alt={product.name}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "10px" }}
+                      loading="lazy"
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
                       onError={handleImageError}
                     />
                   </div>
@@ -280,10 +287,10 @@ function Marketplace() {
 
                     <div className="provider">
                       <div className={`provider-logo ${product.color}`}>
-                        {product.name === "Food Panda" && "●"}
-                        {product.name === "Grab Food" && "grab"}
-                        {product.name === "Deliveroo" && "D"}
-                        {product.name === "Minimalist" && "●"}
+                        {product.name === "Digital Thermometer" && "🌡"}
+                        {product.name === "Blood Pressure Monitor" && "❤"}
+                        {product.name === "First Aid Kit" && "✚"}
+                        {product.name === "Vitamin D3 Supplement" && "💊"}
                       </div>
                       <h3>{product.name}</h3>
                     </div>
@@ -307,9 +314,8 @@ function Marketplace() {
             </div>
           </div>
 
-          {/* OTHER RESULTS */}
           <div className="results-card" id="marketplace-results">
-            <h2>Other results for healthy diet search</h2>
+            <h2>Other medical results</h2>
 
             <div className="results-toolbar">
               <label className="entries-select">
@@ -355,12 +361,15 @@ function Marketplace() {
                     <tr key={item.id}>
                       <td>
                         <div className="table-name">
-                          {/* عکس کوچک برای جدول */}
-                          <div className="small-food-image" style={{ overflow: "hidden", borderRadius: "8px" }}>
-                            <img 
-                              src={item.image} 
-                              alt={item.name} 
-                              style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+                          <div
+                            className="small-food-image"
+                            style={{ overflow: "hidden", borderRadius: "50%" }}
+                          >
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              loading="lazy"
+                              style={{ width: "100%", height: "100%", objectFit: "cover" }}
                               onError={handleImageError}
                             />
                           </div>
@@ -402,7 +411,6 @@ function Marketplace() {
           </div>
         </section>
 
-        {/* FOOTER */}
         <footer className="dashboard-footer">
           <p>© 2026, made with ♥ by MyPiHUB for a better web.</p>
 

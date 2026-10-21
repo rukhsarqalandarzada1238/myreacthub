@@ -1,4 +1,3 @@
-
 /* =========================================
    GLOBAL RESET
 ========================================= */
@@ -494,99 +493,6 @@ button {
   background: linear-gradient(135deg, #c9f0ef, #6ac8c5);
 }
 
-.marketplace-body .food-image {
-  position: absolute;
-  inset: 0;
-}
-
-/* DECORATIVE FOOD ILLUSTRATION */
-
-.marketplace-body .plate {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  width: 100px;
-  height: 100px;
-  transform: translate(-50%, -50%);
-
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    #fff 0 55%,
-    #e7e7e7 56% 61%,
-    #fff 62%
-  );
-
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
-}
-
-.marketplace-body .food-piece {
-  position: absolute;
-  top: 38px;
-  left: 30px;
-
-  width: 35px;
-  height: 17px;
-
-  border-radius: 50%;
-  background: #f4e2bd;
-  transform: rotate(-20deg);
-}
-
-.marketplace-body .food-piece.second {
-  top: 55px;
-  left: 40px;
-  width: 30px;
-
-  background: #d9c298;
-  transform: rotate(18deg);
-}
-
-.marketplace-body .drink {
-  position: absolute;
-  top: 8px;
-  left: 30px;
-
-  width: 35px;
-  height: 35px;
-
-  border: 4px solid #f5e7c0;
-  border-radius: 50%;
-  background: #f7c817;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.marketplace-body .fruit {
-  position: absolute;
-  top: 28px;
-  right: 30px;
-
-  width: 28px;
-  height: 28px;
-
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 35% 35%,
-    #ff5d5d 0 20%,
-    #e62d3d 21% 60%,
-    #4a9d42 61%
-  );
-}
-
-.marketplace-body .side-dish {
-  position: absolute;
-  bottom: 14px;
-  left: 27px;
-
-  width: 38px;
-  height: 24px;
-
-  border-radius: 50%;
-  background: #f3e4c7;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
-}
-
 /* PRODUCT INFORMATION */
 
 .marketplace-body .product-info {
@@ -856,20 +762,6 @@ button {
   background: linear-gradient(135deg, #c9efed, #6bc6c3);
 }
 
-.marketplace-body .small-plate {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  width: 27px;
-  height: 27px;
-  transform: translate(-50%, -50%);
-
-  border: 3px solid #e8e8e8;
-  border-radius: 50%;
-  background: #fff;
-}
-
 .marketplace-body .service-cell {
   display: flex;
   align-items: center;
@@ -947,27 +839,6 @@ button {
 }
 
 /* =========================================
-   DESKTOP SIDEBAR COLLAPSE
-========================================= */
-
-@media (min-width: 951px) {
-  .marketplace-body.sidebar-collapsed .sidebar {
-    transform: translateX(-100%);
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  .marketplace-body.sidebar-collapsed .main-content {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .marketplace-sidebar-overlay {
-    display: none !important;
-  }
-}
-
-/* =========================================
    TABLET — 1100px
 ========================================= */
 
@@ -980,11 +851,6 @@ button {
   .marketplace-body .main-content {
     width: calc(100% - 260px);
     margin-left: 260px;
-  }
-
-  .marketplace-body.sidebar-collapsed .main-content {
-    width: 100%;
-    margin-left: 0;
   }
 
   .marketplace-body .logo-area {
@@ -1018,7 +884,7 @@ button {
 }
 
 /* =========================================
-   MOBILE SIDEBAR + CONDITIONAL OVERLAY
+   MOBILE SIDEBAR
 ========================================= */
 
 .marketplace-sidebar-overlay {
@@ -1044,13 +910,11 @@ button {
     pointer-events: auto;
   }
 
-  .marketplace-body .main-content,
-  .marketplace-body.sidebar-collapsed .main-content {
+  .marketplace-body .main-content {
     width: 100%;
     margin-left: 0;
   }
 
-  /* Overlay is conditionally rendered by React */
   .marketplace-sidebar-overlay {
     display: block;
     position: fixed;
@@ -1291,11 +1155,21 @@ button {
 }
 
 /* =========================================
-   COLLAPSED SIDEBAR — ICONS ONLY
+   DESKTOP SIDEBAR COLLAPSE — ICON-ONLY MODE
+   (Single source of truth — no duplicate rules)
 ========================================= */
 
 @media (min-width: 951px) {
-  /* Narrow sidebar when collapsed */
+  /* Default: expanded sidebar */
+  .marketplace-body .sidebar {
+    width: 300px;
+    min-width: 300px;
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* Collapsed: narrow sidebar, icons only */
   .marketplace-body.sidebar-collapsed .sidebar {
     width: 82px;
     min-width: 82px;
@@ -1305,7 +1179,7 @@ button {
     overflow-x: hidden;
   }
 
-  /* Keep logo icon, hide logo text */
+  /* Collapsed: hide logo text */
   .marketplace-body.sidebar-collapsed .logo-area {
     justify-content: center;
     padding: 0;
@@ -1315,7 +1189,7 @@ button {
     display: none;
   }
 
-  /* Center menu icons */
+  /* Collapsed: center menu icons */
   .marketplace-body.sidebar-collapsed .sidebar-menu {
     padding: 25px 10px;
   }
@@ -1336,7 +1210,7 @@ button {
     height: 38px;
   }
 
-  /* Hide help text, keep its icon */
+  /* Collapsed: hide help text, keep icon */
   .marketplace-body.sidebar-collapsed .help-box {
     justify-content: center;
     gap: 0;
@@ -1352,9 +1226,42 @@ button {
     min-width: 38px;
   }
 
-  /* Main content adjusts to narrow sidebar */
+  /* Collapsed: main content shrinks to 82px sidebar */
   .marketplace-body.sidebar-collapsed .main-content {
     width: calc(100% - 82px);
     margin-left: 82px;
   }
+
+  /* Tablet + collapsed override */
+  @media (max-width: 1100px) {
+    .marketplace-body.sidebar-collapsed .sidebar {
+      width: 82px;
+      min-width: 82px;
+    }
+
+    .marketplace-body.sidebar-collapsed .main-content {
+      width: calc(100% - 82px);
+      margin-left: 82px;
+    }
+  }
+
+  /* Overlay is never shown on desktop */
+  .marketplace-sidebar-overlay {
+    display: none !important;
+  }
+}
+.marketplace-body .provider-logo.medical-blue {
+  background: #1a73e8;
+}
+
+.marketplace-body .provider-logo.medical-red {
+  background: #e53935;
+}
+
+.marketplace-body .provider-logo.medical-green {
+  background: #2e7d32;
+}
+
+.marketplace-body .provider-logo.medical-purple {
+  background: #7b1fa2;
 }
