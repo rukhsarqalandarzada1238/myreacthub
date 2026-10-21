@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./Login";
@@ -10,12 +11,13 @@ import FindClinicResult from "./FindClinicResult";
 import Marketplace from "./Marketplace";
 import FindPharmacy from "./FindPharmacy";
 import MyDependents from "./MyDependents";
+import Appointment from "./Appointment";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Home: redirect to Login */}
+        {/* Home */}
         <Route
           path="/"
           element={<Navigate to="/login" replace />}
@@ -37,6 +39,12 @@ function App() {
         <Route
           path="/dashboard"
           element={<Dashboard />}
+        />
+
+        {/* Appointments */}
+        <Route
+          path="/appointments"
+          element={<Appointment />}
         />
 
         {/* Find Doctor */}
@@ -79,7 +87,7 @@ function App() {
           element={<MyDependents />}
         />
 
-        {/* Old Pharmacy URL - keep it working */}
+        {/* Old Pharmacy URL */}
         <Route
           path="/pharmacy"
           element={<FindPharmacy />}
