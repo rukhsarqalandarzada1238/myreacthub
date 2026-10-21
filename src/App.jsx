@@ -10,6 +10,7 @@ import Marketplace from "./Marketplace";
 import FindPharmacy from "./FindPharmacy";
 import MyDependents from "./MyDependents";
 import AccountSetting from "./AccountSetting";
+import Chat from "./Chat";
 
 function App() {
   return (
@@ -31,6 +32,12 @@ function App() {
         <Route
           path="/dashboard"
           element={<Dashboard />}
+        />
+
+        {/* Chat */}
+        <Route
+          path="/chat"
+          element={<Chat />}
         />
 
         {/* Find Doctor */}
