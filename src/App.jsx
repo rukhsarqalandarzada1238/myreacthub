@@ -1,6 +1,5 @@
-
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
+import "./Dashboard.css";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import Dashboard from "./Dashboard";
@@ -11,7 +10,10 @@ import FindClinicResult from "./FindClinicResult";
 import Marketplace from "./Marketplace";
 import FindPharmacy from "./FindPharmacy";
 import MyDependents from "./MyDependents";
+feature-login
 import Appointment from "./Appointment";
+import AccountSetting from "./AccountSetting";
+main
 
 function App() {
   return (
@@ -81,16 +83,28 @@ function App() {
           element={<FindPharmacy />}
         />
 
+ feature-login
+=======
+        <Route
+          path="/pharmacy"
+          element={<FindPharmacy />}
+        />
+
+ main
         {/* My Dependents */}
         <Route
           path="/my-dependents"
           element={<MyDependents />}
         />
 
+ feature-login
         {/* Old Pharmacy URL */}
+
+        {/* ===== Settings (Account Setting) ===== */}
+main
         <Route
-          path="/pharmacy"
-          element={<FindPharmacy />}
+          path="/settings"
+          element={<AccountSetting />}
         />
 
         {/* Unknown URL */}

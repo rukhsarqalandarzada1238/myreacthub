@@ -174,6 +174,23 @@ function Dashboard() {
     };
   }, []);
 
+  /* SIDEBAR KEYBOARD */
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setSidebarOpen(false);
+        setShowSearchResults(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   /* NAVIGATION */
 
   const handleNavigation = (path) => {
@@ -201,22 +218,6 @@ function Dashboard() {
       setShowSearchResults(false);
     }
   };
-
-  /* SIDEBAR KEYBOARD */
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        setSidebarOpen(false);
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
 
   return (
     <div
@@ -261,7 +262,10 @@ function Dashboard() {
               onClick={() => handleNavigation(item.path)}
               tabIndex={sidebarOpen ? 0 : -1}
             >
-              <span className="pharmacy-menu-icon">{item.icon}</span>
+              <span className="pharmacy-menu-icon">
+                {item.icon}
+              </span>
+
               <span>{item.label}</span>
             </button>
           ))}
@@ -286,15 +290,15 @@ function Dashboard() {
           <div className="header-left">
             {/* HAMBURGER ON ALL SCREEN SIZES */}
 
-<button
-  type="button"
-  className={`hamburger ${sidebarOpen ? "is-open" : ""}`}
-  aria-label={sidebarOpen ? "Close menu" : "Open menu"}
-  aria-expanded={sidebarOpen}
-  onClick={() => setSidebarOpen((previous) => !previous)}
->
-  <span>☰</span>
-</button>
+            <button
+              type="button"
+              className={`hamburger ${sidebarOpen ? "is-open" : ""}`}
+              aria-label={sidebarOpen ? "Close menu" : "Open menu"}
+              aria-expanded={sidebarOpen}
+              onClick={() => setSidebarOpen((previous) => !previous)}
+            >
+              <span>☰</span>
+            </button>
 
             <div className="header-heading">
               <div className="breadcrumb">
@@ -308,7 +312,7 @@ function Dashboard() {
           </div>
 
           <div className="header-right">
-            {/* SEARCH */}
+            {/* FUNCTIONAL SEARCH BOX */}
 
             <div
               className="dashboard-search-wrapper"
@@ -353,7 +357,9 @@ function Dashboard() {
 
                         <span>{page.label}</span>
 
-                        <span className="search-result-arrow">→</span>
+                        <span className="search-result-arrow">
+                          →
+                        </span>
                       </button>
                     ))
                   ) : (
@@ -401,6 +407,8 @@ function Dashboard() {
           {/* CHART CARDS */}
 
           <div className="cards-grid">
+            {/* CLINIC CHART */}
+
             <article className="dashboard-card">
               <div className="card-title">
                 <h3>Promotion by Clinics</h3>
@@ -420,6 +428,8 @@ function Dashboard() {
                 VIEW MORE DETAILS
               </button>
             </article>
+
+            {/* PHARMACY CHART */}
 
             <article className="dashboard-card">
               <div className="card-title">
@@ -441,6 +451,8 @@ function Dashboard() {
               </button>
             </article>
 
+            {/* MARKET CHART */}
+
             <article className="dashboard-card">
               <div className="card-title">
                 <h3>Smart Market Usage by App</h3>
@@ -460,6 +472,8 @@ function Dashboard() {
                 VIEW MORE DETAILS
               </button>
             </article>
+
+            {/* HEALTH INDEX CHART */}
 
             <article className="dashboard-card">
               <div className="card-title">
