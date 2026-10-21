@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Marketplace.css";
 
 function Marketplace() {
@@ -10,6 +10,7 @@ function Marketplace() {
   const [entriesPerPage, setEntriesPerPage] = useState(7);
 
   const navigate = useNavigate();
+  const location = useLocation(); // برای تشخیص اینکه در کدام صفحه هستیم
 
   const handleHamburger = () => {
     if (window.matchMedia("(max-width: 950px)").matches) {
@@ -28,42 +29,43 @@ function Marketplace() {
     closeSidebar();
   };
 
+  // اضافه کردن عکس واقعی برای هر محصول
   const products = [
     {
       id: 1,
       name: "Food Panda",
       price: "5 RM",
       category: "Healthy Diet",
-      description:
-        "As Uber works through a huge amount of internal management turmoil.",
+      description: "As Uber works through a huge amount of internal management turmoil.",
       color: "food-panda",
+      image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80", // عکس غذا
     },
     {
       id: 2,
       name: "Grab Food",
       price: "10 RM",
       category: "Healthy Diet",
-      description:
-        "Music is something that every person has or ing that every person has his or.",
+      description: "Music is something that every person has or ing that every person has his or.",
       color: "grab-food",
+      image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80", // عکس سالاد
     },
     {
       id: 3,
       name: "Deliveroo",
       price: "15 RM",
       category: "Healthy Diet",
-      description:
-        "Different people have different taste, and various types of music.",
+      description: "Different people have different taste, and various types of music.",
       color: "deliveroo",
+      image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=400&q=80", // عکس غذا
     },
     {
       id: 4,
       name: "Minimalist",
       price: "20 RM",
       category: "Healthy Diet",
-      description:
-        "Different people have different taste, and various types of music.",
+      description: "Different people have different taste, and various types of music.",
       color: "minimalist",
+      image: "https://images.unsplash.com/photo-1498837167922-41c00ff4c4b1?auto=format&fit=crop&w=400&q=80", // عکس غذا
     },
   ];
 
@@ -75,6 +77,7 @@ function Marketplace() {
       discount: "0",
       price: "10 RM",
       id: "243598234",
+      image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=100&q=80",
     },
     {
       name: "Healthy Diet",
@@ -83,6 +86,7 @@ function Marketplace() {
       discount: "5",
       price: "15 RM",
       id: "243598235",
+      image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=100&q=80",
     },
     {
       name: "Healthy Diet",
@@ -91,23 +95,19 @@ function Marketplace() {
       discount: "10",
       price: "20 RM",
       id: "243598236",
+      image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=100&q=80",
     },
   ];
 
+  // فقط بر اساس اسم محصول جستجو میکند
   const searchValue = search.trim().toLowerCase();
 
-  // ===== فیلتر کارت‌ها =====
   const filteredProducts = products.filter((product) =>
-    `${product.name} ${product.category} ${product.description}`
-      .toLowerCase()
-      .includes(searchValue)
+    product.name.toLowerCase().includes(searchValue)
   );
 
-  // ===== فیلتر جدول =====
   const filteredResults = tableResults.filter((item) =>
-    `${item.name} ${item.category} ${item.service} ${item.id}`
-      .toLowerCase()
-      .includes(searchValue)
+    item.name.toLowerCase().includes(searchValue)
   );
 
   const displayedResults = filteredResults.slice(0, entriesPerPage);
@@ -120,12 +120,25 @@ function Marketplace() {
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const handleImageError = (event) => {
+    event.currentTarget.src = "https://via.placeholder.com/150?text=No+Image";
+  };
+
+  const menuItems = [
+    { label: "Dashboard", icon: "▣", path: "/dashboard" },
+    { label: "Appointments", icon: "▤", path: "/appointments" },
+    { label: "Find Doctor", icon: "♟", path: "/find-doctor" },
+    { label: "Find Clinic", icon: "▦", path: "/find-clinic" },
+    { label: "Chat", icon: "▣", path: "/chat" },
+    { label: "Find Market-Place", icon: "▤", path: "/marketplace" },
+    { label: "Find Pharmacy", icon: "💊", path: "/pharmacy" },
+    { label: "My Dependents", icon: "▤", path: "/my-dependents" },
+    { label: "My Account", icon: "⚒", path: "/account" },
+    { label: "Settings", icon: "⚙", path: "/settings" },
+  ];
+
   return (
-    <div
-      className={`marketplace-body ${
-        desktopCollapsed ? "sidebar-collapsed" : ""
-      }`}
-    >
+    <div className={`marketplace-body ${desktopCollapsed ? "sidebar-collapsed" : ""}`}>
       {/* MOBILE OVERLAY */}
       {sidebarOpen && (
         <button
@@ -144,96 +157,22 @@ function Marketplace() {
         </div>
 
         <nav className="sidebar-menu" aria-label="Main navigation">
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => handleNavigation("/dashboard")}
-          >
-            <span className="menu-icon">▣</span>
-            <span>Dashboard</span>
-          </button>
+          {menuItems.map((item) => {
+            // چک میکنیم کاربر در کدام صفحه است تا آیکون را فعال کند
+            const isActive = location.pathname === item.path;
 
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => handleNavigation("/appointments")}
-          >
-            <span className="menu-icon">▤</span>
-            <span>Appointments</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => handleNavigation("/find-doctor")}
-          >
-            <span className="menu-icon">♟</span>
-            <span>Find Doctor</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => handleNavigation("/find-clinic")}
-          >
-            <span className="menu-icon">▦</span>
-            <span>Find Clinic</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => handleNavigation("/chat")}
-          >
-            <span className="menu-icon">▣</span>
-            <span>Chat</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item active"
-            onClick={() => handleNavigation("/marketplace")}
-            aria-current="page"
-          >
-            <span className="menu-icon">▤</span>
-            <span>Find Market-Place</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => handleNavigation("/find-pharmacy")}
-          >
-            <span className="menu-icon">▦</span>
-            <span>Find Pharmacy</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => handleNavigation("/my-dependents")}
-          >
-            <span className="menu-icon">▤</span>
-            <span>My Dependents</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => handleNavigation("/account")}
-          >
-            <span className="menu-icon">⚒</span>
-            <span>My Account</span>
-          </button>
-
-          <button
-            type="button"
-            className="menu-item"
-            onClick={() => handleNavigation("/settings")}
-          >
-            <span className="menu-icon">⚙</span>
-            <span>Settings</span>
-          </button>
+            return (
+              <button
+                key={item.label}
+                type="button"
+                className={`menu-item ${isActive ? "active" : ""}`}
+                onClick={() => handleNavigation(item.path)}
+              >
+                <span className="menu-icon">{item.icon}</span>
+                <span>{item.label}</span>
+              </button>
+            );
+          })}
         </nav>
 
         <div className="help-box">
@@ -274,7 +213,7 @@ function Marketplace() {
               <span aria-hidden="true">⌕</span>
               <input
                 type="search"
-                placeholder="Type here..."
+                placeholder="Type product name here..."
                 aria-label="Search marketplace results"
                 value={headerSearch}
                 onChange={(event) => setHeaderSearch(event.target.value)}
@@ -289,6 +228,7 @@ function Marketplace() {
               ◉ Log out
             </button>
 
+            {/* دکمه تنظیمات (چرخ دنده) */}
             <button
               type="button"
               className="header-icon"
@@ -298,6 +238,7 @@ function Marketplace() {
               ⚙
             </button>
 
+            {/* دکمه حساب کاربری (آدمک) */}
             <button
               type="button"
               className="header-icon"
@@ -321,23 +262,19 @@ function Marketplace() {
             <div className="product-grid">
               {filteredProducts.map((product) => (
                 <article className="product-card" key={product.id}>
+                  {/* عکس واقعی محصول به جای CSS */}
                   <div className={`product-image ${product.color}`}>
-                    <div className="food-image">
-                      <div className="plate">
-                        <div className="food-piece" />
-                        <div className="food-piece second" />
-                      </div>
-                      <div className="drink" />
-                      <div className="fruit" />
-                      <div className="side-dish" />
-                    </div>
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "10px" }}
+                      onError={handleImageError}
+                    />
                   </div>
 
                   <div className="product-info">
                     <div className="product-top">
-                      <span className="product-category">
-                        {product.category}
-                      </span>
+                      <span className="product-category">{product.category}</span>
                       <span className="product-price">{product.price}</span>
                     </div>
 
@@ -356,9 +293,7 @@ function Marketplace() {
                     <button
                       type="button"
                       className="buy-button"
-                      onClick={() => {
-                        // Connect the checkout flow here when available.
-                      }}
+                      onClick={() => navigate("/login")}
                     >
                       BUY NOW
                     </button>
@@ -367,9 +302,7 @@ function Marketplace() {
               ))}
 
               {filteredProducts.length === 0 && (
-                <p className="no-products-found">
-                  No products found for "{search}"
-                </p>
+                <p className="no-products-found">No products found for "{search}"</p>
               )}
             </div>
           </div>
@@ -382,9 +315,7 @@ function Marketplace() {
               <label className="entries-select">
                 <select
                   value={entriesPerPage}
-                  onChange={(event) =>
-                    setEntriesPerPage(Number(event.target.value))
-                  }
+                  onChange={(event) => setEntriesPerPage(Number(event.target.value))}
                   aria-label="Entries per page"
                 >
                   <option value={7}>7</option>
@@ -424,8 +355,14 @@ function Marketplace() {
                     <tr key={item.id}>
                       <td>
                         <div className="table-name">
-                          <div className="small-food-image">
-                            <div className="small-plate" />
+                          {/* عکس کوچک برای جدول */}
+                          <div className="small-food-image" style={{ overflow: "hidden", borderRadius: "8px" }}>
+                            <img 
+                              src={item.image} 
+                              alt={item.name} 
+                              style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+                              onError={handleImageError}
+                            />
                           </div>
                           <span>{item.name}</span>
                         </div>
@@ -459,8 +396,7 @@ function Marketplace() {
 
             <div className="table-bottom">
               <span>
-                Showing {displayedResults.length} of {filteredResults.length}{" "}
-                entries
+                Showing {displayedResults.length} of {filteredResults.length} entries
               </span>
             </div>
           </div>
