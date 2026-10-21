@@ -94,13 +94,23 @@ function Marketplace() {
     },
   ];
 
-  const filteredResults = tableResults
-    .filter((item) =>
-      `${item.name} ${item.category} ${item.service} ${item.id}`
-        .toLowerCase()
-        .includes(search.toLowerCase().trim())
-    )
-    .slice(0, entriesPerPage);
+  const searchValue = search.trim().toLowerCase();
+
+  // ===== فیلتر کارت‌ها =====
+  const filteredProducts = products.filter((product) =>
+    `${product.name} ${product.category} ${product.description}`
+      .toLowerCase()
+      .includes(searchValue)
+  );
+
+  // ===== فیلتر جدول =====
+  const filteredResults = tableResults.filter((item) =>
+    `${item.name} ${item.category} ${item.service} ${item.id}`
+      .toLowerCase()
+      .includes(searchValue)
+  );
+
+  const displayedResults = filteredResults.slice(0, entriesPerPage);
 
   const handleHeaderSearch = (event) => {
     event.preventDefault();
@@ -116,7 +126,7 @@ function Marketplace() {
         desktopCollapsed ? "sidebar-collapsed" : ""
       }`}
     >
-      {/* MOBILE OVERLAY: only rendered while mobile sidebar is open */}
+      {/* MOBILE OVERLAY */}
       {sidebarOpen && (
         <button
           type="button"
@@ -132,6 +142,7 @@ function Marketplace() {
           <div className="logo-icon">M</div>
           <span>MyPatientHUB</span>
         </div>
+
         <nav className="sidebar-menu" aria-label="Main navigation">
           <button
             type="button"
@@ -244,11 +255,6 @@ function Marketplace() {
               className="hamburger"
               onClick={handleHamburger}
               aria-label="Toggle navigation sidebar"
-              aria-expanded={
-                window.matchMedia("(max-width: 950px)").matches
-                  ? sidebarOpen
-                  : !desktopCollapsed
-              }
             >
               ☰
             </button>
@@ -313,7 +319,7 @@ function Marketplace() {
             <h1>Search Marketplaces and order what you need</h1>
 
             <div className="product-grid">
-              {products.map((product) => (
+              {filteredProducts.map((product) => (
                 <article className="product-card" key={product.id}>
                   <div className={`product-image ${product.color}`}>
                     <div className="food-image">
@@ -324,84 +330,6 @@ function Marketplace() {
                       <div className="drink" />
                       <div className="fruit" />
                       <div className="side-dish" />
-
-function Marketplace() {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [search, setSearch] = useState("");
-    const [entriesPerPage, setEntriesPerPage] = useState(7);
-
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    const handleNavigation = (path) => {
-        navigate(path);
-        setSidebarOpen(false);
-    };
-
-    const menuItems = [
-        { label: "Dashboard", icon: "▣", path: "/dashboard" },
-        { label: "Appointments", icon: "▤", path: "/appointments" },
-        { label: "Find Doctor", icon: "♟", path: "/find-doctor" },
-        { label: "Find Clinic", icon: "▦", path: "/find-clinic" },
-        { label: "Chat", icon: "▣", path: "/chat" },
-        { label: "Find Market-Place", icon: "🛍️", path: "/marketplace" },
-        { label: "Find Pharmacy", icon: "💊", path: "/find-pharmacy" },
-        { label: "My Dependents", icon: "▤", path: "/my-dependents" },
-        { label: "My Account", icon: "♟", path: "/account" },
-        { label: "Settings", icon: "⚙", path: "/settings" },
-    ];
-
-    // ===== فیلتر محصولات (کارت‌ها) =====
-    const filteredProducts = products.filter((product) =>
-        `${product.name} ${product.category} ${product.description} ${product.provider}`
-            .toLowerCase()
-            .includes(search.trim().toLowerCase())
-    );
-
-    // ===== فیلتر محصولات جدول =====
-    const filteredResults = tableResults.filter((item) =>
-        `${item.name} ${item.category} ${item.service} ${item.id}`
-            .toLowerCase()
-            .includes(search.trim().toLowerCase())
-    );
-
-    const displayedResults = filteredResults.slice(0, entriesPerPage);
-
-    const handleImageError = (event) => {
-        event.currentTarget.style.display = "none";
-    };
-
-    return (
-        <div className="marketplace-body">
-            {/* SIDEBAR */}
-            <aside className={`sidebar ${sidebarOpen ? "show" : ""}`}>
-                <div className="logo-area">
-                    <div className="logo-icon">M</div>
-                    <span>MyPatientHUB</span>
-                </div>
-
-                <nav className="sidebar-menu">
-                    {menuItems.map((item) => (
-                        <button
-                            key={item.label}
-                            type="button"
-                            className={`menu-item ${
-                                location.pathname === item.path ? "active" : ""
-                            }`}
-                            onClick={() => handleNavigation(item.path)}
-                        >
-                            <span className="menu-icon">{item.icon}</span>
-                            <span>{item.label}</span>
-                        </button>
-                    ))}
-                </nav>
-
-                <div className="help-box">
-                    <span>?</span>
-                    <div>
-                        <h4>Need Help?</h4>
-                        <p>Contact our support team</p>
-
                     </div>
                   </div>
 
@@ -410,9 +338,7 @@ function Marketplace() {
                       <span className="product-category">
                         {product.category}
                       </span>
-                      <span className="product-price">
-                        {product.price}
-                      </span>
+                      <span className="product-price">{product.price}</span>
                     </div>
 
                     <div className="provider">
@@ -423,112 +349,6 @@ function Marketplace() {
                         {product.name === "Minimalist" && "●"}
                       </div>
                       <h3>{product.name}</h3>
-
-                    <div className="header-right">
-                        <div className="search-box">
-                            <span>⌕</span>
-                            <input
-                                type="text"
-                                placeholder="Search healthcare products..."
-                                aria-label="Search healthcare products"
-                                value={search}
-                                onChange={(event) => setSearch(event.target.value)}
-                            />
-                        </div>
-
-                        <button
-                            type="button"
-                            className="header-link"
-                            onClick={() => navigate("/login")}
-                        >
-                            ◉ Log out
-                        </button>
-
-                        <button
-                            type="button"
-                            className="header-icon"
-                            aria-label="Settings"
-                            onClick={() => navigate("/settings")}
-                        >
-                            ⚙
-                        </button>
-
-                        <button
-                            type="button"
-                            className="header-icon"
-                            aria-label="My account"
-                            onClick={() => navigate("/account")}
-                        >
-                            ♟
-                        </button>
-                    </div>
-                </header>
-
-                {/* MARKETPLACE CONTENT */}
-                <section className="marketplace-content">
-                    <div className="marketplace-card">
-                        <h1>Healthcare Products & Patient Essentials</h1>
-                        <p className="marketplace-intro">
-                            Explore medical supplies, wellness products, and everyday
-                            essentials to support you and your family.
-                        </p>
-
-                        <div className="product-grid">
-                            {filteredProducts.map((product) => (
-                                <article className="product-card" key={product.id}>
-                                    <div className={`product-image ${product.color}`}>
-                                        <img
-                                            src={product.image}
-                                            alt={product.name}
-                                            loading="lazy"
-                                            onError={handleImageError}
-                                        />
-                                    </div>
-
-                                    <div className="product-info">
-                                        <div className="product-top">
-                                            <span className="product-category">
-                                                {product.category}
-                                            </span>
-                                            <span className="product-price">
-                                                {product.price}
-                                            </span>
-                                        </div>
-
-                                        <div className="provider">
-                                            <div className={`provider-logo ${product.color}`}>
-                                                {product.initials}
-                                            </div>
-                                            <h3>{product.name}</h3>
-                                        </div>
-
-                                        <p>{product.description}</p>
-
-                                        <button
-                                            type="button"
-                                            className="buy-button"
-                                            onClick={() =>
-                                                navigate("/login", {
-                                                    state: {
-                                                        message:
-                                                            `Please log in to continue with ${product.name}.`,
-                                                    },
-                                                })
-                                            }
-                                        >
-                                            VIEW DETAILS
-                                        </button>
-                                    </div>
-                                </article>
-                            ))}
-
-                            {filteredProducts.length === 0 && (
-                                <p className="no-products-found">
-                                    No products found for "{search}"
-                                </p>
-                            )}
-                        </div>
-
                     </div>
 
                     <p>{product.description}</p>
@@ -545,6 +365,12 @@ function Marketplace() {
                   </div>
                 </article>
               ))}
+
+              {filteredProducts.length === 0 && (
+                <p className="no-products-found">
+                  No products found for "{search}"
+                </p>
+              )}
             </div>
           </div>
 
@@ -594,7 +420,7 @@ function Marketplace() {
                 </thead>
 
                 <tbody>
-                  {filteredResults.map((item) => (
+                  {displayedResults.map((item) => (
                     <tr key={item.id}>
                       <td>
                         <div className="table-name">
@@ -619,24 +445,21 @@ function Marketplace() {
                       <td>{item.id}</td>
                     </tr>
                   ))}
+
+                  {displayedResults.length === 0 && (
+                    <tr>
+                      <td colSpan="6" className="no-results">
+                        No results found.
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
 
-            {filteredResults.length === 0 && (
-              <div className="no-results">No results found.</div>
-            )}
-
             <div className="table-bottom">
               <span>
-                Showing {filteredResults.length} of{" "}
-                {
-                  tableResults.filter((item) =>
-                    `${item.name} ${item.category} ${item.service} ${item.id}`
-                      .toLowerCase()
-                      .includes(search.toLowerCase().trim())
-                  ).length
-                }{" "}
+                Showing {displayedResults.length} of {filteredResults.length}{" "}
                 entries
               </span>
             </div>
